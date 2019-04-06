@@ -19,7 +19,7 @@ class ValvolaAnd : SKShapeNode, ValvolaConformance {
     
     init(size: CGSize) {
         super.init()
-        
+        self.fillColor = .clear
         self.path = CGPath(rect: CGRect(origin: .zero, size: size), transform: nil)
         enable()
     }
@@ -38,18 +38,19 @@ class ValvolaAnd : SKShapeNode, ValvolaConformance {
         inputRight.parentValvola = self
         mainOutput.parentValvola = self
         
-        inputLeft.fillColor = self.fillColor
-        inputRight.fillColor = self.fillColor
-        mainOutput.fillColor = self.fillColor
+        [inputLeft, inputRight, mainOutput].forEach { $0?.fillColor = .blue }
         
-        let w = self.frame.width
-        inputLeft.position = CGPoint(x: self.frame.minX, y: 0)
+        let w = self.frame.size.width
+        inputLeft.position.x = 0 - (inputLeft.frame.width / 2)
+        inputLeft.position.y = 0 - (inputLeft.frame.height / 2)
         inputLeft.zPosition = self.zPosition + 1
         
-        inputRight.position = CGPoint(x: w, y: 0)
+        inputRight.position.x = w - (inputLeft.frame.width / 2)
+        inputRight.position.y = 0 - (inputLeft.frame.height / 2)
         inputRight.zPosition = self.zPosition + 1
         
-        mainOutput.position = CGPoint(x: self.frame.midX, y: self.frame.height)
+        mainOutput.position.x = self.frame.midX
+        mainOutput.position.y = self.frame.height - (mainOutput.frame.height / 2)
         mainOutput.zPosition = self.zPosition + 1
         
         addChild(inputLeft)

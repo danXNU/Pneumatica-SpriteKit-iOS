@@ -25,13 +25,11 @@ class GameScene: SKScene {
         self.anchorPoint = .zero
         
         valvola.name = "Valvola And"
-        valvola.fillColor = .blue
         valvola.position = CGPoint(x: 0, y: 0)
         valvola.zPosition = 1
         addChild(valvola)
         
         test.name = "Asd"
-        test.fillColor = .green
         test.position = CGPoint(x: 100, y: 100)
         test.zPosition = 1
         addChild(test)
@@ -91,8 +89,17 @@ class GameScene: SKScene {
     func drawLine(line: Line) {
         let path = CGMutablePath()
         
-        let startPosition = convert(line.fromInput!.position, from: line.fromInput!.parentValvola! as! SKNode)
-        let finishPosition = convert(line.toOutput!.position, from: line.toOutput!.parentValvola! as! SKNode)
+        var startPoint = line.fromInput!.position
+        var finishPoint = line.toOutput!.position
+        
+        startPoint.x += (line.fromInput.frame.width / 2)
+        startPoint.y += (line.fromInput.frame.height / 2)
+        
+        finishPoint.x += (line.toOutput.frame.width / 2)
+        finishPoint.y += (line.toOutput.frame.height / 2)
+        
+        let startPosition = convert(startPoint, from: line.fromInput!.parentValvola! as! SKNode)
+        let finishPosition = convert(finishPoint, from: line.toOutput!.parentValvola! as! SKNode)
         
         path.move(to: startPosition)
         path.addLine(to: finishPosition)
@@ -114,8 +121,8 @@ class GameScene: SKScene {
             
             firstSelectedIO?.addWire(from: secondSelectedIO!)
             
-            firstSelectedIO?.fillColor = .clear
-            secondSelectedIO?.fillColor = .clear
+            firstSelectedIO?.fillColor = .blue
+            secondSelectedIO?.fillColor = .blue
             firstSelectedIO = nil
             secondSelectedIO = nil
         }
