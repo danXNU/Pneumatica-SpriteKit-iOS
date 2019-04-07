@@ -90,7 +90,7 @@ class GameScene: SKScene {
         for valvola in self.children where valvola is ValvolaConformance & SKNode {
             for input in valvola.children where input is InputOutput {
                 let obj = input as! InputOutput
-                obj.fillColor = .blue
+                obj.fillColor = obj.idleColor
             }
         }
     }

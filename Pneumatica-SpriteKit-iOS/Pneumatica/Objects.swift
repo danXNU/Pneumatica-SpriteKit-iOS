@@ -38,8 +38,6 @@ class ValvolaAnd : SKShapeNode, ValvolaConformance {
         inputRight.parentValvola = self
         mainOutput.parentValvola = self
         
-        [inputLeft, inputRight, mainOutput].forEach { $0?.fillColor = .blue }
-        
         let w = self.frame.size.width
         inputLeft.position.x = 0 - (inputLeft.frame.width / 2)
         inputLeft.position.y = 0 - (inputLeft.frame.height / 2)
@@ -67,10 +65,12 @@ class ValvolaAnd : SKShapeNode, ValvolaConformance {
     }
     
     func update() {
-        if case AriaType.present(_) = self.inputLeft.ariaValue, case AriaType.present(_) = self.inputRight.ariaValue {
+        if self.inputLeft.ariaPressure > 0 && self.inputRight.ariaPressure > 0 {
             PneumaticaRuntime.shared.sendAria(to: mainOutput.inputsConnected, from: mainOutput)
+//            self.fillColor = .green
         } else {
             PneumaticaRuntime.shared.stopSendingAria(to: mainOutput.inputsConnected, from: mainOutput)
+//            self.fillColor = .clear
         }
     }
 
@@ -96,15 +96,13 @@ class GruppoFRL : SKShapeNode, ValvolaConformance {
     }
     
     func update() {
-        onlyOutput.ariaValue = .present(2.0)
+        onlyOutput.ariaPressure = 2.0
         PneumaticaRuntime.shared.sendAria(to: onlyOutput.inputsConnected, from: onlyOutput)
     }
     
     func enable() {
         self.onlyOutput = InputOutput(circleOfRadius: 10, valvola: self)
         onlyOutput.parentValvola = self
- 
-        onlyOutput.fillColor = .blue
         
         onlyOutput.position.x = self.frame.width / 2 - onlyOutput.frame.width / 2
         onlyOutput.position.y = self.frame.height - onlyOutput.frame.height / 2
@@ -136,12 +134,12 @@ class CilindroDoppioEffetto: SKSpriteNode, ValvolaConformance {
     func update() {
         switch state {
         case .interno:
-            if case AriaType.present(_) = inputLeft.ariaValue, case AriaType.notPresent = inputRight.ariaValue {
+            if inputLeft.ariaPressure > 0 && inputRight.ariaPressure <= 0 {
                 //animation
                 self.state = .fuoriuscito
             }
         case .fuoriuscito:
-            if case AriaType.present(_) = inputRight.ariaValue, case AriaType.notPresent = inputLeft.ariaValue {
+            if inputRight.ariaPressure > 0 && inputLeft.ariaPressure <= 0 {
                 //animation
                 self.state = .interno
             }

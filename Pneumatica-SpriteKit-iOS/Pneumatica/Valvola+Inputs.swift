@@ -43,39 +43,29 @@ class InputOutput: SKShapeNode {
     
     var id : UUID = UUID()
     var parentValvola : ValvolaConformance?
-    var ariaValue : AriaType = .notPresent {
+    var idleColor: UIColor = .red
+    
+    var inputsConnected : Set<InputOutput> = []
+    var ouputsActivatingMe : Set<InputOutput> = []
+    
+    var ariaPressure : Double = 0.0 {
         didSet {
             DispatchQueue.main.async {
-                switch self.ariaValue {
-                case .notPresent:
+                if self.ariaPressure == 0 {
                     self.fillColor = .blue
-                case .present(_):
+                } else {
                     self.fillColor = .green
                 }
             }
         }
     }
     
-    var inputsConnected : Set<InputOutput> = []
-    var ouputsActivatingMe : Set<InputOutput> = []
-    
-//    init(valvola: ValvolaConformance, shape: CGRect) {
-//        self.parentValvola = valvola
-//        self.id = UUID()
-//        self.ariaValue = AriaType.notPresent
-//        super.init(rect: shape)
-//        self.name = id.uuidString
-//    }
-
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
     init(circleOfRadius: CGFloat, valvola: ValvolaConformance){
         super.init()
         let diameter = circleOfRadius * 2
         self.path = CGPath(ellipseIn: CGRect(origin: .zero, size: CGSize(width: diameter, height: diameter)), transform: nil)
         
+        self.fillColor = self.idleColor
         self.parentValvola = valvola
         self.name = id.uuidString
     }
@@ -97,23 +87,23 @@ class InputOutput: SKShapeNode {
     
     func receive(from input: InputOutput) {
         ouputsActivatingMe.insert(input)
-        if let pressureValue = self.getMostHightInput()?.ariaValue.get(), pressureValue > 0 {
-            self.ariaValue = .present(pressureValue)
+        if let pressureValue = self.getMostHightInput()?.ariaPressure, pressureValue > 0 {
+            self.ariaPressure = pressureValue
             self.fillColor = .green
         }
     }
     
     func stopReceiving(from output: InputOutput) {
         ouputsActivatingMe.remove(output)
-        if let pressureValue = self.getMostHightInput()?.ariaValue.get(), pressureValue > 0 {
-            self.ariaValue = .present(pressureValue)
+        if let pressureValue = self.getMostHightInput()?.ariaPressure, pressureValue > 0 {
+            self.ariaPressure = pressureValue
         } else {
-            self.ariaValue = .notPresent
+            self.ariaPressure = 0.0
             self.fillColor = .blue
         }
     }
     
     private func getMostHightInput() -> InputOutput? {
-        return self.ouputsActivatingMe.max(by: { $0.ariaValue.get() > $1.ariaValue.get() })
+        return self.ouputsActivatingMe.max(by: { $0.ariaPressure > $1.ariaPressure })
     }
 }
