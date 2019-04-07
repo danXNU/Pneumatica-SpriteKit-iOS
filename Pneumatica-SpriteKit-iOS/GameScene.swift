@@ -11,8 +11,8 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    let valvola = ValvolaAnd(size: .init(width: 200, height: 100))
-    let test = ValvolaAnd(size: .init(width: 200, height: 100))
+    let valvola = ValvolaAnd(size: .init(width: 100, height: 50))
+    let test = ValvolaAnd(size: .init(width: 100, height: 50))
     
     var firstSelectedIO: InputOutput?
     var secondSelectedIO: InputOutput?
@@ -101,8 +101,24 @@ class GameScene: SKScene {
         let startPosition = convert(startPoint, from: line.fromInput!.parentValvola! as! SKNode)
         let finishPosition = convert(finishPoint, from: line.toOutput!.parentValvola! as! SKNode)
         
+        var keyPointes : [CGPoint] = []
+        var startHolder = startPosition
+        while startHolder != finishPosition {
+            if startHolder.x != finishPosition.x {
+                startHolder.x = finishPosition.x
+                keyPointes.append(startHolder)
+            }
+            if startHolder.y != finishPosition.y {
+                startHolder.y = finishPosition.y
+                keyPointes.append(startHolder)
+            }
+        }
+        
         path.move(to: startPosition)
-        path.addLine(to: finishPosition)
+        for keyPoint in keyPointes {
+            path.addLine(to: keyPoint)
+        }
+//        path.addLine(to: finishPosition)
         
         line.path = path
         line.zPosition = 2
