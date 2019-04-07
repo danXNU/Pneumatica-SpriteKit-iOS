@@ -11,8 +11,10 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    let valvola = ValvolaAnd(size: .init(width: 100, height: 50))
+    let and = ValvolaAnd(size: .init(width: 100, height: 50))
+    let or = ValvolaOR(size: .init(width: 100, height: 50))
     let frl = GruppoFRL(size: .init(width: 100, height: 100))
+    let cilindro = CilindroDoppioEffetto(size: .init(width: 200, height: 50))
     
     var firstSelectedIO: InputOutput?
     var secondSelectedIO: InputOutput?
@@ -24,16 +26,25 @@ class GameScene: SKScene {
         self.size = view.bounds.size
         self.anchorPoint = .zero
         
-        valvola.name = "Valvola And"
-        valvola.position = CGPoint(x: 0, y: 0)
-        valvola.zPosition = 1
-        addChild(valvola)
+        and.name = "Valvola And"
+        and.position = CGPoint(x: 0, y: 0)
+        and.zPosition = 1
+        addChild(and)
         
+        or.name = "OR"
+        or.position = CGPoint(x: 200, y: 400)
+        or.zPosition = 1
+        addChild(or)
         
         frl.name = "FRL"
         frl.position = CGPoint(x: 200, y: 200)
         frl.zPosition = 1
         addChild(frl)
+        
+        cilindro.name = "Cilindro"
+        cilindro.position = CGPoint(x: 200, y: 500)
+        cilindro.zPosition = 1
+        addChild(cilindro)
         
     }
     

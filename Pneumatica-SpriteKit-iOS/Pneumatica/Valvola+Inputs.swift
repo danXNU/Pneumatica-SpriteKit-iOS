@@ -12,6 +12,8 @@ protocol ValvolaConformance {
     var nome: String { get set }
     var descrizione: String { get set }
     
+    var labelText: String { get }
+    
     func update()
     func enable()
 }
