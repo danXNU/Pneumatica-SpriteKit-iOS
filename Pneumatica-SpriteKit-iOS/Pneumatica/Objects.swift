@@ -70,9 +70,11 @@ class ValvolaAnd : SKShapeNode, ValvolaConformance {
     
     func update() {
         if self.inputLeft.ariaPressure > 0 && self.inputRight.ariaPressure > 0 {
+            mainOutput.ariaPressure = [inputLeft.ariaPressure, inputRight.ariaPressure].max() ?? 0.0
             PneumaticaRuntime.shared.sendAria(to: mainOutput.inputsConnected, from: mainOutput)
 //            self.fillColor = .green
         } else {
+            mainOutput.ariaPressure = 0.0
             PneumaticaRuntime.shared.stopSendingAria(to: mainOutput.inputsConnected, from: mainOutput)
 //            self.fillColor = .clear
         }
@@ -87,8 +89,10 @@ class ValvolaOR : ValvolaAnd {
     
     override func update() {
         if inputLeft.ariaPressure > 0 || inputRight.ariaPressure > 0 {
+            mainOutput.ariaPressure = [inputLeft.ariaPressure, inputRight.ariaPressure].max() ?? 0.0
             PneumaticaRuntime.shared.sendAria(to: mainOutput.inputsConnected, from: mainOutput)
         } else {
+            mainOutput.ariaPressure = 0.0
             PneumaticaRuntime.shared.stopSendingAria(to: mainOutput.inputsConnected, from: mainOutput)
         }
     }
@@ -174,29 +178,12 @@ class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance {
         switch state {
         case .interno:
             if inputLeft.ariaPressure > 0 && inputRight.ariaPressure <= 0 {
-                //animation
-//                let path = CGMutablePath()
-//                let startPoint = CGPoint(x: self.frame.minX, y: pistone.position.y - pistone.frame.height * 1.5)
-//                let finishPoint = CGPoint(x: startPoint.x + 50, y: startPoint.y)
-//                path.move(to: startPoint)
-//                path.addLine(to: finishPoint)
-//
-//                let action = SKAction.follow(path, asOffset: true, orientToPath: false, duration: 0.3)
                 self.pistone.run(pistonAction)
                 self.state = .fuoriuscito
             }
         case .fuoriuscito:
             if inputRight.ariaPressure > 0 && inputLeft.ariaPressure <= 0 {
-                //animation
-//                let path = UIBezierPath()
-//                let startPoint = CGPoint(x: self.frame.minX, y: self.frame.midY - pistone.frame.height / 2)
-//                let finishPoint = CGPoint(x: startPoint.x - 30, y: startPoint.y)
-//                path.move(to: startPoint)
-//                path.addLine(to: finishPoint)
-//
-//                let action = SKAction.follow(path.cgPath, asOffset: true, orientToPath: false, duration: 1.5)
                 self.pistone.run(pistonAction.reversed())
-                
                 self.state = .interno
             }
         case .animating: break // da fare in futuro se necessario
