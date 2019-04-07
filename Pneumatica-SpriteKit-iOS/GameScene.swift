@@ -12,7 +12,7 @@ import GameplayKit
 class GameScene: SKScene {
     
     let valvola = ValvolaAnd(size: .init(width: 100, height: 50))
-    let test = ValvolaAnd(size: .init(width: 100, height: 50))
+    let frl = GruppoFRL(size: .init(width: 100, height: 100))
     
     var firstSelectedIO: InputOutput?
     var secondSelectedIO: InputOutput?
@@ -29,10 +29,11 @@ class GameScene: SKScene {
         valvola.zPosition = 1
         addChild(valvola)
         
-        test.name = "Asd"
-        test.position = CGPoint(x: 100, y: 100)
-        test.zPosition = 1
-        addChild(test)
+        
+        frl.name = "FRL"
+        frl.position = CGPoint(x: 200, y: 200)
+        frl.zPosition = 1
+        addChild(frl)
         
     }
     
@@ -40,10 +41,11 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
 //        defer { lastUpdate = currentTime }
 //
-//        for node in self.scene?.children ?? [] {
-//            guard let realNode = node as? ValvolaConformance else { continue }
-//            realNode.update()
-//        }
+        for node in self.scene?.children ?? [] {
+            guard let realNode = node as? ValvolaConformance else { continue }
+            realNode.update()
+        }
+        
         if valvoleLayoutChanged {
             let lines = self.children.compactMap { $0 as? Line }
             lines.forEach { (line) in
@@ -61,6 +63,12 @@ class GameScene: SKScene {
             if firstSelectedIO == nil { firstSelectedIO = clickedIO }
             else if secondSelectedIO == nil { secondSelectedIO = clickedIO }
         
+            if (firstSelectedIO?.parentValvola as? SKNode) == (secondSelectedIO?.parentValvola as? SKNode) {
+                print("Non puoi collegare un filo alla stessa valvola")
+                resetTouches()
+                return
+            }
+            
             clickedIO.fillColor = .red
             createLine()
         } else if let valvola = nodes.first as? SKNode & ValvolaConformance {
@@ -68,18 +76,28 @@ class GameScene: SKScene {
             selectedValvola = valvola
             (selectedValvola as? SKShapeNode)?.strokeColor = .red
         } else {
-            (selectedValvola as? SKShapeNode)?.strokeColor = .white
-            selectedValvola = nil
-            firstSelectedIO = nil
-            secondSelectedIO = nil
+            resetTouches()
         }
         
+    }
+    
+    func resetTouches() {
+        (selectedValvola as? SKShapeNode)?.strokeColor = .white
+        selectedValvola = nil
+        firstSelectedIO = nil
+        secondSelectedIO = nil
+        
+        for valvola in self.children where valvola is ValvolaConformance & SKNode {
+            for input in valvola.children where input is InputOutput {
+                let obj = input as! InputOutput
+                obj.fillColor = .blue
+            }
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let touchPoint = touch.location(in: self)
-            
             selectedValvola?.position.x = touchPoint.x - 100
             selectedValvola?.position.y = touchPoint.y - 50
         }

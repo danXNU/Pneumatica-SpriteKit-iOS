@@ -53,25 +53,30 @@ class ValvolaAnd : SKShapeNode, ValvolaConformance {
         mainOutput.position.y = self.frame.height - (mainOutput.frame.height / 2)
         mainOutput.zPosition = self.zPosition + 1
         
+        let label = SKLabelNode(text: "AND")
+        label.color = .white
+        label.position.x = self.frame.width / 2
+        label.position.y = self.frame.height / 2  - label.frame.height / 2
+//        label.position = self.position
+        label.zPosition = 2
+        addChild(label)
+        
         addChild(inputLeft)
         addChild(inputRight)
         addChild(mainOutput)
     }
     
     func update() {
-        if inputLeft == nil || mainOutput == nil || inputRight == nil {
-            self.enable()
+        if case AriaType.present(_) = self.inputLeft.ariaValue, case AriaType.present(_) = self.inputRight.ariaValue {
+            PneumaticaRuntime.shared.sendAria(to: mainOutput.inputsConnected, from: mainOutput)
+        } else {
+            PneumaticaRuntime.shared.stopSendingAria(to: mainOutput.inputsConnected, from: mainOutput)
         }
-//
-//        if case AriaType.present(_) = self.inputLeft.ariaValue, case AriaType.present(_) = self.inputRight.ariaValue {
-//            PneumaticaRuntime.shared.sendAria(to: mainOutput.inputsConnected, from: mainOutput)
-//        } else {
-//            PneumaticaRuntime.shared.stopSendingAria(to: mainOutput.inputsConnected, from: mainOutput)
-//        }
     }
+
 }
 
-class GruppoFRL : SKSpriteNode, ValvolaConformance {
+class GruppoFRL : SKShapeNode, ValvolaConformance {
     var id: UUID = UUID()
     var nome: String = ""
     var descrizione: String = ""
@@ -79,14 +84,42 @@ class GruppoFRL : SKSpriteNode, ValvolaConformance {
     var isActive : Bool = true
     var onlyOutput : InputOutput!
     
+    init(size: CGSize) {
+        super.init()
+        self.fillColor = .clear
+        self.path = CGPath(rect: CGRect(origin: .zero, size: size), transform: nil)
+        enable()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func update() {
+        onlyOutput.ariaValue = .present(2.0)
         PneumaticaRuntime.shared.sendAria(to: onlyOutput.inputsConnected, from: onlyOutput)
     }
     
     func enable() {
         self.onlyOutput = InputOutput(circleOfRadius: 10, valvola: self)
         onlyOutput.parentValvola = self
+ 
+        onlyOutput.fillColor = .blue
+        
+        onlyOutput.position.x = self.frame.width / 2 - onlyOutput.frame.width / 2
+        onlyOutput.position.y = self.frame.height - onlyOutput.frame.height / 2
+        onlyOutput.zPosition = self.zPosition + 1
+        
+        let label = SKLabelNode(text: "FRL")
+        label.color = .white
+        label.position.x = self.frame.width / 2
+        label.position.y = self.frame.height / 2  - label.frame.height / 2
+        label.zPosition = 2
+        
+        addChild(label)
+        addChild(onlyOutput)
     }
+    
     
 }
 

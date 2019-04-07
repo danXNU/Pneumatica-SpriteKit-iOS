@@ -43,7 +43,18 @@ class InputOutput: SKShapeNode {
     
     var id : UUID = UUID()
     var parentValvola : ValvolaConformance?
-    var ariaValue : AriaType = .notPresent
+    var ariaValue : AriaType = .notPresent {
+        didSet {
+            DispatchQueue.main.async {
+                switch self.ariaValue {
+                case .notPresent:
+                    self.fillColor = .blue
+                case .present(_):
+                    self.fillColor = .green
+                }
+            }
+        }
+    }
     
     var inputsConnected : Set<InputOutput> = []
     var ouputsActivatingMe : Set<InputOutput> = []
@@ -88,6 +99,7 @@ class InputOutput: SKShapeNode {
         ouputsActivatingMe.insert(input)
         if let pressureValue = self.getMostHightInput()?.ariaValue.get(), pressureValue > 0 {
             self.ariaValue = .present(pressureValue)
+            self.fillColor = .green
         }
     }
     
@@ -97,6 +109,7 @@ class InputOutput: SKShapeNode {
             self.ariaValue = .present(pressureValue)
         } else {
             self.ariaValue = .notPresent
+            self.fillColor = .blue
         }
     }
     
