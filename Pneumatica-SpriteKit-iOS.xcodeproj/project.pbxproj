@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB9DF3D5225DB5A500EDE365 /* ObjectsListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9DF3D4225DB5A500EDE365 /* ObjectsListDataSource.swift */; };
 		DBACB8642258B793007B3E6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB8632258B793007B3E6C /* AppDelegate.swift */; };
 		DBACB8662258B793007B3E6C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DBACB8652258B793007B3E6C /* GameScene.sks */; };
 		DBACB86A2258B793007B3E6C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB8692258B793007B3E6C /* GameScene.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB9DF3D4225DB5A500EDE365 /* ObjectsListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsListDataSource.swift; sourceTree = "<group>"; };
 		DBACB8602258B793007B3E6C /* Pneumatica-SpriteKit-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pneumatica-SpriteKit-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBACB8632258B793007B3E6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DBACB8652258B793007B3E6C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -45,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB9DF3D3225DB57300EDE365 /* ObjectsList */ = {
+			isa = PBXGroup;
+			children = (
+				DB9DF3D4225DB5A500EDE365 /* ObjectsListDataSource.swift */,
+			);
+			path = ObjectsList;
+			sourceTree = "<group>";
+		};
 		DBACB8572258B793007B3E6C = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +74,7 @@
 		DBACB8622258B793007B3E6C /* Pneumatica-SpriteKit-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				DB9DF3D3225DB57300EDE365 /* ObjectsList */,
 				DBACB87C2258B812007B3E6C /* Pneumatica */,
 				DBACB87B2258B7B2007B3E6C /* Supporting Files */,
 				DBACB8692258B793007B3E6C /* GameScene.swift */,
@@ -173,6 +184,7 @@
 				DBACB8642258B793007B3E6C /* AppDelegate.swift in Sources */,
 				DBACB8822258B812007B3E6C /* Valvola+Inputs.swift in Sources */,
 				DBACB8812258B812007B3E6C /* Runtime.swift in Sources */,
+				DB9DF3D5225DB5A500EDE365 /* ObjectsListDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +340,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.danitox.Pneumatica-SpriteKit-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -347,7 +359,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.danitox.Pneumatica-SpriteKit-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

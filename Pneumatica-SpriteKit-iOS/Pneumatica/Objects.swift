@@ -6,6 +6,7 @@
 //
 
 import SpriteKit
+import UIKit
 
 class ValvolaAnd : SKShapeNode, ValvolaConformance {
     var id : UUID = UUID()
@@ -18,7 +19,6 @@ class ValvolaAnd : SKShapeNode, ValvolaConformance {
     
     var inputLeft : InputOutput!
     var inputRight: InputOutput!
-    
     var mainOutput: InputOutput!
     
     init(size: CGSize) {
@@ -27,7 +27,7 @@ class ValvolaAnd : SKShapeNode, ValvolaConformance {
         self.path = CGPath(rect: CGRect(origin: .zero, size: size), transform: nil)
         enable()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

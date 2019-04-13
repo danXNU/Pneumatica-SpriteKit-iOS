@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import UIKit
 
 class GameScene: SKScene {
     
@@ -18,13 +19,27 @@ class GameScene: SKScene {
     
     var firstSelectedIO: InputOutput?
     var secondSelectedIO: InputOutput?
+    var lines: [Line] = []
+    
+    var holdRecognizer: UILongPressGestureRecognizer!
+    var tableView : UITableView!
     
     var selectedValvola : SKNode?
     var valvoleLayoutChanged: Bool = false
     
+    var dataSource : ObjectsListDataSource!
+    
     override func didMove(to view: SKView) {
         self.size = view.bounds.size
         self.anchorPoint = .zero
+        
+        self.tableView = UITableView()
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.tableView.backgroundColor = .white
+        self.tableView.delegate = self
+        
+        self.holdRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(holdPoint(_:)))
+        self.view?.addGestureRecognizer(self.holdRecognizer)
         
         and.name = "Valvola And"
         and.position = CGPoint(x: 0, y: 0)
@@ -66,6 +81,10 @@ class GameScene: SKScene {
         }
     }
     
+    @objc func holdPoint(_ recognizer: UILongPressGestureRecognizer) {
+        showTableView()
+    }
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touchPoint = touches.first?.location(in: self)
         
@@ -88,8 +107,22 @@ class GameScene: SKScene {
             (selectedValvola as? SKShapeNode)?.strokeColor = .red
         } else {
             resetTouches()
+            hideTableView()
         }
         
+    }
+    
+    func showTableView() {
+        let rect = CGRect(x: 0, y: 0, width: self.view!.frame.width, height: self.view!.frame.height / 2)
+        self.tableView.frame = rect
+        self.view?.addSubview(self.tableView)
+        self.dataSource = ObjectsListDataSource(objects: self.lines)
+        tableView.dataSource = self.dataSource
+        tableView.reloadData()
+    }
+    
+    func hideTableView() {
+        self.tableView.removeFromSuperview()
     }
     
     func resetTouches() {
@@ -161,7 +194,7 @@ class GameScene: SKScene {
             line.toOutput = secondSelectedIO
             
             drawLine(line: line)
-            
+            self.lines.append(line)
             addChild(line)
             
             firstSelectedIO?.addWire(from: secondSelectedIO!)
@@ -172,5 +205,9 @@ class GameScene: SKScene {
             secondSelectedIO = nil
         }
     }
+    
+}
+
+extension GameScene : UITableViewDelegate {
     
 }

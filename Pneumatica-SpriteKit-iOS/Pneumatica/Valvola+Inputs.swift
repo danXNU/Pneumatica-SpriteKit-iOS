@@ -6,6 +6,7 @@
 //
 
 import SpriteKit
+import UIKit
 
 protocol ValvolaConformance {
     var id: UUID { get }
@@ -13,6 +14,7 @@ protocol ValvolaConformance {
     var descrizione: String { get set }
     
     var labelText: String { get }
+    //var holdRecognizer : UILongPressGestureRecognizer { get set }
     
     func update()
     func enable()
@@ -62,6 +64,8 @@ class InputOutput: SKShapeNode {
         }
     }
     
+    var holdRecognizer : UILongPressGestureRecognizer?
+    
     init(circleOfRadius: CGFloat, valvola: ValvolaConformance){
         super.init()
         let diameter = circleOfRadius * 2
@@ -69,7 +73,7 @@ class InputOutput: SKShapeNode {
         
         self.fillColor = self.idleColor
         self.parentValvola = valvola
-        self.name = id.uuidString
+        self.name = "\(self.parentValvola!.labelText)"
     }
     
     required init?(coder aDecoder: NSCoder) {
