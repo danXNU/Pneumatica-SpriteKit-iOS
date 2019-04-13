@@ -17,7 +17,7 @@ class GameScene: SKScene {
     let frl = GruppoFRL(size: .init(width: 100, height: 100))
     let cilindro = CilindroDoppioEffetto(size: .init(width: 200, height: 50))
     let treDueNC = TreDueMonostabileNC(size: .init(width: 200, height: 50))
-    let timer = SpriteTimer(size: .init(width: 200, height: 50))
+    let timer = SpriteTimer(size: .init(width: 80, height: 50))
     
     var firstSelectedIO: InputOutput?
     var secondSelectedIO: InputOutput?
@@ -84,6 +84,7 @@ class GameScene: SKScene {
             realNode.ios.forEach { $0.update() }
             realNode.update()
         }
+        lines.forEach { $0.update() }
         
         if valvoleLayoutChanged {
             let lines = self.children.compactMap { $0 as? Line }

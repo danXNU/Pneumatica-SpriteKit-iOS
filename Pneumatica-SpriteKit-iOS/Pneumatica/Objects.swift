@@ -166,7 +166,7 @@ class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance {
     var descrizione: String = ""
     
     var labelText: String {
-        return "CDE"
+        return "Cilindro"
     }
     
     var inputLeft : InputOutput!
@@ -259,6 +259,14 @@ class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance {
 class Line: SKShapeNode {
     var fromInput : InputOutput!
     var toOutput: InputOutput!
+    
+    func update() {
+        if self.fromInput.ariaPressure > 0 && self.toOutput.ariaPressure > 0 {
+            self.strokeColor = .green
+        } else {
+            self.strokeColor = .red
+        }
+    }
 }
 
 class TreDueMonostabileNC : SKShapeNode, ValvolaConformance {
@@ -410,7 +418,7 @@ class SpriteTimer: SKShapeNode, ValvolaConformance {
         inputAria.position.y = 0 - (inputAria.frame.height / 2)
         inputAria.zPosition = self.zPosition + 1
         
-        mainOutput.position.x = self.frame.midX
+        mainOutput.position.x = halfWidth - self.mainOutput.frame.width / 2
         mainOutput.position.y = self.frame.height - (mainOutput.frame.height / 2)
         mainOutput.zPosition = self.zPosition + 1
         
