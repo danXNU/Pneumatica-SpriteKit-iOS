@@ -14,7 +14,7 @@ protocol ValvolaConformance {
     var descrizione: String { get set }
     
     var labelText: String { get }
-    //var holdRecognizer : UILongPressGestureRecognizer { get set }
+    var ios : Set<InputOutput> { get }
     
     func update()
     func enable()
@@ -50,13 +50,13 @@ class InputOutput: SKShapeNode {
     var idleColor: UIColor = .red
     
     var inputsConnected : Set<InputOutput> = []
-    var ouputsActivatingMe : Set<InputOutput> = []
+//    var ouputsActivatingMe : Set<InputOutput> = []
     
     var ariaPressure : Double = 0.0 {
         didSet {
             DispatchQueue.main.async {
                 if self.ariaPressure == 0 {
-                    self.fillColor = .blue
+                    self.fillColor = self.idleColor
                 } else {
                     self.fillColor = .green
                 }
@@ -80,36 +80,46 @@ class InputOutput: SKShapeNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func update() {
+        if inputsConnected.isEmpty {
+            self.ariaPressure = 0
+            return
+        }
+        
+        if let mostPowerInput = self.getMostHightInput() {
+            self.ariaPressure = mostPowerInput.ariaPressure
+        } else {
+            self.ariaPressure = 0
+        }
+    }
+    
     func addWire(from output: InputOutput) {
         output.inputsConnected.insert(self)
         self.inputsConnected.insert(output)
     }
     
     func removeWire(_ wire: InputOutput) {
-        self.ouputsActivatingMe.remove(wire)
         self.inputsConnected.remove(wire)
         wire.inputsConnected.remove(self)
     }
     
-    func receive(from input: InputOutput) {
-        ouputsActivatingMe.insert(input)
-        if let pressureValue = self.getMostHightInput()?.ariaPressure, pressureValue > 0 {
-            self.ariaPressure = pressureValue
-            self.fillColor = .green
-        }
-    }
+//    func receive(from input: InputOutput) {
+//        ouputsActivatingMe.insert(input)
+//        if let pressureValue = self.getMostHightInput()?.ariaPressure, pressureValue > 0 {
+//            self.ariaPressure = pressureValue
+//        }
+//    }
     
-    func stopReceiving(from output: InputOutput) {
-        ouputsActivatingMe.remove(output)
-        if let pressureValue = self.getMostHightInput()?.ariaPressure, pressureValue > 0 {
-            self.ariaPressure = pressureValue
-        } else {
-            self.ariaPressure = 0.0
-            self.fillColor = .blue
-        }
-    }
+//    func stopReceiving(from output: InputOutput) {
+//        ouputsActivatingMe.remove(output)
+//        if let pressureValue = self.getMostHightInput()?.ariaPressure, pressureValue > 0 {
+//            self.ariaPressure = pressureValue
+//        } else {
+//            self.ariaPressure = 0.0
+//        }
+//    }
     
     private func getMostHightInput() -> InputOutput? {
-        return self.ouputsActivatingMe.max(by: { $0.ariaPressure > $1.ariaPressure })
+        return self.inputsConnected.max(by: { $0.ariaPressure > $1.ariaPressure })
     }
 }

@@ -69,6 +69,7 @@ class GameScene: SKScene {
 //
         for node in self.scene?.children ?? [] {
             guard let realNode = node as? ValvolaConformance else { continue }
+            realNode.ios.forEach { $0.update() }
             realNode.update()
         }
         
@@ -99,8 +100,17 @@ class GameScene: SKScene {
                 return
             }
             
-            clickedIO.fillColor = .red
-            createLine()
+//            clickedIO.fillColor = .red
+            if let firstIO = firstSelectedIO, let secondIO = secondSelectedIO {
+                if firstIO.inputsConnected.contains(secondIO) && secondIO.inputsConnected.contains(firstIO) {
+                    removeLine()
+                } else {
+                    createLine()
+                }
+                resetTouches()
+            }
+            
+            
         } else if let valvola = nodes.first as? SKNode & ValvolaConformance {
             (selectedValvola as? SKShapeNode)?.strokeColor = .white
             selectedValvola = valvola
@@ -203,6 +213,31 @@ class GameScene: SKScene {
             secondSelectedIO?.fillColor = .blue
             firstSelectedIO = nil
             secondSelectedIO = nil
+        }
+    }
+    
+    func removeLine() {
+        guard let firstIO = firstSelectedIO else { return }
+        guard let secondIO = secondSelectedIO else { return }
+        
+        let line = lines.first { (line) -> Bool in
+            if line.fromInput == firstIO && line.toOutput == secondIO {
+                return true
+            } else if line.fromInput == secondIO && line.toOutput == firstIO {
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        if let lineSelected = line {
+            self.lines.removeAll(where: { $0 == lineSelected })
+            firstIO.removeWire(secondIO)
+            let fadeAction = SKAction.fadeOut(withDuration: 0.3)
+            let removeAction = SKAction.removeFromParent()
+            
+            let compoundAction = SKAction.sequence([fadeAction, removeAction])
+            lineSelected.run(compoundAction)
         }
     }
     

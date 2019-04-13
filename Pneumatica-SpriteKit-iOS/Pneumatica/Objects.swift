@@ -21,6 +21,14 @@ class ValvolaAnd : SKShapeNode, ValvolaConformance {
     var inputRight: InputOutput!
     var mainOutput: InputOutput!
     
+    var ios: Set<InputOutput> {
+        var set = Set<InputOutput>()
+        set.insert(inputLeft)
+        set.insert(inputRight)
+        set.insert(mainOutput)
+        return set
+    }
+    
     init(size: CGSize) {
         super.init()
         self.fillColor = .clear
@@ -71,11 +79,11 @@ class ValvolaAnd : SKShapeNode, ValvolaConformance {
     func update() {
         if self.inputLeft.ariaPressure > 0 && self.inputRight.ariaPressure > 0 {
             mainOutput.ariaPressure = [inputLeft.ariaPressure, inputRight.ariaPressure].max() ?? 0.0
-            PneumaticaRuntime.shared.sendAria(to: mainOutput.inputsConnected, from: mainOutput)
+//            PneumaticaRuntime.shared.sendAria(to: mainOutput.inputsConnected, from: mainOutput)
 //            self.fillColor = .green
         } else {
             mainOutput.ariaPressure = 0.0
-            PneumaticaRuntime.shared.stopSendingAria(to: mainOutput.inputsConnected, from: mainOutput)
+//            PneumaticaRuntime.shared.stopSendingAria(to: mainOutput.inputsConnected, from: mainOutput)
 //            self.fillColor = .clear
         }
     }
@@ -90,10 +98,10 @@ class ValvolaOR : ValvolaAnd {
     override func update() {
         if inputLeft.ariaPressure > 0 || inputRight.ariaPressure > 0 {
             mainOutput.ariaPressure = [inputLeft.ariaPressure, inputRight.ariaPressure].max() ?? 0.0
-            PneumaticaRuntime.shared.sendAria(to: mainOutput.inputsConnected, from: mainOutput)
+//            PneumaticaRuntime.shared.sendAria(to: mainOutput.inputsConnected, from: mainOutput)
         } else {
             mainOutput.ariaPressure = 0.0
-            PneumaticaRuntime.shared.stopSendingAria(to: mainOutput.inputsConnected, from: mainOutput)
+//            PneumaticaRuntime.shared.stopSendingAria(to: mainOutput.inputsConnected, from: mainOutput)
         }
     }
 }
@@ -109,6 +117,12 @@ class GruppoFRL : SKShapeNode, ValvolaConformance {
     var isActive : Bool = true
     var onlyOutput : InputOutput!
     
+    var ios: Set<InputOutput> {
+        var set = Set<InputOutput>()
+        set.insert(onlyOutput)
+        return set
+    }
+    
     init(size: CGSize) {
         super.init()
         self.fillColor = .clear
@@ -122,7 +136,7 @@ class GruppoFRL : SKShapeNode, ValvolaConformance {
     
     func update() {
         onlyOutput.ariaPressure = 2.0
-        PneumaticaRuntime.shared.sendAria(to: onlyOutput.inputsConnected, from: onlyOutput)
+//        PneumaticaRuntime.shared.sendAria(to: onlyOutput.inputsConnected, from: onlyOutput)
     }
     
     func enable() {
@@ -158,6 +172,13 @@ class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance {
     var inputLeft : InputOutput!
     var inputRight : InputOutput!
     
+    var ios: Set<InputOutput> {
+        var set = Set<InputOutput>()
+        set.insert(inputLeft)
+        set.insert(inputRight)
+        return set
+    }
+    
     var state : CyclinderState = .interno
     
     var pistone: SKShapeNode!
@@ -175,6 +196,9 @@ class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance {
     }
     
     func update() {
+        inputLeft.update()
+        inputRight.update()
+        
         switch state {
         case .interno:
             if inputLeft.ariaPressure > 0 && inputRight.ariaPressure <= 0 {
