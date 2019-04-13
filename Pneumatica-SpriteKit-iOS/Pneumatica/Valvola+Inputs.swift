@@ -119,7 +119,7 @@ class InputOutput: SKShapeNode {
 //        }
 //    }
     
-    private func getMostHightInput() -> InputOutput? {
+    func getMostHightInput() -> InputOutput? {
         return self.inputsConnected.max(by: { $0.ariaPressure > $1.ariaPressure })
     }
 }

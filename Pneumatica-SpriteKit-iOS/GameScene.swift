@@ -16,6 +16,7 @@ class GameScene: SKScene {
     let or = ValvolaOR(size: .init(width: 100, height: 50))
     let frl = GruppoFRL(size: .init(width: 100, height: 100))
     let cilindro = CilindroDoppioEffetto(size: .init(width: 200, height: 50))
+    let treDueNC = TreDueMonostabileNC(size: .init(width: 200, height: 50))
     
     var firstSelectedIO: InputOutput?
     var secondSelectedIO: InputOutput?
@@ -59,7 +60,13 @@ class GameScene: SKScene {
         cilindro.name = "Cilindro"
         cilindro.position = CGPoint(x: 200, y: 500)
         cilindro.zPosition = 1
+        cilindro.fillColor = self.scene!.backgroundColor
         addChild(cilindro)
+        
+        treDueNC.name = "3/2 Monostabile NC"
+        treDueNC.position = CGPoint(x: 200, y: 100)
+        treDueNC.zPosition = 1
+        addChild(treDueNC)
         
     }
     
@@ -193,7 +200,7 @@ class GameScene: SKScene {
 //        path.addLine(to: finishPosition)
         
         line.path = path
-        line.zPosition = 2
+        line.zPosition = 1
         line.strokeColor = SKColor.red
     }
     
