@@ -19,6 +19,7 @@ class GameScene: SKScene {
     let treDueNC = TreDueMonostabileNC(size: .init(width: 200, height: 50))
     let timer = SpriteTimer(size: .init(width: 80, height: 50))
     let cinqueDue = CinqueDueBistabile(size: .init(width: 250, height: 50))
+    let pulsante = Pulsante(size: .init(width: 150, height: 50))
     
     var firstSelectedIO: InputOutput?
     var secondSelectedIO: InputOutput?
@@ -79,6 +80,11 @@ class GameScene: SKScene {
         cinqueDue.position = CGPoint(x: 0, y: 500)
         cinqueDue.zPosition = 1
         addChild(cinqueDue)
+        
+        pulsante.name = "Pulsante"
+        pulsante.position = CGPoint(x: 50, y: 400)
+        pulsante.zPosition = 1
+        addChild(pulsante)
     }
     
     var lastUpdate : TimeInterval = 0
@@ -109,7 +115,9 @@ class GameScene: SKScene {
         let touchPoint = touches.first?.location(in: self)
         
         let nodes = self.nodes(at: touchPoint!)
-        if let clickedIO = nodes.first as? InputOutput {
+        if let tappableIO = nodes.first as? Tappable {
+            tappableIO.tapped()
+        } else if let clickedIO = nodes.first as? InputOutput {
             if firstSelectedIO == nil { firstSelectedIO = clickedIO }
             else if secondSelectedIO == nil { secondSelectedIO = clickedIO }
         
@@ -119,7 +127,6 @@ class GameScene: SKScene {
                 return
             }
             
-//            clickedIO.fillColor = .red
             if let firstIO = firstSelectedIO, let secondIO = secondSelectedIO {
                 if firstIO.inputsConnected.contains(secondIO) && secondIO.inputsConnected.contains(firstIO) {
                     removeLine()

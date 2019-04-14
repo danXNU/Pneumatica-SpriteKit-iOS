@@ -40,7 +40,19 @@ enum CyclinderState {
     case animating
 }
 
-class InputOutput: SKShapeNode {
+protocol IOConformance {
+    var id: UUID { get set }
+    var parentValvola : ValvolaConformance? { get set }
+    var idleColor : UIColor { get set }
+    var ariaPressure : Double { get set }
+    func update()
+}
+
+protocol Tappable: IOConformance {
+    func tapped()
+}
+
+class InputOutput: SKShapeNode, IOConformance {
     static func == (lhs: InputOutput, rhs: InputOutput) -> Bool {
         return lhs.id == rhs.id
     }
@@ -63,8 +75,6 @@ class InputOutput: SKShapeNode {
             }
         }
     }
-    
-    var holdRecognizer : UILongPressGestureRecognizer?
     
     init(circleOfRadius: CGFloat, valvola: ValvolaConformance){
         super.init()
@@ -103,23 +113,57 @@ class InputOutput: SKShapeNode {
         wire.inputsConnected.remove(self)
     }
     
-//    func receive(from input: InputOutput) {
-//        ouputsActivatingMe.insert(input)
-//        if let pressureValue = self.getMostHightInput()?.ariaPressure, pressureValue > 0 {
-//            self.ariaPressure = pressureValue
-//        }
-//    }
-    
-//    func stopReceiving(from output: InputOutput) {
-//        ouputsActivatingMe.remove(output)
-//        if let pressureValue = self.getMostHightInput()?.ariaPressure, pressureValue > 0 {
-//            self.ariaPressure = pressureValue
-//        } else {
-//            self.ariaPressure = 0.0
-//        }
-//    }
-    
     func getMostHightInput() -> InputOutput? {
         return self.inputsConnected.max(by: { $0.ariaPressure > $1.ariaPressure })
     }
+}
+
+class PressableInput : SKShapeNode, Tappable {
+    static func == (lhs: PressableInput, rhs: PressableInput) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    var id : UUID = UUID()
+    var parentValvola : ValvolaConformance?
+    var idleColor: UIColor = .red
+    
+    
+    var ariaPressure : Double = 0.0 {
+        didSet {
+            DispatchQueue.main.async {
+                if self.ariaPressure == 0 {
+                    self.fillColor = self.idleColor
+                } else {
+                    self.fillColor = .green
+                }
+            }
+        }
+    }
+    
+    init(size: CGSize, valvola: ValvolaConformance){
+        super.init()
+        self.path = CGPath(rect: CGRect(origin: .zero, size: size), transform: nil)
+        
+        self.fillColor = self.idleColor
+        self.parentValvola = valvola
+        self.name = "\(self.parentValvola!.labelText)"
+        
+    }
+    
+    func tapped() {
+        if self.ariaPressure <= 0 {
+            self.ariaPressure = 2
+        } else {
+            self.ariaPressure = 0
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func update() {
+        
+    }
+    
 }
