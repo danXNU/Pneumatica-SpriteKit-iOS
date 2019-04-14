@@ -40,6 +40,26 @@ enum CyclinderState {
     case animating
 }
 
+struct MovingPath {
+    var startingPoint: CGPoint
+    var endPoint: CGPoint
+}
+
+protocol Movable: ValvolaConformance {
+    var movingState: Double { get }
+    var movingPartLocation: CGPoint { get }
+    var movingPath: MovingPath { get set }
+}
+extension Movable {
+    var movingState : Double {
+        let startPoint = self.movingPath.startingPoint.x
+        let endPoint = self.movingPath.endPoint.x
+        
+        let currentPoint = self.movingPartLocation.x
+        
+    }
+}
+
 protocol IOConformance {
     var id: UUID { get set }
     var parentValvola : ValvolaConformance? { get set }

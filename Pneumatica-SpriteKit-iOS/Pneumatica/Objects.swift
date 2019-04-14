@@ -160,7 +160,7 @@ class GruppoFRL : SKShapeNode, ValvolaConformance {
     
 }
 
-class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance {
+class CilindroDoppioEffetto: SKShapeNode, Movable {
     var id: UUID = UUID()
     var nome: String = ""
     var descrizione: String = ""

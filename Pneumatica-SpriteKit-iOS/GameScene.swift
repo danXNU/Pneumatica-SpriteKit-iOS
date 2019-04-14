@@ -108,7 +108,14 @@ class GameScene: SKScene {
     }
     
     @objc func holdPoint(_ recognizer: UILongPressGestureRecognizer) {
-        showTableView()
+        let origPoint = recognizer.location(in: self.view!)
+        let newPoint = convertPoint(fromView: origPoint)//convert(origPoint, to: self)
+        
+        if let node = self.nodes(at: newPoint).first {
+            
+        } else {
+            showTableView()
+        }
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
