@@ -41,22 +41,26 @@ enum CyclinderState {
 }
 
 struct MovingPath {
-    var startingPoint: CGPoint
-    var endPoint: CGPoint
+    var startPoint: CGFloat
+    var endPoint: CGFloat
 }
 
-protocol Movable: ValvolaConformance {
-    var movingState: Double { get }
-    var movingPartLocation: CGPoint { get }
+protocol Movable {
+    var movingPointValue: CGFloat { get }
+    var movingObjectCurrentLocation: CGFloat { get }
     var movingPath: MovingPath { get set }
 }
 extension Movable {
-    var movingState : Double {
-        let startPoint = self.movingPath.startingPoint.x
-        let endPoint = self.movingPath.endPoint.x
+    var movingPointValue : CGFloat {
+        let startPoint = self.movingPath.startPoint //20
+        let endPoint = self.movingPath.endPoint // 40
+        let pathLenght = (endPoint - startPoint) // 20
         
-        let currentPoint = self.movingPartLocation.x
+        let currentPoint = self.movingObjectCurrentLocation // 25
+        let pathPercorsa = currentPoint - startPoint // 5 
         
+        let state = pathPercorsa / pathLenght // 5 : 20 = x : 1
+        return state
     }
 }
 
