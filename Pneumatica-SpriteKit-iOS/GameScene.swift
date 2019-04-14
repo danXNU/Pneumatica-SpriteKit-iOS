@@ -18,6 +18,7 @@ class GameScene: SKScene {
     let cilindro = CilindroDoppioEffetto(size: .init(width: 200, height: 50))
     let treDueNC = TreDueMonostabileNC(size: .init(width: 200, height: 50))
     let timer = SpriteTimer(size: .init(width: 80, height: 50))
+    let cinqueDue = CinqueDueBistabile(size: .init(width: 250, height: 50))
     
     var firstSelectedIO: InputOutput?
     var secondSelectedIO: InputOutput?
@@ -73,6 +74,11 @@ class GameScene: SKScene {
         timer.position = CGPoint(x: 100, y: 50)
         timer.zPosition = 1
         addChild(timer)
+        
+        cinqueDue.name = "5/2 Bistabile"
+        cinqueDue.position = CGPoint(x: 0, y: 500)
+        cinqueDue.zPosition = 1
+        addChild(cinqueDue)
     }
     
     var lastUpdate : TimeInterval = 0
