@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB9C8C332264CD7D0071C104 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C322264CD7D0071C104 /* Protocols.swift */; };
+		DB9C8C362264CE5D0071C104 /* OR.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C352264CE5D0071C104 /* OR.swift */; };
+		DB9C8C382264CE920071C104 /* GruppooFRL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C372264CE920071C104 /* GruppooFRL.swift */; };
+		DB9C8C3A2264CEC90071C104 /* CilindroDoppioEffetto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C392264CEC90071C104 /* CilindroDoppioEffetto.swift */; };
+		DB9C8C3C2264CEFC0071C104 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C3B2264CEFC0071C104 /* Line.swift */; };
+		DB9C8C3E2264CF220071C104 /* TreDueMonostabileNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C3D2264CF220071C104 /* TreDueMonostabileNC.swift */; };
+		DB9C8C402264CF3E0071C104 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C3F2264CF3E0071C104 /* Timer.swift */; };
+		DB9C8C422264CF5B0071C104 /* CinqueDueBistabile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C412264CF5B0071C104 /* CinqueDueBistabile.swift */; };
+		DB9C8C442264CF7A0071C104 /* Pulsante.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C432264CF7A0071C104 /* Pulsante.swift */; };
+		DB9C8C462264CF990071C104 /* Finecorsa.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C452264CF990071C104 /* Finecorsa.swift */; };
+		DB9C8C492264CFD20071C104 /* InputOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C482264CFD20071C104 /* InputOutput.swift */; };
 		DB9DF3D5225DB5A500EDE365 /* ObjectsListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9DF3D4225DB5A500EDE365 /* ObjectsListDataSource.swift */; };
 		DBACB8642258B793007B3E6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB8632258B793007B3E6C /* AppDelegate.swift */; };
 		DBACB8662258B793007B3E6C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DBACB8652258B793007B3E6C /* GameScene.sks */; };
@@ -15,12 +26,22 @@
 		DBACB86F2258B793007B3E6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBACB86D2258B793007B3E6C /* Main.storyboard */; };
 		DBACB8712258B794007B3E6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBACB8702258B794007B3E6C /* Assets.xcassets */; };
 		DBACB8742258B794007B3E6C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBACB8722258B794007B3E6C /* LaunchScreen.storyboard */; };
-		DBACB8802258B812007B3E6C /* Objects.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB87D2258B812007B3E6C /* Objects.swift */; };
-		DBACB8812258B812007B3E6C /* Runtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB87E2258B812007B3E6C /* Runtime.swift */; };
-		DBACB8822258B812007B3E6C /* Valvola+Inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB87F2258B812007B3E6C /* Valvola+Inputs.swift */; };
+		DBACB8802258B812007B3E6C /* AND.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB87D2258B812007B3E6C /* AND.swift */; };
+		DBACB8822258B812007B3E6C /* PressableInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB87F2258B812007B3E6C /* PressableInput.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB9C8C322264CD7D0071C104 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		DB9C8C352264CE5D0071C104 /* OR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OR.swift; sourceTree = "<group>"; };
+		DB9C8C372264CE920071C104 /* GruppooFRL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GruppooFRL.swift; sourceTree = "<group>"; };
+		DB9C8C392264CEC90071C104 /* CilindroDoppioEffetto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CilindroDoppioEffetto.swift; sourceTree = "<group>"; };
+		DB9C8C3B2264CEFC0071C104 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		DB9C8C3D2264CF220071C104 /* TreDueMonostabileNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreDueMonostabileNC.swift; sourceTree = "<group>"; };
+		DB9C8C3F2264CF3E0071C104 /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		DB9C8C412264CF5B0071C104 /* CinqueDueBistabile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinqueDueBistabile.swift; sourceTree = "<group>"; };
+		DB9C8C432264CF7A0071C104 /* Pulsante.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pulsante.swift; sourceTree = "<group>"; };
+		DB9C8C452264CF990071C104 /* Finecorsa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Finecorsa.swift; sourceTree = "<group>"; };
+		DB9C8C482264CFD20071C104 /* InputOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputOutput.swift; sourceTree = "<group>"; };
 		DB9DF3D4225DB5A500EDE365 /* ObjectsListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsListDataSource.swift; sourceTree = "<group>"; };
 		DBACB8602258B793007B3E6C /* Pneumatica-SpriteKit-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pneumatica-SpriteKit-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBACB8632258B793007B3E6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -31,9 +52,8 @@
 		DBACB8702258B794007B3E6C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DBACB8732258B794007B3E6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DBACB8752258B794007B3E6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DBACB87D2258B812007B3E6C /* Objects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Objects.swift; sourceTree = "<group>"; };
-		DBACB87E2258B812007B3E6C /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runtime.swift; sourceTree = "<group>"; };
-		DBACB87F2258B812007B3E6C /* Valvola+Inputs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Valvola+Inputs.swift"; sourceTree = "<group>"; };
+		DBACB87D2258B812007B3E6C /* AND.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AND.swift; sourceTree = "<group>"; };
+		DBACB87F2258B812007B3E6C /* PressableInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PressableInput.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +67,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB9C8C342264CE330071C104 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				DBACB87D2258B812007B3E6C /* AND.swift */,
+				DB9C8C352264CE5D0071C104 /* OR.swift */,
+				DB9C8C372264CE920071C104 /* GruppooFRL.swift */,
+				DB9C8C392264CEC90071C104 /* CilindroDoppioEffetto.swift */,
+				DB9C8C3D2264CF220071C104 /* TreDueMonostabileNC.swift */,
+				DB9C8C3F2264CF3E0071C104 /* Timer.swift */,
+				DB9C8C412264CF5B0071C104 /* CinqueDueBistabile.swift */,
+				DB9C8C432264CF7A0071C104 /* Pulsante.swift */,
+				DB9C8C452264CF990071C104 /* Finecorsa.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		DB9C8C472264CFC10071C104 /* Inputs */ = {
+			isa = PBXGroup;
+			children = (
+				DBACB87F2258B812007B3E6C /* PressableInput.swift */,
+				DB9C8C482264CFD20071C104 /* InputOutput.swift */,
+			);
+			path = Inputs;
+			sourceTree = "<group>";
+		};
+		DB9C8C4A2264D0150071C104 /* Bus */ = {
+			isa = PBXGroup;
+			children = (
+				DB9C8C3B2264CEFC0071C104 /* Line.swift */,
+			);
+			path = Bus;
+			sourceTree = "<group>";
+		};
 		DB9DF3D3225DB57300EDE365 /* ObjectsList */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,9 +152,10 @@
 		DBACB87C2258B812007B3E6C /* Pneumatica */ = {
 			isa = PBXGroup;
 			children = (
-				DBACB87D2258B812007B3E6C /* Objects.swift */,
-				DBACB87E2258B812007B3E6C /* Runtime.swift */,
-				DBACB87F2258B812007B3E6C /* Valvola+Inputs.swift */,
+				DB9C8C4A2264D0150071C104 /* Bus */,
+				DB9C8C472264CFC10071C104 /* Inputs */,
+				DB9C8C342264CE330071C104 /* Objects */,
+				DB9C8C322264CD7D0071C104 /* Protocols.swift */,
 			);
 			path = Pneumatica;
 			sourceTree = "<group>";
@@ -180,11 +234,21 @@
 			files = (
 				DBACB86A2258B793007B3E6C /* GameScene.swift in Sources */,
 				DBACB86C2258B793007B3E6C /* GameViewController.swift in Sources */,
-				DBACB8802258B812007B3E6C /* Objects.swift in Sources */,
+				DB9C8C362264CE5D0071C104 /* OR.swift in Sources */,
+				DBACB8802258B812007B3E6C /* AND.swift in Sources */,
+				DB9C8C462264CF990071C104 /* Finecorsa.swift in Sources */,
+				DB9C8C402264CF3E0071C104 /* Timer.swift in Sources */,
 				DBACB8642258B793007B3E6C /* AppDelegate.swift in Sources */,
-				DBACB8822258B812007B3E6C /* Valvola+Inputs.swift in Sources */,
-				DBACB8812258B812007B3E6C /* Runtime.swift in Sources */,
+				DBACB8822258B812007B3E6C /* PressableInput.swift in Sources */,
+				DB9C8C422264CF5B0071C104 /* CinqueDueBistabile.swift in Sources */,
 				DB9DF3D5225DB5A500EDE365 /* ObjectsListDataSource.swift in Sources */,
+				DB9C8C492264CFD20071C104 /* InputOutput.swift in Sources */,
+				DB9C8C332264CD7D0071C104 /* Protocols.swift in Sources */,
+				DB9C8C3C2264CEFC0071C104 /* Line.swift in Sources */,
+				DB9C8C3A2264CEC90071C104 /* CilindroDoppioEffetto.swift in Sources */,
+				DB9C8C382264CE920071C104 /* GruppooFRL.swift in Sources */,
+				DB9C8C3E2264CF220071C104 /* TreDueMonostabileNC.swift in Sources */,
+				DB9C8C442264CF7A0071C104 /* Pulsante.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
