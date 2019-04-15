@@ -160,7 +160,7 @@ class GruppoFRL : SKShapeNode, ValvolaConformance {
     
 }
 
-class CilindroDoppioEffetto: SKShapeNode, Movable {
+class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance, Movable {
     var id: UUID = UUID()
     var nome: String = ""
     var descrizione: String = ""
@@ -184,6 +184,11 @@ class CilindroDoppioEffetto: SKShapeNode, Movable {
     var pistone: SKShapeNode!
     var pistonAction: SKAction!
     
+    var movingObjectCurrentLocation: CGFloat {
+        return self.pistone.position.x
+    }
+    var movingPath: MovingPath!
+    
     init(size: CGSize) {
         super.init()
         self.fillColor = .clear
@@ -196,6 +201,8 @@ class CilindroDoppioEffetto: SKShapeNode, Movable {
     }
     
     func update() {
+        print("Cilindro: \(self.movingPointValue)")
+        
         inputLeft.update()
         inputRight.update()
         
@@ -227,10 +234,10 @@ class CilindroDoppioEffetto: SKShapeNode, Movable {
         inputRight.zPosition = self.zPosition + 1
         
         
-        let pistone = SKShapeNode(rect: .init(x: 0, y: 0, width: self.frame.width + 15, height: self.frame.height / 5))
+        let pistone = SKShapeNode(rect: .init(origin: .zero, size: .init(width: self.frame.width + 15, height: self.frame.height / 5)))
         pistone.zPosition = self.zPosition - 1
-        pistone.position.x = self.frame.minX
-        pistone.position.y = self.frame.midY - pistone.frame.height / 2
+        pistone.position.x = 0
+        pistone.position.y = self.frame.height / 2 - pistone.frame.height / 2
         self.pistone = pistone
         
         let label = SKLabelNode(text: self.labelText)
@@ -244,9 +251,13 @@ class CilindroDoppioEffetto: SKShapeNode, Movable {
         addChild(inputRight)
         addChild(pistone)
         
+        let startPointPath = self.pistone.position.x
+        let finishPointPath = self.pistone.position.x + 50
+        self.movingPath = MovingPath(startPoint: startPointPath, endPoint: finishPointPath)
+        
         let path = CGMutablePath()
-        let startPoint = CGPoint(x: self.frame.minX, y: pistone.position.y - pistone.frame.height * 1.5)
-        let finishPoint = CGPoint(x: startPoint.x + 50, y: startPoint.y)
+        let startPoint = CGPoint(x: movingPath.startPoint, y: self.position.y)
+        let finishPoint = CGPoint(x: movingPath.endPoint, y: startPoint.y)
         path.move(to: startPoint)
         path.addLine(to: finishPoint)
         

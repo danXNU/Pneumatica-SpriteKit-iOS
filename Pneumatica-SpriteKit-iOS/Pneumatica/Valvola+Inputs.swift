@@ -20,19 +20,19 @@ protocol ValvolaConformance {
     func enable()
 }
 
-enum AriaType {
-    case notPresent
-    case present(Double)
-    
-    func get() -> Double {
-        switch self {
-        case .present(let pressure):
-            return pressure
-        default:
-            return 0.0
-        }
-    }
-}
+//enum AriaType {
+//    case notPresent
+//    case present(Double)
+//
+//    func get() -> Double {
+//        switch self {
+//        case .present(let pressure):
+//            return pressure
+//        default:
+//            return 0.0
+//        }
+//    }
+//}
 
 enum CyclinderState {
     case fuoriuscito
@@ -48,7 +48,7 @@ struct MovingPath {
 protocol Movable {
     var movingPointValue: CGFloat { get }
     var movingObjectCurrentLocation: CGFloat { get }
-    var movingPath: MovingPath { get set }
+    var movingPath: MovingPath! { get set }
 }
 extension Movable {
     var movingPointValue : CGFloat {
@@ -57,7 +57,7 @@ extension Movable {
         let pathLenght = (endPoint - startPoint) // 20
         
         let currentPoint = self.movingObjectCurrentLocation // 25
-        let pathPercorsa = currentPoint - startPoint // 5 
+        let pathPercorsa = currentPoint - startPoint // 5
         
         let state = pathPercorsa / pathLenght // 5 : 20 = x : 1
         return state
