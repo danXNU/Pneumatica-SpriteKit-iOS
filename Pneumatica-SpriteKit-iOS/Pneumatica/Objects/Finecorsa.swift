@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class Finecorsa: SKShapeNode, ValvolaConformance {
+class Finecorsa: SKShapeNode, ValvolaConformance, AcceptsMovableInput {
     enum ValvolaState {
         case aperta
         case chiusa

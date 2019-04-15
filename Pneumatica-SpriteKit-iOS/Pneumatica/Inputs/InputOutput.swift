@@ -18,7 +18,6 @@ class InputOutput: SKShapeNode, IOConformance {
     var idleColor: UIColor = .red
     
     var inputsConnected : Set<InputOutput> = []
-    //    var ouputsActivatingMe : Set<InputOutput> = []
     
     var ariaPressure : Double = 0.0 {
         didSet {

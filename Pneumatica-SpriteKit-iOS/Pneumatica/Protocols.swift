@@ -44,6 +44,8 @@ extension Movable {
     }
 }
 
+protocol AcceptsMovableInput {}
+
 protocol IOConformance {
     var id: UUID { get set }
     var parentValvola : ValvolaConformance? { get set }
