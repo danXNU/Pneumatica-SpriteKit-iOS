@@ -20,6 +20,7 @@ class GameScene: SKScene {
     let timer = SpriteTimer(size: .init(width: 80, height: 50))
     let cinqueDue = CinqueDueBistabile(size: .init(width: 250, height: 50))
     let pulsante = Pulsante(size: .init(width: 150, height: 50))
+    let finecorsa = Finecorsa(size: .init(width: 200, height: 50))
     
     var firstSelectedIO: InputOutput?
     var secondSelectedIO: InputOutput?
@@ -85,6 +86,12 @@ class GameScene: SKScene {
         pulsante.position = CGPoint(x: 50, y: 400)
         pulsante.zPosition = 1
         addChild(pulsante)
+        
+        finecorsa.name = "Finecorsa"
+        finecorsa.position = CGPoint(x: 20, y: 150)
+        finecorsa.zPosition = 1
+        finecorsa.inputLeft = self.cilindro
+        addChild(finecorsa)
     }
     
     var lastUpdate : TimeInterval = 0
