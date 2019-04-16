@@ -37,7 +37,7 @@ class SpriteTimer: SKShapeNode, ValvolaConformance {
         return set
     }
     
-    init(size: CGSize) {
+    required init(size: CGSize) {
         super.init()
         self.fillColor = .clear
         self.path = CGPath(rect: CGRect(origin: .zero, size: size), transform: nil)

@@ -32,7 +32,7 @@ class GameScene: SKScene {
     var selectedValvola : SKNode?
     var valvoleLayoutChanged: Bool = false
     
-    var dataSource : ObjectsListDataSource!
+    var dataSource : UITableViewDataSource!
     
     override func didMove(to view: SKView) {
         self.size = view.bounds.size
@@ -135,11 +135,14 @@ class GameScene: SKScene {
             if firstSelectedIO == nil { firstSelectedIO = clickedIO }
             else if secondSelectedIO == nil { secondSelectedIO = clickedIO }
         
-            if (firstSelectedIO?.parentValvola as? SKNode) == (secondSelectedIO?.parentValvola as? SKNode) {
-                print("Non puoi collegare un filo alla stessa valvola")
-                resetTouches()
-                return
+            if let firstValvola = firstSelectedIO?.parentValvola, let secondValvola = secondSelectedIO?.parentValvola {
+                if firstValvola == secondValvola {
+                    print("Non puoi collegare un filo alla stessa valvola")
+                    resetTouches()
+                    return
+                }
             }
+            
             
             if let firstIO = firstSelectedIO, let secondIO = secondSelectedIO {
                 if firstIO.inputsConnected.contains(secondIO) && secondIO.inputsConnected.contains(firstIO) {
@@ -166,8 +169,9 @@ class GameScene: SKScene {
         let rect = CGRect(x: 0, y: 0, width: self.view!.frame.width, height: self.view!.frame.height / 2)
         self.tableView.frame = rect
         self.view?.addSubview(self.tableView)
-        self.dataSource = ObjectsListDataSource(objects: self.lines)
+        self.dataSource = ObjectCreationDataSource()
         tableView.dataSource = self.dataSource
+        tableView.delegate = self
         tableView.reloadData()
     }
     
@@ -210,8 +214,8 @@ class GameScene: SKScene {
         finishPoint.x += (line.toOutput.frame.width / 2)
         finishPoint.y += (line.toOutput.frame.height / 2)
         
-        let startPosition = convert(startPoint, from: line.fromInput!.parentValvola! as! SKNode)
-        let finishPosition = convert(finishPoint, from: line.toOutput!.parentValvola! as! SKNode)
+        let startPosition = convert(startPoint, from: line.fromInput!.parentValvola!)
+        let finishPosition = convert(finishPoint, from: line.toOutput!.parentValvola!)
         
         var keyPointes : [CGPoint] = []
         var startHolder = startPosition
@@ -284,5 +288,14 @@ class GameScene: SKScene {
 }
 
 extension GameScene : UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        hideTableView()
+        if let dataSource = self.dataSource as? ObjectCreationDataSource {
+            let newNode = dataSource.createInstanceOf(index: indexPath.row)
+            newNode.position.x = self.frame.width / 2
+            newNode.position.y = self.frame.height / 2
+            newNode.zPosition = 1
+            self.addChild(newNode)
+        }
+    }
 }

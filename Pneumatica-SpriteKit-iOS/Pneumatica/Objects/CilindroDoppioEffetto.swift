@@ -43,7 +43,7 @@ class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance, Movable {
     }
     var movingPath: MovingPath!
     
-    init(size: CGSize) {
+    required init(size: CGSize) {
         super.init()
         self.fillColor = .clear
         self.path = CGPath(rect: CGRect(origin: .zero, size: size), transform: nil)
