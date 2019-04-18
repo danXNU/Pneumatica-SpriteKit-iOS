@@ -15,11 +15,11 @@ struct MovingPath {
 
 protocol ValvolaConformance where Self: SKShapeNode {
     var id: UUID { get }
-    var nome: String { get set }
     var descrizione: String { get set }
     
     var labelText: String { get }
     var ios : Set<InputOutput> { get }
+    var stringValue : String { get }
     
     static var keyStringClass: String { get }
     static var preferredSize: CGSize { get }
@@ -37,8 +37,11 @@ extension ValvolaConformance {
     static var preferredSize: CGSize {
         return CGSize(width: 150, height: 50)
     }
+    
+    var stringValue : String {
+        return String(describing: self)
+    }
 }
-
 
 protocol Movable {
     var movingPointValue: CGFloat { get }
@@ -59,8 +62,12 @@ extension Movable {
     }
 }
 
-protocol AcceptsMovableInput {}
+protocol Editable {}
+protocol AcceptsMovableInput : Editable {}
 
+
+
+// IO
 protocol IOConformance {
     var id: UUID { get set }
     var parentValvola : ValvolaConformance? { get set }
@@ -78,6 +85,3 @@ protocol Tappable: IOConformance {
 extension Tappable {
     func tapped() {}
 }
-
-
-

@@ -29,7 +29,6 @@
 		DBACB8742258B794007B3E6C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBACB8722258B794007B3E6C /* LaunchScreen.storyboard */; };
 		DBACB8802258B812007B3E6C /* AND.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB87D2258B812007B3E6C /* AND.swift */; };
 		DBACB8822258B812007B3E6C /* PressableInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB87F2258B812007B3E6C /* PressableInput.swift */; };
-		DBBC0E6022687AED004BD2EA /* BaseInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC0E5F22687AED004BD2EA /* BaseInfoView.swift */; };
 		DBE603FB22687CDA00564E90 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = DBE603F922687CDA00564E90 /* Explosion.sks */; };
 		DBE603FC22687CDA00564E90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBE603FA22687CDA00564E90 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -59,9 +58,12 @@
 		DBACB8752258B794007B3E6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBACB87D2258B812007B3E6C /* AND.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AND.swift; sourceTree = "<group>"; };
 		DBACB87F2258B812007B3E6C /* PressableInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PressableInput.swift; sourceTree = "<group>"; };
-		DBBC0E5F22687AED004BD2EA /* BaseInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoView.swift; sourceTree = "<group>"; };
+		DBBC0E5F22687AED004BD2EA /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		DBE603F922687CDA00564E90 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 		DBE603FA22687CDA00564E90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DBE603FD2268976500564E90 /* SKListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKListView.swift; sourceTree = "<group>"; };
+		DBE603FF22689F6C00564E90 /* LineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNode.swift; sourceTree = "<group>"; };
+		DBE604012268A38900564E90 /* ListNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,8 +138,9 @@
 		DBACB8622258B793007B3E6C /* Pneumatica-SpriteKit-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				DBE604032268B06C00564E90 /* Cells */,
 				DBE603F822687CB600564E90 /* Particles */,
-				DBBC0E5E22687AD5004BD2EA /* Views */,
+				DBBC0E5E22687AD5004BD2EA /* NOT_IN_USE */,
 				DB9DF3D3225DB57300EDE365 /* DataSources */,
 				DBACB87C2258B812007B3E6C /* Pneumatica */,
 				DBACB87B2258B7B2007B3E6C /* Supporting Files */,
@@ -171,12 +174,15 @@
 			path = Pneumatica;
 			sourceTree = "<group>";
 		};
-		DBBC0E5E22687AD5004BD2EA /* Views */ = {
+		DBBC0E5E22687AD5004BD2EA /* NOT_IN_USE */ = {
 			isa = PBXGroup;
 			children = (
-				DBBC0E5F22687AED004BD2EA /* BaseInfoView.swift */,
+				DBBC0E5F22687AED004BD2EA /* EditView.swift */,
+				DBE603FD2268976500564E90 /* SKListView.swift */,
+				DBE603FF22689F6C00564E90 /* LineNode.swift */,
+				DBE604012268A38900564E90 /* ListNode.swift */,
 			);
-			path = Views;
+			path = NOT_IN_USE;
 			sourceTree = "<group>";
 		};
 		DBE603F822687CB600564E90 /* Particles */ = {
@@ -186,6 +192,13 @@
 				DBE603FA22687CDA00564E90 /* Assets.xcassets */,
 			);
 			path = Particles;
+			sourceTree = "<group>";
+		};
+		DBE604032268B06C00564E90 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,7 +284,6 @@
 				DBACB8642258B793007B3E6C /* AppDelegate.swift in Sources */,
 				DBACB8822258B812007B3E6C /* PressableInput.swift in Sources */,
 				DB47CE0C22664AC200EA2F6E /* CreationObjectDataSource.swift in Sources */,
-				DBBC0E6022687AED004BD2EA /* BaseInfoView.swift in Sources */,
 				DB9C8C422264CF5B0071C104 /* CinqueDueBistabile.swift in Sources */,
 				DB9DF3D5225DB5A500EDE365 /* ObjectsListDataSource.swift in Sources */,
 				DB9C8C492264CFD20071C104 /* InputOutput.swift in Sources */,

@@ -12,15 +12,9 @@ import UIKit
 
 class GameScene: SKScene {
     
-    let and = ValvolaAnd(size: .init(width: 100, height: 50))
-    let or = ValvolaOR(size: .init(width: 100, height: 50))
-    let frl = GruppoFRL(size: .init(width: 100, height: 100))
     let cilindro = CilindroDoppioEffetto(size: .init(width: 200, height: 50))
-    let treDueNC = TreDueMonostabileNC(size: .init(width: 200, height: 50))
-    let timer = SpriteTimer(size: .init(width: 80, height: 50))
-    let cinqueDue = CinqueDueBistabile(size: .init(width: 250, height: 50))
-    let pulsante = Pulsante(size: .init(width: 150, height: 50))
     let finecorsa = Finecorsa(size: .init(width: 200, height: 50))
+    let frl = GruppoFRL(size: .init(width: 100, height: 50))
     
     var firstSelectedIO: InputOutput?
     var secondSelectedIO: InputOutput?
@@ -30,13 +24,12 @@ class GameScene: SKScene {
     
     var holdRecognizer: UILongPressGestureRecognizer!
     var tableView : UITableView!
+    var dataSource : UITableViewDataSource!
     
-    var currentShowingView: UIView?
     
     var selectedValvola : ValvolaConformance?
     var valvoleLayoutChanged: Bool = false
-    
-    var dataSource : UITableViewDataSource!
+    var isEditingMode : Bool = false
     
     override func didMove(to view: SKView) {
         self.size = view.bounds.size
@@ -58,15 +51,6 @@ class GameScene: SKScene {
         self.holdRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(holdPoint(_:)))
         self.view?.addGestureRecognizer(self.holdRecognizer)
         
-        and.name = "Valvola And"
-        and.position = CGPoint(x: 0, y: 0)
-        and.zPosition = 1
-        addChild(and)
-        
-        or.name = "OR"
-        or.position = CGPoint(x: 200, y: 400)
-        or.zPosition = 1
-        addChild(or)
         
         frl.name = "FRL"
         frl.position = CGPoint(x: 200, y: 200)
@@ -78,26 +62,7 @@ class GameScene: SKScene {
         cilindro.zPosition = 1
         cilindro.fillColor = self.scene!.backgroundColor
         addChild(cilindro)
-        
-        treDueNC.name = "3/2 Monostabile NC"
-        treDueNC.position = CGPoint(x: 200, y: 100)
-        treDueNC.zPosition = 1
-        addChild(treDueNC)
-        
-        timer.name = "Timer"
-        timer.position = CGPoint(x: 100, y: 50)
-        timer.zPosition = 1
-        addChild(timer)
-        
-        cinqueDue.name = "5/2 Bistabile"
-        cinqueDue.position = CGPoint(x: 0, y: 500)
-        cinqueDue.zPosition = 1
-        addChild(cinqueDue)
-        
-        pulsante.name = "Pulsante"
-        pulsante.position = CGPoint(x: 50, y: 400)
-        pulsante.zPosition = 1
-        addChild(pulsante)
+    
         
         finecorsa.name = "Finecorsa"
         finecorsa.position = CGPoint(x: 20, y: 150)
@@ -130,12 +95,15 @@ class GameScene: SKScene {
         let origPoint = recognizer.location(in: self.view!)
         let newPoint = convertPoint(fromView: origPoint)//convert(origPoint, to: self)
         
-        if let node = self.nodes(at: newPoint).first {
-            
+        if let _ = self.nodes(at: newPoint).first as? Editable {
+            let alert = UIAlertController(title: "Test", message: "It works!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
         } else {
             showTableView()
         }
     }
+    
 
     fileprivate func makeExplosion(_ valvola: ValvolaConformance) {
         if let explosion = SKEmitterNode(fileNamed: "Explosion") {
@@ -205,7 +173,10 @@ class GameScene: SKScene {
     }
     
     func showTableView() {
-        let rect = CGRect(x: 0, y: 0, width: self.view!.frame.width, height: self.view!.frame.height / 2)
+        let width = self.size.width / 2
+        let height = self.size.height
+        
+        let rect = CGRect(origin: .zero, size: .init(width: width, height: height))
         self.tableView.frame = rect
         self.view?.addSubview(self.tableView)
         self.dataSource = ObjectCreationDataSource()
