@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB383E482268B18F00267C92 /* BoldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB383E472268B18F00267C92 /* BoldCell.swift */; };
+		DB383E4A2268B1CC00267C92 /* BouncyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB383E492268B1CC00267C92 /* BouncyView.swift */; };
+		DB383E4C2268B21000267C92 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB383E4B2268B21000267C92 /* Extensions.swift */; };
 		DB47CE0C22664AC200EA2F6E /* CreationObjectDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB47CE0B22664AC200EA2F6E /* CreationObjectDataSource.swift */; };
 		DB9C8C332264CD7D0071C104 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C322264CD7D0071C104 /* Protocols.swift */; };
 		DB9C8C362264CE5D0071C104 /* OR.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C352264CE5D0071C104 /* OR.swift */; };
@@ -34,6 +37,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB383E472268B18F00267C92 /* BoldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoldCell.swift; sourceTree = "<group>"; };
+		DB383E492268B1CC00267C92 /* BouncyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BouncyView.swift; sourceTree = "<group>"; };
+		DB383E4B2268B21000267C92 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DB47CE0B22664AC200EA2F6E /* CreationObjectDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationObjectDataSource.swift; sourceTree = "<group>"; };
 		DB9C8C322264CD7D0071C104 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		DB9C8C352264CE5D0071C104 /* OR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OR.swift; sourceTree = "<group>"; };
@@ -138,6 +144,7 @@
 		DBACB8622258B793007B3E6C /* Pneumatica-SpriteKit-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				DB383E4B2268B21000267C92 /* Extensions.swift */,
 				DBE604032268B06C00564E90 /* Cells */,
 				DBE603F822687CB600564E90 /* Particles */,
 				DBBC0E5E22687AD5004BD2EA /* NOT_IN_USE */,
@@ -197,6 +204,8 @@
 		DBE604032268B06C00564E90 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				DB383E492268B1CC00267C92 /* BouncyView.swift */,
+				DB383E472268B18F00267C92 /* BoldCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -287,11 +296,14 @@
 				DB9C8C422264CF5B0071C104 /* CinqueDueBistabile.swift in Sources */,
 				DB9DF3D5225DB5A500EDE365 /* ObjectsListDataSource.swift in Sources */,
 				DB9C8C492264CFD20071C104 /* InputOutput.swift in Sources */,
+				DB383E482268B18F00267C92 /* BoldCell.swift in Sources */,
+				DB383E4C2268B21000267C92 /* Extensions.swift in Sources */,
 				DB9C8C332264CD7D0071C104 /* Protocols.swift in Sources */,
 				DB9C8C3C2264CEFC0071C104 /* Line.swift in Sources */,
 				DB9C8C3A2264CEC90071C104 /* CilindroDoppioEffetto.swift in Sources */,
 				DB9C8C382264CE920071C104 /* GruppooFRL.swift in Sources */,
 				DB9C8C3E2264CF220071C104 /* TreDueMonostabileNC.swift in Sources */,
+				DB383E4A2268B1CC00267C92 /* BouncyView.swift in Sources */,
 				DB9C8C442264CF7A0071C104 /* Pulsante.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

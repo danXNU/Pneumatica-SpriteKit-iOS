@@ -45,7 +45,10 @@ class GameScene: SKScene {
         
         self.tableView = UITableView()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        self.tableView.backgroundColor = .white
+        self.tableView.register(BoldCell.self, forCellReuseIdentifier: "BoldCell")
+        self.tableView.backgroundColor = .clear
+        self.tableView.separatorStyle = .none
+        self.tableView.tableFooterView = UIView()
         self.tableView.delegate = self
         
         self.holdRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(holdPoint(_:)))
@@ -307,5 +310,9 @@ extension GameScene : UITableViewDelegate {
             newNode.zPosition = 1
             self.addChild(newNode)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
 }
