@@ -11,6 +11,8 @@
 		DB383E4A2268B1CC00267C92 /* BouncyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB383E492268B1CC00267C92 /* BouncyView.swift */; };
 		DB383E4C2268B21000267C92 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB383E4B2268B21000267C92 /* Extensions.swift */; };
 		DB383E4D2268CEC800267C92 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC0E5F22687AED004BD2EA /* EditView.swift */; };
+		DB383E4F2269143300267C92 /* CinqueDueMonostabili.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB383E4E2269143300267C92 /* CinqueDueMonostabili.swift */; };
+		DB383E51226916D500267C92 /* TreDueBistabile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB383E50226916D500267C92 /* TreDueBistabile.swift */; };
 		DB47CE0C22664AC200EA2F6E /* CreationObjectDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB47CE0B22664AC200EA2F6E /* CreationObjectDataSource.swift */; };
 		DB9C8C332264CD7D0071C104 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C322264CD7D0071C104 /* Protocols.swift */; };
 		DB9C8C362264CE5D0071C104 /* OR.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C352264CE5D0071C104 /* OR.swift */; };
@@ -41,6 +43,8 @@
 		DB383E472268B18F00267C92 /* BoldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoldCell.swift; sourceTree = "<group>"; };
 		DB383E492268B1CC00267C92 /* BouncyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BouncyView.swift; sourceTree = "<group>"; };
 		DB383E4B2268B21000267C92 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DB383E4E2269143300267C92 /* CinqueDueMonostabili.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinqueDueMonostabili.swift; sourceTree = "<group>"; };
+		DB383E50226916D500267C92 /* TreDueBistabile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreDueBistabile.swift; sourceTree = "<group>"; };
 		DB47CE0B22664AC200EA2F6E /* CreationObjectDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationObjectDataSource.swift; sourceTree = "<group>"; };
 		DB9C8C322264CD7D0071C104 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		DB9C8C352264CE5D0071C104 /* OR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OR.swift; sourceTree = "<group>"; };
@@ -96,6 +100,8 @@
 				DB9C8C412264CF5B0071C104 /* CinqueDueBistabile.swift */,
 				DB9C8C432264CF7A0071C104 /* Pulsante.swift */,
 				DB9C8C452264CF990071C104 /* Finecorsa.swift */,
+				DB383E4E2269143300267C92 /* CinqueDueMonostabili.swift */,
+				DB383E50226916D500267C92 /* TreDueBistabile.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -293,6 +299,7 @@
 				DB9C8C462264CF990071C104 /* Finecorsa.swift in Sources */,
 				DB9C8C402264CF3E0071C104 /* Timer.swift in Sources */,
 				DBACB8642258B793007B3E6C /* AppDelegate.swift in Sources */,
+				DB383E51226916D500267C92 /* TreDueBistabile.swift in Sources */,
 				DBACB8822258B812007B3E6C /* PressableInput.swift in Sources */,
 				DB47CE0C22664AC200EA2F6E /* CreationObjectDataSource.swift in Sources */,
 				DB9C8C422264CF5B0071C104 /* CinqueDueBistabile.swift in Sources */,
@@ -302,6 +309,7 @@
 				DB383E4C2268B21000267C92 /* Extensions.swift in Sources */,
 				DB9C8C332264CD7D0071C104 /* Protocols.swift in Sources */,
 				DB9C8C3C2264CEFC0071C104 /* Line.swift in Sources */,
+				DB383E4F2269143300267C92 /* CinqueDueMonostabili.swift in Sources */,
 				DB9C8C3A2264CEC90071C104 /* CilindroDoppioEffetto.swift in Sources */,
 				DB9C8C382264CE920071C104 /* GruppooFRL.swift in Sources */,
 				DB9C8C3E2264CF220071C104 /* TreDueMonostabileNC.swift in Sources */,

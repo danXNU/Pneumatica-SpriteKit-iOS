@@ -17,8 +17,10 @@ class ObjectCreationDataSource : NSObject, UITableViewDataSource {
         GruppoFRL.self,
         CilindroDoppioEffetto.self,
         TreDueMonostabileNC.self,
+        TreDueBistabile.self,
         SpriteTimer.self,
         CinqueDueBistabile.self,
+        CinqueDueMonostabile.self,
         Pulsante.self,
         Finecorsa.self
     ]

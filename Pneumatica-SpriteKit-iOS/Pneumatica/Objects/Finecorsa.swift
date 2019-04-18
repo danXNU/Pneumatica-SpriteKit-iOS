@@ -95,7 +95,13 @@ class Finecorsa: SKShapeNode, ValvolaConformance, AcceptsMovableInput, Editable 
             self.state = .chiusa
             return
         }
-        if movableInput.movingPointValue == CGFloat(listenValue) {
+        var movingPoint = movableInput.movingPointValue
+        if movingPoint < 0 { movingPoint = 0 }
+        if movingPoint > 1 { movingPoint = 1 }
+        let roundedValue = roundf(Float(10.0 * movingPoint)) / 10.0
+        
+        
+        if roundedValue == listenValue {
             self.state = .aperta
         } else {
             self.state = .chiusa
