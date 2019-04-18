@@ -59,5 +59,7 @@ class GruppoFRL : SKShapeNode, ValvolaConformance {
         addChild(onlyOutput)
     }
     
-    
+    static var preferredSize: CGSize {
+        return .init(width: 100, height: 50)
+    }
 }

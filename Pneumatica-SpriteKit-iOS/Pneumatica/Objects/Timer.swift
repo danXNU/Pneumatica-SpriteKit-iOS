@@ -102,4 +102,8 @@ class SpriteTimer: SKShapeNode, ValvolaConformance {
         })
     }
     
+    static var preferredSize: CGSize {
+        return .init(width: 100, height: 50)
+    }
+    
 }

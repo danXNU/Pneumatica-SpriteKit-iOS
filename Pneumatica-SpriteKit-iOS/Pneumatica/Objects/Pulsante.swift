@@ -97,4 +97,7 @@ class Pulsante : SKShapeNode, ValvolaConformance {
         }
     }
     
+    static var preferredSize: CGSize {
+        return .init(width: 150, height: 50)
+    }
 }

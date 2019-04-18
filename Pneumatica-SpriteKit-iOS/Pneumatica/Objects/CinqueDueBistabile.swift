@@ -137,5 +137,9 @@ class CinqueDueBistabile : SKShapeNode, ValvolaConformance {
             }
         }
     }
+ 
+    static var preferredSize: CGSize {
+        return .init(width: 200, height: 50)
+    }
     
 }

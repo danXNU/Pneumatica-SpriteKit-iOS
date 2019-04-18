@@ -10,6 +10,7 @@
 		DB383E482268B18F00267C92 /* BoldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB383E472268B18F00267C92 /* BoldCell.swift */; };
 		DB383E4A2268B1CC00267C92 /* BouncyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB383E492268B1CC00267C92 /* BouncyView.swift */; };
 		DB383E4C2268B21000267C92 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB383E4B2268B21000267C92 /* Extensions.swift */; };
+		DB383E4D2268CEC800267C92 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC0E5F22687AED004BD2EA /* EditView.swift */; };
 		DB47CE0C22664AC200EA2F6E /* CreationObjectDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB47CE0B22664AC200EA2F6E /* CreationObjectDataSource.swift */; };
 		DB9C8C332264CD7D0071C104 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C322264CD7D0071C104 /* Protocols.swift */; };
 		DB9C8C362264CE5D0071C104 /* OR.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C352264CE5D0071C104 /* OR.swift */; };
@@ -286,6 +287,7 @@
 			files = (
 				DBACB86A2258B793007B3E6C /* GameScene.swift in Sources */,
 				DBACB86C2258B793007B3E6C /* GameViewController.swift in Sources */,
+				DB383E4D2268CEC800267C92 /* EditView.swift in Sources */,
 				DB9C8C362264CE5D0071C104 /* OR.swift in Sources */,
 				DBACB8802258B812007B3E6C /* AND.swift in Sources */,
 				DB9C8C462264CF990071C104 /* Finecorsa.swift in Sources */,

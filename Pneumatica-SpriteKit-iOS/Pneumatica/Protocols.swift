@@ -34,9 +34,9 @@ extension ValvolaConformance {
         return String(describing: self)
     }
     
-    static var preferredSize: CGSize {
-        return CGSize(width: 150, height: 50)
-    }
+//    static var preferredSize: CGSize {
+//        return CGSize(width: 150, height: 50)
+//    }
     
     var stringValue : String {
         return String(describing: self)
@@ -63,7 +63,11 @@ extension Movable {
 }
 
 protocol Editable {}
-protocol AcceptsMovableInput : Editable {}
+
+protocol AcceptsMovableInput where Self: ValvolaConformance {
+    var movableInput : Movable? { get set }
+    var listenValue : Float { get set }
+}
 
 
 

@@ -12,9 +12,41 @@ import UIKit
 
 class GameScene: SKScene {
     
-    let cilindro = CilindroDoppioEffetto(size: .init(width: 200, height: 50))
-    let finecorsa = Finecorsa(size: .init(width: 200, height: 50))
-    let frl = GruppoFRL(size: .init(width: 100, height: 50))
+    struct EditingMode {
+        enum State {
+            case active
+            case disabled
+        }
+        var state : State = .disabled
+        var selectedInput : Movable? = nil
+        var selectedValvolaWithMovableInput : AcceptsMovableInput? = nil
+        var valueOfMovable : Float = 0.0
+        var editView : EditView!
+        
+        private var sceneFrame: CGRect
+        
+        init(sceneFrame: CGRect) {
+            self.sceneFrame = sceneFrame
+            reset()
+        }
+        
+        mutating func reset() {
+            self.state = .disabled
+            self.selectedInput = nil
+            self.selectedValvolaWithMovableInput = nil
+            self.valueOfMovable = 0.0
+            self.editView?.removeFromSuperview()
+            
+            let height = 200
+            let width = 300
+            let x = Int(sceneFrame.width) / 2 - width / 2
+            let y = Int(sceneFrame.height) / 2 - height / 2
+            
+            self.editView = EditView(frame: .init(x: x, y: y, width: width, height: height))
+        }
+    }
+    
+    var defaultBackground: UIColor!
     
     var firstSelectedIO: InputOutput?
     var secondSelectedIO: InputOutput?
@@ -26,16 +58,20 @@ class GameScene: SKScene {
     var tableView : UITableView!
     var dataSource : UITableViewDataSource!
     
+    var editinMode : EditingMode!
     
     var selectedValvola : ValvolaConformance?
     var valvoleLayoutChanged: Bool = false
-    var isEditingMode : Bool = false
     
     override func didMove(to view: SKView) {
         self.size = view.bounds.size
         self.anchorPoint = .zero
         
-        self.trashNode = SKShapeNode(circleOfRadius: 50)
+        self.defaultBackground = self.backgroundColor
+        
+        self.editinMode = EditingMode(sceneFrame: self.frame)
+        
+        self.trashNode = SKShapeNode(circleOfRadius: 25)
         trashNode!.fillColor = .red
         trashNode!.zPosition = 1
         trashNode!.name = "Trash"
@@ -54,24 +90,6 @@ class GameScene: SKScene {
         self.holdRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(holdPoint(_:)))
         self.view?.addGestureRecognizer(self.holdRecognizer)
         
-        
-        frl.name = "FRL"
-        frl.position = CGPoint(x: 200, y: 200)
-        frl.zPosition = 1
-        addChild(frl)
-        
-        cilindro.name = "Cilindro"
-        cilindro.position = CGPoint(x: 200, y: 500)
-        cilindro.zPosition = 1
-        cilindro.fillColor = self.scene!.backgroundColor
-        addChild(cilindro)
-    
-        
-        finecorsa.name = "Finecorsa"
-        finecorsa.position = CGPoint(x: 20, y: 150)
-        finecorsa.zPosition = 1
-        finecorsa.inputLeft = self.cilindro
-        addChild(finecorsa)
     }
     
     var lastUpdate : TimeInterval = 0
@@ -98,12 +116,21 @@ class GameScene: SKScene {
         let origPoint = recognizer.location(in: self.view!)
         let newPoint = convertPoint(fromView: origPoint)//convert(origPoint, to: self)
         
-        if let _ = self.nodes(at: newPoint).first as? Editable {
-            let alert = UIAlertController(title: "Test", message: "It works!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+        if let node = self.nodes(at: newPoint).first as? AcceptsMovableInput {
+            if editinMode.state == .disabled {
+                self.backgroundColor = .purple
+                editinMode.state = .active
+                editinMode.selectedValvolaWithMovableInput = node
+                self.scene?.view?.addSubview(editinMode.editView)
+            }
+            return
         } else {
-            showTableView()
+            if editinMode.state == .active {
+                editinMode.reset()
+                self.backgroundColor = self.defaultBackground
+            } else {
+                showTableView()
+            }
         }
     }
     
@@ -131,6 +158,21 @@ class GameScene: SKScene {
         let touchPoint = touches.first?.location(in: self)
         
         let nodes = self.nodes(at: touchPoint!)
+        
+        if editinMode.state == .active {
+            if let movableObject = nodes.first as? Movable {
+                editinMode.selectedInput = movableObject
+            }
+            if editinMode.selectedInput != nil && editinMode.selectedValvolaWithMovableInput != nil {
+                editinMode.selectedValvolaWithMovableInput?.movableInput = editinMode.selectedInput
+                editinMode.selectedValvolaWithMovableInput?.listenValue = editinMode.editView.sliderValue
+                editinMode.reset()
+                self.backgroundColor = self.defaultBackground
+            }
+            return
+        }
+        
+        
         if let tappableIO = nodes.first as? Tappable {
             tappableIO.tapped()
         } else if let clickedIO = nodes.first as? InputOutput {

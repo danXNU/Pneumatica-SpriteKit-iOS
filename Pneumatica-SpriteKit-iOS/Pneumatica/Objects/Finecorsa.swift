@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class Finecorsa: SKShapeNode, ValvolaConformance, AcceptsMovableInput {
+class Finecorsa: SKShapeNode, ValvolaConformance, AcceptsMovableInput, Editable {
     enum ValvolaState {
         case aperta
         case chiusa
@@ -19,8 +19,10 @@ class Finecorsa: SKShapeNode, ValvolaConformance, AcceptsMovableInput {
     var descrizione: String = ""
     
     var labelText: String {
-        return "3/2 Finecorsa"
+        return "Finecorsa"
     }
+    
+    var listenValue: Float = 0
     
     var state : ValvolaState = .chiusa {
         didSet {
@@ -33,8 +35,10 @@ class Finecorsa: SKShapeNode, ValvolaConformance, AcceptsMovableInput {
         }
     }
     
+    
+    
     var inputAria : InputOutput!
-    var inputLeft: Movable?
+    var movableInput: Movable?
     var mainOutput: InputOutput!
     
     var ios: Set<InputOutput> {
@@ -87,16 +91,20 @@ class Finecorsa: SKShapeNode, ValvolaConformance, AcceptsMovableInput {
     }
     
     func update() {
-        guard let movableInput = self.inputLeft else {
+        guard let movableInput = self.movableInput else {
             self.state = .chiusa
             return
         }
-        if movableInput.movingPointValue >= CGFloat(1) {
+        if movableInput.movingPointValue == CGFloat(listenValue) {
             self.state = .aperta
         } else {
             self.state = .chiusa
         }
     }
     
+    
+    static var preferredSize: CGSize {
+        return .init(width: 200, height: 50)
+    }
 }
 

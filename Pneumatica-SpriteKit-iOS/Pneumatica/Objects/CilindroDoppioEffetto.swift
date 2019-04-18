@@ -117,4 +117,8 @@ class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance, Movable {
         self.pistonAction = action
     }
     
+    static var preferredSize: CGSize {
+        return CGSize(width: 200, height: 50)
+    }
+    
 }
