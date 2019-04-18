@@ -26,10 +26,14 @@ class GameScene: SKScene {
     var secondSelectedIO: InputOutput?
     var lines: [Line] = []
     
+    var trashNode : SKShapeNode?
+    
     var holdRecognizer: UILongPressGestureRecognizer!
     var tableView : UITableView!
     
-    var selectedValvola : SKNode?
+    var currentShowingView: UIView?
+    
+    var selectedValvola : ValvolaConformance?
     var valvoleLayoutChanged: Bool = false
     
     var dataSource : UITableViewDataSource!
@@ -37,6 +41,14 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         self.size = view.bounds.size
         self.anchorPoint = .zero
+        
+        self.trashNode = SKShapeNode(circleOfRadius: 50)
+        trashNode!.fillColor = .red
+        trashNode!.zPosition = 1
+        trashNode!.name = "Trash"
+        trashNode!.position.x = self.view!.frame.width - trashNode!.frame.width / 2
+        trashNode!.position.y = 0 + trashNode!.frame.height / 2
+        addChild(trashNode!)
         
         self.tableView = UITableView()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -125,6 +137,25 @@ class GameScene: SKScene {
         }
     }
 
+    fileprivate func makeExplosion(_ valvola: ValvolaConformance) {
+        if let explosion = SKEmitterNode(fileNamed: "Explosion") {
+            let defaultVector = explosion.particlePositionRange
+            let width = valvola.frame.width
+            
+            explosion.particlePositionRange = CGVector(dx: width, dy: defaultVector.dy)
+            explosion.zPosition = 1
+            explosion.position.x = valvola.position.x + valvola.frame.width / 2
+            explosion.position.y = valvola.frame.height
+            addChild(explosion)
+            
+            let removeAction = SKAction.removeFromParent()
+            let waitAction = SKAction.wait(forDuration: 1.5)
+            let fullAction = SKAction.sequence([waitAction, removeAction])
+            explosion.run(fullAction)
+            valvola.run(fullAction)
+        }
+    }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touchPoint = touches.first?.location(in: self)
         
@@ -154,13 +185,21 @@ class GameScene: SKScene {
             }
             
             
-        } else if let valvola = nodes.first as? SKNode & ValvolaConformance {
-            (selectedValvola as? SKShapeNode)?.strokeColor = .white
+        } else if let valvola = nodes.first as? ValvolaConformance {
+            selectedValvola?.strokeColor = .white
             selectedValvola = valvola
-            (selectedValvola as? SKShapeNode)?.strokeColor = .red
+            selectedValvola?.strokeColor = .red
+            
         } else {
             resetTouches()
             hideTableView()
+        }
+        
+        if let valvola = selectedValvola, let trashNode = self.trashNode {
+            if valvola.intersects(trashNode) {
+                makeExplosion(valvola)
+                selectedValvola = nil
+            }
         }
         
     }
@@ -180,12 +219,12 @@ class GameScene: SKScene {
     }
     
     func resetTouches() {
-        (selectedValvola as? SKShapeNode)?.strokeColor = .white
+        selectedValvola?.strokeColor = .white
         selectedValvola = nil
         firstSelectedIO = nil
         secondSelectedIO = nil
         
-        for valvola in self.children where valvola is ValvolaConformance & SKNode {
+        for valvola in self.children where valvola is ValvolaConformance {
             for input in valvola.children where input is InputOutput {
                 let obj = input as! InputOutput
                 obj.fillColor = obj.idleColor
