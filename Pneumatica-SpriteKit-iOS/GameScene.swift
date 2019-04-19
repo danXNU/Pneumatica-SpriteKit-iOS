@@ -292,7 +292,7 @@ class GameScene: SKScene {
 //        path.addLine(to: finishPosition)
         
         line.path = path
-        line.zPosition = 1
+        line.zPosition = 0
         line.strokeColor = SKColor.red
     }
     
@@ -347,6 +347,7 @@ extension GameScene : UITableViewDelegate {
         hideTableView()
         if let dataSource = self.dataSource as? ObjectCreationDataSource {
             let newNode = dataSource.createInstanceOf(index: indexPath.row)
+            newNode.fillColor = self.defaultBackground
             newNode.position.x = self.frame.width / 2
             newNode.position.y = self.frame.height / 2
             newNode.zPosition = 1
