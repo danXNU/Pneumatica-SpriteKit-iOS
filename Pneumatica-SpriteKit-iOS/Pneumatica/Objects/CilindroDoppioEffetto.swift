@@ -15,12 +15,12 @@ class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance, Movable {
         case animating
     }
     
-    var ios: Set<InputOutput> {
-        var set = Set<InputOutput>()
-        set.insert(inputLeft)
-        set.insert(inputRight)
-        return set
-    }
+//    var ios: Set<InputOutput> {
+//        var set = Set<InputOutput>()
+//        set.insert(inputLeft)
+//        set.insert(inputRight)
+//        return set
+//    }
     
     var id: UUID = UUID()
     var nome: String = ""
@@ -76,6 +76,9 @@ class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance, Movable {
     func enable() {
         self.inputLeft = InputOutput(circleOfRadius: 10, valvola: self)
         self.inputRight = InputOutput(circleOfRadius: 10, valvola: self)
+        
+        inputLeft.idNumber = 0
+        inputRight.idNumber = 0
         
         inputLeft.position.x = self.frame.width / 10
         inputLeft.position.y = 0 - inputLeft.frame.height / 2

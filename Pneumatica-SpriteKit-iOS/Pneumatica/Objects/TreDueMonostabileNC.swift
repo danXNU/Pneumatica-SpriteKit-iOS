@@ -37,13 +37,13 @@ class TreDueMonostabileNC : SKShapeNode, ValvolaConformance {
     var inputLeft: InputOutput!
     var mainOutput: InputOutput!
     
-    var ios: Set<InputOutput> {
-        var set = Set<InputOutput>()
-        set.insert(inputAria)
-        set.insert(inputLeft)
-        set.insert(mainOutput)
-        return set
-    }
+//    var ios: Set<InputOutput> {
+//        var set = Set<InputOutput>()
+//        set.insert(inputAria)
+//        set.insert(inputLeft)
+//        set.insert(mainOutput)
+//        return set
+//    }
     
     required init(size: CGSize) {
         super.init()
@@ -62,9 +62,9 @@ class TreDueMonostabileNC : SKShapeNode, ValvolaConformance {
         self.inputAria = InputOutput(circleOfRadius: 10, valvola: self)
         self.mainOutput = InputOutput(circleOfRadius: 10, valvola: self)
         
-        inputLeft.parentValvola = self
-        inputAria.parentValvola = self
-        mainOutput.parentValvola = self
+        inputLeft.idNumber = 0
+        inputAria.idNumber = 1
+        mainOutput.idNumber = 2
         
         let w = self.frame.size.width
         inputLeft.position.x = 0 - (inputLeft.frame.width / 2)

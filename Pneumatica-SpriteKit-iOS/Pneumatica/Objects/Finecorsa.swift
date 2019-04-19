@@ -35,18 +35,13 @@ class Finecorsa: SKShapeNode, ValvolaConformance, AcceptsMovableInput, Editable 
         }
     }
     
-    
-    
     var inputAria : InputOutput!
     var movableInput: Movable?
     var mainOutput: InputOutput!
     
-    var ios: Set<InputOutput> {
-        var set = Set<InputOutput>()
-        set.insert(inputAria)
-        set.insert(mainOutput)
-        return set
-    }
+//    var ios: [InputOutput] {
+//        return [inputAria, mainOutput]
+//    }
     
     required init(size: CGSize) {
         super.init()
@@ -64,8 +59,8 @@ class Finecorsa: SKShapeNode, ValvolaConformance, AcceptsMovableInput, Editable 
         self.inputAria = InputOutput(circleOfRadius: 10, valvola: self)
         self.mainOutput = InputOutput(circleOfRadius: 10, valvola: self)
         
-        inputAria.parentValvola = self
-        mainOutput.parentValvola = self
+        inputAria.idNumber = 0
+        mainOutput.idNumber = 1
         
         let w = self.frame.size.width
         

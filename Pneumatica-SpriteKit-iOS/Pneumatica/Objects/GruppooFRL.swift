@@ -19,11 +19,11 @@ class GruppoFRL : SKShapeNode, ValvolaConformance {
     var isActive : Bool = true
     var onlyOutput : InputOutput!
     
-    var ios: Set<InputOutput> {
-        var set = Set<InputOutput>()
-        set.insert(onlyOutput)
-        return set
-    }
+//    var ios: Set<InputOutput> {
+//        var set = Set<InputOutput>()
+//        set.insert(onlyOutput)
+//        return set
+//    }
     
     required init(size: CGSize) {
         super.init()
@@ -42,7 +42,7 @@ class GruppoFRL : SKShapeNode, ValvolaConformance {
     
     func enable() {
         self.onlyOutput = InputOutput(circleOfRadius: 10, valvola: self)
-        onlyOutput.parentValvola = self
+        onlyOutput.idNumber = 0
         
         onlyOutput.position.x = self.frame.width / 2 - onlyOutput.frame.width / 2
         onlyOutput.position.y = self.frame.height - onlyOutput.frame.height / 2

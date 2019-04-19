@@ -37,20 +37,18 @@ class CinqueDueMonostabile : SKShapeNode, ValvolaConformance {
     var inputAria : InputOutput!
     
     var inputLeft: InputOutput!
-//    var inputRight: InputOutput!
     
     var outputLeft: InputOutput!
     var outputRight: InputOutput!
     
-    var ios: Set<InputOutput> {
-        var set = Set<InputOutput>()
-        set.insert(inputAria)
-        set.insert(inputLeft)
-//        set.insert(inputRight)
-        set.insert(outputLeft)
-        set.insert(outputRight)
-        return set
-    }
+//    var ios: Set<InputOutput> {
+//        var set = Set<InputOutput>()
+//        set.insert(inputAria)
+//        set.insert(inputLeft)
+//        set.insert(outputLeft)
+//        set.insert(outputRight)
+//        return set
+//    }
     
     required init(size: CGSize) {
         super.init()
@@ -67,10 +65,14 @@ class CinqueDueMonostabile : SKShapeNode, ValvolaConformance {
         self.inputAria = InputOutput(circleOfRadius: 10, valvola: self)
         
         self.inputLeft  = InputOutput(circleOfRadius: 10, valvola: self)
-//        self.inputRight  = InputOutput(circleOfRadius: 10, valvola: self)
         
         self.outputLeft = InputOutput(circleOfRadius: 10, valvola: self)
         self.outputRight = InputOutput(circleOfRadius: 10, valvola: self)
+        
+        inputAria.idNumber = 0
+        inputLeft.idNumber = 1
+        outputLeft.idNumber = 2
+        outputRight.idNumber = 3
         
         
         let w = self.frame.size.width

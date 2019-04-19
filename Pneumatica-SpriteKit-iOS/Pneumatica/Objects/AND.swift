@@ -21,13 +21,9 @@ class ValvolaAnd : SKShapeNode, ValvolaConformance {
     var inputRight: InputOutput!
     var mainOutput: InputOutput!
     
-    var ios: Set<InputOutput> {
-        var set = Set<InputOutput>()
-        set.insert(inputLeft)
-        set.insert(inputRight)
-        set.insert(mainOutput)
-        return set
-    }
+//    var ios: [InputOutput] {
+//        return [inputLeft, inputRight, mainOutput]
+//    }
     
     required init(size: CGSize) {
         super.init()
@@ -46,9 +42,9 @@ class ValvolaAnd : SKShapeNode, ValvolaConformance {
         self.inputRight = InputOutput(circleOfRadius: 10, valvola: self)
         self.mainOutput = InputOutput(circleOfRadius: 10, valvola: self)
         
-        inputLeft.parentValvola = self
-        inputRight.parentValvola = self
-        mainOutput.parentValvola = self
+        inputLeft.idNumber = 0
+        inputRight.idNumber = 1
+        mainOutput.idNumber = 2
         
         let w = self.frame.size.width
         inputLeft.position.x = 0 - (inputLeft.frame.width / 2)

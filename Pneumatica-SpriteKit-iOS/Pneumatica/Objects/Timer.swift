@@ -30,12 +30,12 @@ class SpriteTimer: SKShapeNode, ValvolaConformance {
     var inputAria: InputOutput!
     var mainOutput: InputOutput!
     
-    var ios: Set<InputOutput> {
-        var set = Set<InputOutput>()
-        set.insert(inputAria)
-        set.insert(mainOutput)
-        return set
-    }
+//    var ios: Set<InputOutput> {
+//        var set = Set<InputOutput>()
+//        set.insert(inputAria)
+//        set.insert(mainOutput)
+//        return set
+//    }
     
     required init(size: CGSize) {
         super.init()
@@ -49,27 +49,27 @@ class SpriteTimer: SKShapeNode, ValvolaConformance {
     }
     
     func enable() {
-        self.inputAria = InputOutput(circleOfRadius: 10, valvola: self)
+        self.inputAria  = InputOutput(circleOfRadius: 10, valvola: self)
         self.mainOutput = InputOutput(circleOfRadius: 10, valvola: self)
         
-        inputAria.parentValvola = self
-        mainOutput.parentValvola = self
+        inputAria.idNumber  = 0
+        mainOutput.idNumber = 1
         
         let w = self.frame.size.width
         
-        let halfWidth = w / 2
-        inputAria.position.x = halfWidth  - (inputAria.frame.width / 2)
-        inputAria.position.y = 0 - (inputAria.frame.height / 2)
-        inputAria.zPosition = self.zPosition + 1
+        let halfWidth           = w / 2
+        inputAria.position.x    = halfWidth  - (inputAria.frame.width / 2)
+        inputAria.position.y    = 0 - (inputAria.frame.height / 2)
+        inputAria.zPosition     = self.zPosition + 1
         
-        mainOutput.position.x = halfWidth - self.mainOutput.frame.width / 2
-        mainOutput.position.y = self.frame.height - (mainOutput.frame.height / 2)
-        mainOutput.zPosition = self.zPosition + 1
+        mainOutput.position.x   = halfWidth - self.mainOutput.frame.width / 2
+        mainOutput.position.y   = self.frame.height - (mainOutput.frame.height / 2)
+        mainOutput.zPosition    = self.zPosition + 1
         
-        let label = SKLabelNode(text: labelText)
-        label.color = .white
-        label.position.x = self.frame.width / 2
-        label.position.y = self.frame.height / 2  - label.frame.height / 2
+        let label           = SKLabelNode(text: labelText)
+        label.color         = .white
+        label.position.x    = self.frame.width / 2
+        label.position.y    = self.frame.height / 2  - label.frame.height / 2
         //        label.position = self.position
         label.zPosition = 2
         addChild(label)

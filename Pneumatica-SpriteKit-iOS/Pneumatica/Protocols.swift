@@ -14,11 +14,11 @@ struct MovingPath {
 }
 
 protocol ValvolaConformance where Self: SKShapeNode {
-    var id: UUID { get }
+    var id: UUID { get set }
     var descrizione: String { get set }
     
     var labelText: String { get }
-    var ios : Set<InputOutput> { get }
+    var ios : [InputOutput] { get }
     var stringValue : String { get }
     
     static var keyStringClass: String { get }
@@ -34,9 +34,17 @@ extension ValvolaConformance {
         return String(describing: self)
     }
     
-//    static var preferredSize: CGSize {
-//        return CGSize(width: 150, height: 50)
-//    }
+    var ios : [InputOutput] {
+        var arr = [InputOutput]()
+        
+        let mirror = Mirror(reflecting: self)
+        for child in mirror.children {
+            if let io = child.value as? InputOutput {
+                arr.append(io)
+            }
+        }
+        return arr
+    }
     
     var stringValue : String {
         return String(describing: self)

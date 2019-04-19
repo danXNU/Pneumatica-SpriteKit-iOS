@@ -276,3 +276,9 @@ extension UIColor {
         }
     }
 }
+
+struct Folders {
+    static var documentsPath: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+}
+
+

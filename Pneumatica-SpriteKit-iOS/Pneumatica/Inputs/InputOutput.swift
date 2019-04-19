@@ -31,6 +31,8 @@ class InputOutput: SKShapeNode, IOConformance {
         }
     }
     
+    var idNumber: Int = -1
+    
     init(circleOfRadius: CGFloat, valvola: ValvolaConformance){
         super.init()
         let diameter = circleOfRadius * 2

@@ -25,7 +25,7 @@ class ObjectCreationDataSource : NSObject, UITableViewDataSource {
         Finecorsa.self
     ]
     
-    func createInstanceOf(index: Int) -> SKShapeNode {
+    func createInstanceOf(index: Int) -> ValvolaConformance {
         let type = types[index]
         return type.init(size: type.preferredSize)
     }

@@ -39,14 +39,14 @@ class TreDueBistabile : SKShapeNode, ValvolaConformance {
     
     var outputMain: InputOutput!
     
-    var ios: Set<InputOutput> {
-        var set = Set<InputOutput>()
-        set.insert(inputAria)
-        set.insert(inputLeft)
-        set.insert(inputRight)
-        set.insert(outputMain)
-        return set
-    }
+//    var ios: Set<InputOutput> {
+//        var set = Set<InputOutput>()
+//        set.insert(inputAria)
+//        set.insert(inputLeft)
+//        set.insert(inputRight)
+//        set.insert(outputMain)
+//        return set
+//    }
     
     required init(size: CGSize) {
         super.init()
@@ -66,6 +66,11 @@ class TreDueBistabile : SKShapeNode, ValvolaConformance {
         self.inputRight  = InputOutput(circleOfRadius: 10, valvola: self)
         
         self.outputMain = InputOutput(circleOfRadius: 10, valvola: self)
+        
+        inputAria.idNumber = 0
+        inputLeft.idNumber = 1
+        inputRight.idNumber = 2
+        outputMain.idNumber = 3
         
         let w = self.frame.size.width
         let halfWidth = w / 2

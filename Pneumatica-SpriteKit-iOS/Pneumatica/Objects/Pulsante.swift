@@ -36,12 +36,12 @@ class Pulsante : SKShapeNode, ValvolaConformance {
     var outputMain: InputOutput!
     var inputPulsante : PressableInput!
     
-    var ios: Set<InputOutput> {
-        var set = Set<InputOutput>()
-        set.insert(inputAria)
-        set.insert(outputMain)
-        return set
-    }
+//    var ios: Set<InputOutput> {
+//        var set = Set<InputOutput>()
+//        set.insert(inputAria)
+//        set.insert(outputMain)
+//        return set
+//    }
     
     required init(size: CGSize) {
         super.init()
@@ -59,6 +59,8 @@ class Pulsante : SKShapeNode, ValvolaConformance {
         self.outputMain = InputOutput(circleOfRadius: 10, valvola: self)
         self.inputPulsante = PressableInput(size: .init(width: 30, height: 30), valvola: self)
         
+        inputAria.idNumber = 0
+        outputMain.idNumber = 1
         
         let w = self.frame.size.width
         let halfWidth = w / 2

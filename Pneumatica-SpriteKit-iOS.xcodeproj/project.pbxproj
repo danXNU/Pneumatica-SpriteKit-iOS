@@ -14,6 +14,9 @@
 		DB383E4F2269143300267C92 /* CinqueDueMonostabili.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB383E4E2269143300267C92 /* CinqueDueMonostabili.swift */; };
 		DB383E51226916D500267C92 /* TreDueBistabile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB383E50226916D500267C92 /* TreDueBistabile.swift */; };
 		DB47CE0C22664AC200EA2F6E /* CreationObjectDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB47CE0B22664AC200EA2F6E /* CreationObjectDataSource.swift */; };
+		DB97B3E3226A28CF00B1421E /* DiskObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB97B3E2226A28CF00B1421E /* DiskObjects.swift */; };
+		DB97B3E5226A2C6000B1421E /* Saver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB97B3E4226A2C6000B1421E /* Saver.swift */; };
+		DB97B3E7226A5DAB00B1421E /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB97B3E6226A5DAB00B1421E /* Loader.swift */; };
 		DB9C8C332264CD7D0071C104 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C322264CD7D0071C104 /* Protocols.swift */; };
 		DB9C8C362264CE5D0071C104 /* OR.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C352264CE5D0071C104 /* OR.swift */; };
 		DB9C8C382264CE920071C104 /* GruppooFRL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C372264CE920071C104 /* GruppooFRL.swift */; };
@@ -46,6 +49,9 @@
 		DB383E4E2269143300267C92 /* CinqueDueMonostabili.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinqueDueMonostabili.swift; sourceTree = "<group>"; };
 		DB383E50226916D500267C92 /* TreDueBistabile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreDueBistabile.swift; sourceTree = "<group>"; };
 		DB47CE0B22664AC200EA2F6E /* CreationObjectDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationObjectDataSource.swift; sourceTree = "<group>"; };
+		DB97B3E2226A28CF00B1421E /* DiskObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskObjects.swift; sourceTree = "<group>"; };
+		DB97B3E4226A2C6000B1421E /* Saver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saver.swift; sourceTree = "<group>"; };
+		DB97B3E6226A5DAB00B1421E /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		DB9C8C322264CD7D0071C104 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		DB9C8C352264CE5D0071C104 /* OR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OR.swift; sourceTree = "<group>"; };
 		DB9C8C372264CE920071C104 /* GruppooFRL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GruppooFRL.swift; sourceTree = "<group>"; };
@@ -88,6 +94,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB97B3E1226A28BF00B1421E /* SaverModel */ = {
+			isa = PBXGroup;
+			children = (
+				DB97B3E2226A28CF00B1421E /* DiskObjects.swift */,
+				DB97B3E4226A2C6000B1421E /* Saver.swift */,
+				DB97B3E6226A5DAB00B1421E /* Loader.swift */,
+			);
+			path = SaverModel;
+			sourceTree = "<group>";
+		};
 		DB9C8C342264CE330071C104 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +167,7 @@
 		DBACB8622258B793007B3E6C /* Pneumatica-SpriteKit-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				DB97B3E1226A28BF00B1421E /* SaverModel */,
 				DB383E4B2268B21000267C92 /* Extensions.swift */,
 				DBE604032268B06C00564E90 /* Cells */,
 				DBE603F822687CB600564E90 /* Particles */,
@@ -299,6 +316,7 @@
 				DB9C8C462264CF990071C104 /* Finecorsa.swift in Sources */,
 				DB9C8C402264CF3E0071C104 /* Timer.swift in Sources */,
 				DBACB8642258B793007B3E6C /* AppDelegate.swift in Sources */,
+				DB97B3E7226A5DAB00B1421E /* Loader.swift in Sources */,
 				DB383E51226916D500267C92 /* TreDueBistabile.swift in Sources */,
 				DBACB8822258B812007B3E6C /* PressableInput.swift in Sources */,
 				DB47CE0C22664AC200EA2F6E /* CreationObjectDataSource.swift in Sources */,
@@ -313,8 +331,10 @@
 				DB9C8C3A2264CEC90071C104 /* CilindroDoppioEffetto.swift in Sources */,
 				DB9C8C382264CE920071C104 /* GruppooFRL.swift in Sources */,
 				DB9C8C3E2264CF220071C104 /* TreDueMonostabileNC.swift in Sources */,
+				DB97B3E3226A28CF00B1421E /* DiskObjects.swift in Sources */,
 				DB383E4A2268B1CC00267C92 /* BouncyView.swift in Sources */,
 				DB9C8C442264CF7A0071C104 /* Pulsante.swift in Sources */,
+				DB97B3E5226A2C6000B1421E /* Saver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

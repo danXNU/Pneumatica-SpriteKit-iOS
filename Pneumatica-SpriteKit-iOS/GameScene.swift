@@ -53,6 +53,7 @@ class GameScene: SKScene {
     var lines: [Line] = []
     
     var trashNode : SKShapeNode?
+    var loaderNode: SKShapeNode?
     
     var holdRecognizer: UILongPressGestureRecognizer!
     var tableView : UITableView!
@@ -78,6 +79,14 @@ class GameScene: SKScene {
         trashNode!.position.x = self.view!.frame.width - trashNode!.frame.width / 2
         trashNode!.position.y = 0 + trashNode!.frame.height / 2
         addChild(trashNode!)
+        
+        self.loaderNode = SKShapeNode(circleOfRadius: 25)
+        loaderNode!.fillColor = .red
+        loaderNode!.zPosition = 1
+        loaderNode!.name = "Loader"
+        loaderNode!.position.x = self.view!.frame.width - loaderNode!.frame.width / 2
+        loaderNode!.position.y = self.frame.height - loaderNode!.frame.height
+        addChild(loaderNode!)
         
         self.tableView = UITableView()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -124,6 +133,22 @@ class GameScene: SKScene {
                 self.scene?.view?.addSubview(editinMode.editView)
             }
             return
+        } else if self.nodes(at: newPoint).first?.name == "Trash" {
+            let nodes = scene?.children.compactMap { $0 as? ValvolaConformance } ?? []
+            let saver = Saver(circuitName: "TestCircuitName", nodes: nodes, scene: scene!)
+            do {
+                try saver.save(to: "circuit.json")
+            } catch {
+                UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
+            }
+        } else if self.nodes(at: newPoint).first?.name == "Loader" {
+            do {
+                let loader = try Loader(fileName: "circuit.json", scene: self.scene!)
+                loader.load()
+            } catch {
+                UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
+            }
+            
         } else {
             if editinMode.state == .active {
                 editinMode.reset()
@@ -190,9 +215,9 @@ class GameScene: SKScene {
             
             if let firstIO = firstSelectedIO, let secondIO = secondSelectedIO {
                 if firstIO.inputsConnected.contains(secondIO) && secondIO.inputsConnected.contains(firstIO) {
-                    removeLine()
+                    removeLine(from: firstIO, to: secondIO)
                 } else {
-                    createLine()
+                    createLine(from: firstIO, to: secondIO)
                 }
                 resetTouches()
             }
@@ -296,29 +321,22 @@ class GameScene: SKScene {
         line.strokeColor = SKColor.red
     }
     
-    func createLine() {
-        if firstSelectedIO != nil && secondSelectedIO != nil {
-            let line = Line()
-            line.fromInput = firstSelectedIO
-            line.toOutput = secondSelectedIO
-            
-            drawLine(line: line)
-            self.lines.append(line)
-            addChild(line)
-            
-            firstSelectedIO?.addWire(from: secondSelectedIO!)
-            
-            firstSelectedIO?.fillColor = .blue
-            secondSelectedIO?.fillColor = .blue
-            firstSelectedIO = nil
-            secondSelectedIO = nil
-        }
+    func createLine(from firstIO: InputOutput, to secondIO: InputOutput) {
+        let line = Line()
+        line.fromInput = firstIO
+        line.toOutput = secondIO
+        
+        drawLine(line: line)
+        self.lines.append(line)
+        addChild(line)
+        
+        firstIO.addWire(from: secondIO)
+        
+        firstIO.fillColor = .blue
+        secondIO.fillColor = .blue
     }
     
-    func removeLine() {
-        guard let firstIO = firstSelectedIO else { return }
-        guard let secondIO = secondSelectedIO else { return }
-        
+    func removeLine(from firstIO: InputOutput, to secondIO: InputOutput) {
         let line = lines.first { (line) -> Bool in
             if line.fromInput == firstIO && line.toOutput == secondIO {
                 return true
