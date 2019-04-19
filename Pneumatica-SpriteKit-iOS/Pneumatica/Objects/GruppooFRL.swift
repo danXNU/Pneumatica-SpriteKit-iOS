@@ -38,7 +38,6 @@ class GruppoFRL : SKShapeNode, ValvolaConformance {
     
     func update() {
         onlyOutput.ariaPressure = 2.0
-        //        PneumaticaRuntime.shared.sendAria(to: onlyOutput.inputsConnected, from: onlyOutput)
     }
     
     func enable() {
