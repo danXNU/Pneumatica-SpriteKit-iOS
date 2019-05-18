@@ -97,3 +97,6 @@ protocol Tappable: IOConformance {
 extension Tappable {
     func tapped() {}
 }
+
+protocol CircuitLoader where Self: ValvolaConformance {
+}

@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GruppoFRL : SKShapeNode, ValvolaConformance {
+class GruppoFRL : SKShapeNode, ValvolaConformance, CircuitLoader {
     var id: UUID = UUID()
     var nome: String = ""
     var descrizione: String = ""
