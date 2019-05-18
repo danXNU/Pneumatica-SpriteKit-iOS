@@ -24,7 +24,7 @@ class ObjectsListDataSource : NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         let object = self.objects[indexPath.row]
-        cell.textLabel?.text = "\(String(describing: object.fromInput.name)) --> \(String(describing: object.toOutput.name))"
+        cell.textLabel?.text = "\(String(describing: object.firstIO.name)) --> \(String(describing: object.secondIO.name))"
         return cell
     }
     

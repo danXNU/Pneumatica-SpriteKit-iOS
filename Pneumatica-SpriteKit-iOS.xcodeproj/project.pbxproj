@@ -40,6 +40,7 @@
 		DBACB8822258B812007B3E6C /* PressableInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB87F2258B812007B3E6C /* PressableInput.swift */; };
 		DBCD4E1C2290029900E6BBA0 /* MovableEditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD4E1B2290029900E6BBA0 /* MovableEditMode.swift */; };
 		DBCD4E1E2290048F00E6BBA0 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD4E1D2290048F00E6BBA0 /* Notifications.swift */; };
+		DBCD4E2022900CAD00E6BBA0 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD4E1F22900CAD00E6BBA0 /* Helpers.swift */; };
 		DBE603FB22687CDA00564E90 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = DBE603F922687CDA00564E90 /* Explosion.sks */; };
 		DBE603FC22687CDA00564E90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBE603FA22687CDA00564E90 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -80,6 +81,7 @@
 		DBBC0E5F22687AED004BD2EA /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		DBCD4E1B2290029900E6BBA0 /* MovableEditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovableEditMode.swift; sourceTree = "<group>"; };
 		DBCD4E1D2290048F00E6BBA0 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		DBCD4E1F22900CAD00E6BBA0 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		DBE603F922687CDA00564E90 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 		DBE603FA22687CDA00564E90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DBE603FD2268976500564E90 /* SKListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKListView.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				DBACB8692258B793007B3E6C /* GameScene.swift */,
 				DBACB86B2258B793007B3E6C /* GameViewController.swift */,
 				DBCD4E1B2290029900E6BBA0 /* MovableEditMode.swift */,
+				DBCD4E1F22900CAD00E6BBA0 /* Helpers.swift */,
 			);
 			path = "Pneumatica-SpriteKit-iOS";
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				DB383E51226916D500267C92 /* TreDueBistabile.swift in Sources */,
 				DBACB8822258B812007B3E6C /* PressableInput.swift in Sources */,
 				DB47CE0C22664AC200EA2F6E /* CreationObjectDataSource.swift in Sources */,
+				DBCD4E2022900CAD00E6BBA0 /* Helpers.swift in Sources */,
 				DB9C8C422264CF5B0071C104 /* CinqueDueBistabile.swift in Sources */,
 				DB9DF3D5225DB5A500EDE365 /* ObjectsListDataSource.swift in Sources */,
 				DB9C8C492264CFD20071C104 /* InputOutput.swift in Sources */,

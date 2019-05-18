@@ -9,11 +9,11 @@
 import SpriteKit
 
 class Line: SKShapeNode {
-    var fromInput : InputOutput!
-    var toOutput: InputOutput!
+    var firstIO : InputOutput!
+    var secondIO: InputOutput!
     
     func update() {
-        if self.fromInput.ariaPressure > 0 && self.toOutput.ariaPressure > 0 {
+        if self.firstIO.ariaPressure > 0 && self.secondIO.ariaPressure > 0 {
             self.strokeColor = .green
         } else {
             self.strokeColor = .red

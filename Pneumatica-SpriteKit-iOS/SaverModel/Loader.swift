@@ -58,8 +58,8 @@ class Loader {
                 
                 guard let gameScene = scene as? GameScene else { continue }
                 if !gameScene.lines.contains(where: { (line) -> Bool in
-                    line.fromInput == nodeIO && line.toOutput == newNodeIO ||
-                    line.fromInput == newNodeIO && line.toOutput == nodeIO
+                    line.firstIO == nodeIO && line.secondIO == newNodeIO ||
+                    line.firstIO == newNodeIO && line.secondIO == nodeIO
                 }) {
                     gameScene.createLine(from: nodeIO, to: newNodeIO)
                 }

@@ -25,9 +25,6 @@ class GameScene: SKScene {
     var secondSelectedIO: InputOutput?
     var lines: [Line] = []
     
-    var trashNode : SKShapeNode?
-    var loaderNode: SKShapeNode?
-    
     var holdRecognizer: UILongPressGestureRecognizer!
     var tableView : UITableView!
     var dataSource : UITableViewDataSource!
@@ -46,22 +43,6 @@ class GameScene: SKScene {
         
         self.editinMode = EditingMode(sceneFrame: self.frame)
         
-        self.trashNode = SKShapeNode(circleOfRadius: 25)
-        trashNode!.fillColor = .red
-        trashNode!.zPosition = 1
-        trashNode!.name = "Trash"
-        trashNode!.position.x = self.view!.frame.width - trashNode!.frame.width / 2
-        trashNode!.position.y = 0 + trashNode!.frame.height / 2
-        addChild(trashNode!)
-        
-        self.loaderNode = SKShapeNode(circleOfRadius: 25)
-        loaderNode!.fillColor = .red
-        loaderNode!.zPosition = 1
-        loaderNode!.name = "Loader"
-        loaderNode!.position.x = self.view!.frame.width - loaderNode!.frame.width / 2
-        loaderNode!.position.y = self.frame.height - loaderNode!.frame.height
-        addChild(loaderNode!)
-        
         self.tableView = UITableView()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         self.tableView.register(BoldCell.self, forCellReuseIdentifier: "BoldCell")
@@ -78,6 +59,26 @@ class GameScene: SKScene {
             guard let mode = notif.object as? Mode else { return }
             self.mode = mode
             print("mode changed in: \(mode)")
+        }
+        
+        NotificationCenter.default.addObserver(forName: .commandSent, object: nil, queue: .main) { (notif) in
+            guard let command = notif.object as? CommandCode else { return }
+            switch command {
+            case .trash:
+                if let valvola = self.selectedValvola {
+                    for line in self.lines {
+                        if valvola.ios.contains(line.firstIO) ||
+                            valvola.ios.contains(line.secondIO) {
+                            self.remove(line: line)
+                        }
+                    }
+                    self.makeExplosion(valvola)
+                    self.selectedValvola = nil
+                }
+                
+            case .load: break
+            case .save: break
+            }
         }
     }
     
@@ -150,7 +151,7 @@ class GameScene: SKScene {
             explosion.particlePositionRange = CGVector(dx: width, dy: defaultVector.dy)
             explosion.zPosition = 1
             explosion.position.x = valvola.position.x + valvola.frame.width / 2
-            explosion.position.y = valvola.frame.height
+            explosion.position.y = valvola.position.y - valvola.frame.height / 2
             addChild(explosion)
             
             let removeAction = SKAction.removeFromParent()
@@ -213,8 +214,8 @@ class GameScene: SKScene {
             if mode != .running {
                 selectedValvola?.ios.forEach { $0.fillColor = .blue }
                 for line in self.lines {
-                    if selectedValvola?.ios.contains(line.fromInput) ?? false ||
-                        selectedValvola?.ios.contains(line.toOutput) ?? false {
+                    if selectedValvola?.ios.contains(line.firstIO) ?? false ||
+                        selectedValvola?.ios.contains(line.secondIO) ?? false {
                         line.strokeColor = .blue
                     } else {
                         line.strokeColor = .red
@@ -225,14 +226,6 @@ class GameScene: SKScene {
             resetTouches()
             hideTableView()
         }
-        
-        if let valvola = selectedValvola, let trashNode = self.trashNode {
-            if valvola.intersects(trashNode) {
-                makeExplosion(valvola)
-                selectedValvola = nil
-            }
-        }
-        
     }
     
     func showTableView() {
@@ -281,17 +274,17 @@ class GameScene: SKScene {
     func drawLine(line: Line) {
         let path = CGMutablePath()
         
-        var startPoint = line.fromInput!.position
-        var finishPoint = line.toOutput!.position
+        var startPoint = line.firstIO!.position
+        var finishPoint = line.secondIO!.position
         
-        startPoint.x += (line.fromInput.frame.width / 2)
-        startPoint.y += (line.fromInput.frame.height / 2)
+        startPoint.x += (line.firstIO.frame.width / 2)
+        startPoint.y += (line.firstIO.frame.height / 2)
         
-        finishPoint.x += (line.toOutput.frame.width / 2)
-        finishPoint.y += (line.toOutput.frame.height / 2)
+        finishPoint.x += (line.secondIO.frame.width / 2)
+        finishPoint.y += (line.secondIO.frame.height / 2)
         
-        let startPosition = convert(startPoint, from: line.fromInput!.parentValvola!)
-        let finishPosition = convert(finishPoint, from: line.toOutput!.parentValvola!)
+        let startPosition = convert(startPoint, from: line.firstIO!.parentValvola!)
+        let finishPosition = convert(finishPoint, from: line.secondIO!.parentValvola!)
         
         var keyPointes : [CGPoint] = []
         var startHolder = startPosition
@@ -319,8 +312,8 @@ class GameScene: SKScene {
     
     func createLine(from firstIO: InputOutput, to secondIO: InputOutput) {
         let line = Line()
-        line.fromInput = firstIO
-        line.toOutput = secondIO
+        line.firstIO = firstIO
+        line.secondIO = secondIO
         
         drawLine(line: line)
         self.lines.append(line)
@@ -334,9 +327,9 @@ class GameScene: SKScene {
     
     func removeLine(from firstIO: InputOutput, to secondIO: InputOutput) {
         let line = lines.first { (line) -> Bool in
-            if line.fromInput == firstIO && line.toOutput == secondIO {
+            if line.firstIO == firstIO && line.secondIO == secondIO {
                 return true
-            } else if line.fromInput == secondIO && line.toOutput == firstIO {
+            } else if line.firstIO == secondIO && line.secondIO == firstIO {
                 return true
             } else {
                 return false
@@ -352,6 +345,17 @@ class GameScene: SKScene {
             let compoundAction = SKAction.sequence([fadeAction, removeAction])
             lineSelected.run(compoundAction)
         }
+    }
+    
+    func remove(line: Line) {
+        self.lines.removeAll(where: { $0 == line })
+        line.firstIO.removeWire(line.secondIO)
+        
+        let fadeAction = SKAction.fadeOut(withDuration: 0.3)
+        let removeAction = SKAction.removeFromParent()
+        
+        let compoundAction = SKAction.sequence([fadeAction, removeAction])
+        line.run(compoundAction)
     }
     
 }

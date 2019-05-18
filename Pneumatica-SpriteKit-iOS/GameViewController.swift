@@ -59,4 +59,18 @@ class GameViewController: UIViewController {
         NotificationCenter.default.post(name: .sceneModeChanged, object: mode)
     }
     
+    @IBAction func saveTouched(_ sender: UIButton) {
+        let command = CommandCode.save
+        NotificationCenter.default.post(name: .commandSent, object: command)
+    }
+    
+    @IBAction func caricaTouched(_ sender: UIButton) {
+        let command = CommandCode.load
+        NotificationCenter.default.post(name: .commandSent, object: command)
+    }
+    
+    @IBAction func cestinoTouched(_ sender: UIButton) {
+        let command = CommandCode.trash
+        NotificationCenter.default.post(name: .commandSent, object: command)
+    }
 }
