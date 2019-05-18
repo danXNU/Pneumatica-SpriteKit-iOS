@@ -29,6 +29,10 @@ class GameScene: SKScene {
     var selectedValvola : ValvolaConformance?
     var valvoleLayoutChanged: Bool = false
     
+    let cameraNode = SKCameraNode()
+    
+    
+    //MARK: - Lifecycle
     override func didMove(to view: SKView) {
         self.size = view.bounds.size
         self.anchorPoint = .zero
@@ -47,6 +51,8 @@ class GameScene: SKScene {
         
         self.holdRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(holdPoint(_:)))
         self.view?.addGestureRecognizer(self.holdRecognizer)
+        
+        self.camera = cameraNode
         
         
         NotificationCenter.default.addObserver(forName: .sceneModeChanged, object: nil, queue: .main) { (notif) in
@@ -110,48 +116,8 @@ class GameScene: SKScene {
         }
         
     }
-    
-    @objc func holdPoint(_ recognizer: UILongPressGestureRecognizer) {
-        let origPoint = recognizer.location(in: self.view!)
-        let newPoint = convertPoint(fromView: origPoint)//convert(origPoint, to: self)
-        
-        if let node = self.nodes(at: newPoint).first as? AcceptsMovableInput {
-            if editinMode.state == .disabled {
-                self.backgroundColor = .purple
-                editinMode.state = .active
-                editinMode.selectedValvolaWithMovableInput = node
-                self.scene?.view?.addSubview(editinMode.editView)
-            }
-            return
-        } else {
-            if editinMode.state == .active {
-                editinMode.reset()
-                self.backgroundColor = self.defaultBackground
-            } else {
-                showTableView()
-            }
-        }
-    }
-    
 
-    fileprivate func makeExplosion(_ valvola: ValvolaConformance) {
-        if let explosion = SKEmitterNode(fileNamed: "Explosion") {
-            let defaultVector = explosion.particlePositionRange
-            let width = valvola.frame.width
-            
-            explosion.particlePositionRange = CGVector(dx: width, dy: defaultVector.dy)
-            explosion.zPosition = 1
-            explosion.position.x = valvola.position.x + valvola.frame.width / 2
-            explosion.position.y = valvola.position.y - valvola.frame.height / 2
-            addChild(explosion)
-            
-            let removeAction = SKAction.removeFromParent()
-            let waitAction = SKAction.wait(forDuration: 1.5)
-            let fullAction = SKAction.sequence([waitAction, removeAction])
-            explosion.run(fullAction)
-            valvola.run(fullAction)
-        }
-    }
+    // MARK: - Touches
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touchPoint = touches.first?.location(in: self)
@@ -219,6 +185,68 @@ class GameScene: SKScene {
         }
     }
     
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if selectedValvola != nil {
+            for touch in touches {
+                let touchPoint = touch.location(in: self)
+                selectedValvola?.position.x = touchPoint.x - 100
+                selectedValvola?.position.y = touchPoint.y - 50
+            }
+            valvoleLayoutChanged = true
+        } else {
+            guard let touch = touches.first else { return }
+            let location = touch.location(in: self)
+            let previousLocation = touch.previousLocation(in: self)
+            
+            camera?.position.x -= location.x - previousLocation.x
+            camera?.position.y -= location.y - previousLocation.y
+            
+        }
+    }
+    
+    @objc func holdPoint(_ recognizer: UILongPressGestureRecognizer) {
+        let origPoint = recognizer.location(in: self.view!)
+        let newPoint = convertPoint(fromView: origPoint)//convert(origPoint, to: self)
+        
+        if let node = self.nodes(at: newPoint).first as? AcceptsMovableInput {
+            if editinMode.state == .disabled {
+                self.backgroundColor = .purple
+                editinMode.state = .active
+                editinMode.selectedValvolaWithMovableInput = node
+                self.scene?.view?.addSubview(editinMode.editView)
+            }
+            return
+        } else {
+            if editinMode.state == .active {
+                editinMode.reset()
+                self.backgroundColor = self.defaultBackground
+            } else {
+                showTableView()
+            }
+        }
+    }
+    
+    // MARK: - Generic Functions
+    
+    fileprivate func makeExplosion(_ valvola: ValvolaConformance) {
+        if let explosion = SKEmitterNode(fileNamed: "Explosion") {
+            let defaultVector = explosion.particlePositionRange
+            let width = valvola.frame.width
+            
+            explosion.particlePositionRange = CGVector(dx: width, dy: defaultVector.dy)
+            explosion.zPosition = 1
+            explosion.position.x = valvola.position.x + valvola.frame.width / 2
+            explosion.position.y = valvola.position.y - valvola.frame.height / 2
+            addChild(explosion)
+            
+            let removeAction = SKAction.removeFromParent()
+            let waitAction = SKAction.wait(forDuration: 1.5)
+            let fullAction = SKAction.sequence([waitAction, removeAction])
+            explosion.run(fullAction)
+            valvola.run(fullAction)
+        }
+    }
+    
     func showTableView() {
         let width = self.size.width / 2
         let height = self.size.height
@@ -253,14 +281,7 @@ class GameScene: SKScene {
         }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-            let touchPoint = touch.location(in: self)
-            selectedValvola?.position.x = touchPoint.x - 100
-            selectedValvola?.position.y = touchPoint.y - 50
-        }
-        valvoleLayoutChanged = true
-    }
+    
     
     func drawLine(line: Line) {
         let path = CGMutablePath()
@@ -349,6 +370,22 @@ class GameScene: SKScene {
         line.run(compoundAction)
     }
     
+    func present(valvola: ValvolaConformance, position: CGPoint? = nil) {
+        if position == nil {
+            let tempPoistion = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
+            let newPosition = convertPoint(fromView: tempPoistion)
+            valvola.position = newPosition
+            self.addChild(valvola)
+        } else {
+            var newPosition = convertPoint(fromView: position!)
+            newPosition = convert(newPosition, to: self)
+//            let newPosition = convert(position!, to: self)
+//            let newPosition = convertPoint(toView: position!)
+            valvola.position = newPosition
+            self.addChild(valvola)
+        }
+    }
+    
 }
 
 extension GameScene : UITableViewDelegate {
@@ -357,10 +394,15 @@ extension GameScene : UITableViewDelegate {
         if let dataSource = self.dataSource as? ObjectCreationDataSource {
             let newNode = dataSource.createInstanceOf(index: indexPath.row)
             newNode.fillColor = self.defaultBackground
-            newNode.position.x = self.frame.width / 2
-            newNode.position.y = self.frame.height / 2
+            
+//            let tempPoistion = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
+//            let newPosition = convertPoint(fromView: tempPoistion)
+//
+//            newNode.position = newPosition
+            
+//            self.addChild(newNode)
+            present(valvola: newNode)
             newNode.zPosition = 1
-            self.addChild(newNode)
             valvole.append(newNode)
         }
     }

@@ -25,6 +25,7 @@ class ValvolaOR : SKShapeNode, ValvolaConformance {
         super.init()
         self.fillColor = .clear
         self.path = CGPath(rect: CGRect(origin: .zero, size: size), transform: nil)
+        self.zPosition = 1
         enable()
     }
     
