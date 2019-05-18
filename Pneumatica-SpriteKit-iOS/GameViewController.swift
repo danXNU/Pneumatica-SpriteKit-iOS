@@ -11,7 +11,8 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-
+    @IBOutlet weak var modeSegment: UISegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,4 +48,15 @@ class GameViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
+    @IBAction func modeSegmentChanged(_ sender: UISegmentedControl) {
+        var mode: Mode = .editing
+        switch sender.selectedSegmentIndex {
+        case 0: mode = .editing
+        case 1: mode = .running
+        default: break
+        }
+        NotificationCenter.default.post(name: .sceneModeChanged, object: mode)
+    }
+    
 }

@@ -10,41 +10,14 @@ import SpriteKit
 import GameplayKit
 import UIKit
 
+enum Mode {
+    case editing
+    case running
+    case stopped
+}
+
 class GameScene: SKScene {
-    
-    struct EditingMode {
-        enum State {
-            case active
-            case disabled
-        }
-        var state : State = .disabled
-        var selectedInput : Movable? = nil
-        var selectedValvolaWithMovableInput : AcceptsMovableInput? = nil
-        var valueOfMovable : Float = 0.0
-        var editView : EditView!
-        
-        private var sceneFrame: CGRect
-        
-        init(sceneFrame: CGRect) {
-            self.sceneFrame = sceneFrame
-            reset()
-        }
-        
-        mutating func reset() {
-            self.state = .disabled
-            self.selectedInput = nil
-            self.selectedValvolaWithMovableInput = nil
-            self.valueOfMovable = 0.0
-            self.editView?.removeFromSuperview()
-            
-            let height = 200
-            let width = 300
-            let x = Int(sceneFrame.width) / 2 - width / 2
-            let y = Int(sceneFrame.height) / 2 - height / 2
-            
-            self.editView = EditView(frame: .init(x: x, y: y, width: width, height: height))
-        }
-    }
+    var mode: Mode = .editing
     
     var defaultBackground: UIColor!
     
@@ -61,6 +34,7 @@ class GameScene: SKScene {
     
     var editinMode : EditingMode!
     
+    var valvole: [ValvolaConformance] = []
     var selectedValvola : ValvolaConformance?
     var valvoleLayoutChanged: Bool = false
     
@@ -99,24 +73,25 @@ class GameScene: SKScene {
         self.holdRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(holdPoint(_:)))
         self.view?.addGestureRecognizer(self.holdRecognizer)
         
+        
+        NotificationCenter.default.addObserver(forName: .sceneModeChanged, object: nil, queue: .main) { (notif) in
+            guard let mode = notif.object as? Mode else { return }
+            self.mode = mode
+            print("mode changed in: \(mode)")
+        }
     }
     
-    var lastUpdate : TimeInterval = 0
     override func update(_ currentTime: TimeInterval) {
-//        defer { lastUpdate = currentTime }
-//
-        for node in self.scene?.children ?? [] {
-            guard let realNode = node as? ValvolaConformance else { continue }
-            realNode.ios.forEach { $0.update() }
-            realNode.update()
+
+        for valvola in valvole {
+            valvola.ios.forEach { $0.update() }
+            valvola.update()
         }
+
         lines.forEach { $0.update() }
         
         if valvoleLayoutChanged {
-            let lines = self.children.compactMap { $0 as? Line }
-            lines.forEach { (line) in
-                drawLine(line: line)
-            }
+            lines.forEach { drawLine(line: $0) }
             valvoleLayoutChanged = false
         }
     }
@@ -370,6 +345,7 @@ extension GameScene : UITableViewDelegate {
             newNode.position.y = self.frame.height / 2
             newNode.zPosition = 1
             self.addChild(newNode)
+            valvole.append(newNode)
         }
     }
     
