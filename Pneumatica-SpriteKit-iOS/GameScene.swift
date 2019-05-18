@@ -10,12 +10,6 @@ import SpriteKit
 import GameplayKit
 import UIKit
 
-enum Mode {
-    case editing
-    case running
-    case stopped
-}
-
 class GameScene: SKScene {
     var mode: Mode = .editing
     
@@ -76,8 +70,21 @@ class GameScene: SKScene {
                     self.selectedValvola = nil
                 }
                 
-            case .load: break
-            case .save: break
+            case .load:
+                do {
+                    let loader = try Loader(fileName: "circuit.json", scene: self.scene!)
+                    loader.load()
+                } catch {
+                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
+                }
+            case .save:
+                let valvole = self.valvole
+                let saver = Saver(circuitName: "TestCircuitName", nodes: valvole, scene: self.scene!)
+                do {
+                    try saver.save(to: "circuit.json")
+                } catch {
+                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
+                }
             }
         }
     }
@@ -116,22 +123,6 @@ class GameScene: SKScene {
                 self.scene?.view?.addSubview(editinMode.editView)
             }
             return
-        } else if self.nodes(at: newPoint).first?.name == "Trash" {
-            let nodes = scene?.children.compactMap { $0 as? ValvolaConformance } ?? []
-            let saver = Saver(circuitName: "TestCircuitName", nodes: nodes, scene: scene!)
-            do {
-                try saver.save(to: "circuit.json")
-            } catch {
-                UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
-            }
-        } else if self.nodes(at: newPoint).first?.name == "Loader" {
-            do {
-                let loader = try Loader(fileName: "circuit.json", scene: self.scene!)
-                loader.load()
-            } catch {
-                UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
-            }
-            
         } else {
             if editinMode.state == .active {
                 editinMode.reset()

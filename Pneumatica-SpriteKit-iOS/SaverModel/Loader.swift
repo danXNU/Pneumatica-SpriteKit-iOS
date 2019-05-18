@@ -45,6 +45,7 @@ class Loader {
             newObject.zPosition = object.zPosition
             allNodes.append(newObject)
             
+            (scene as! GameScene).valvole.append(newObject)
             scene.addChild(newObject)
         }
         

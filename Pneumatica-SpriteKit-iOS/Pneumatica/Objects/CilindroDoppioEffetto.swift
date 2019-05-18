@@ -78,7 +78,7 @@ class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance, Movable {
         self.inputRight = InputOutput(circleOfRadius: 10, valvola: self)
         
         inputLeft.idNumber = 0
-        inputRight.idNumber = 0
+        inputRight.idNumber = 1
         
         inputLeft.position.x = self.frame.width / 10
         inputLeft.position.y = 0 - inputLeft.frame.height / 2

@@ -13,3 +13,9 @@ enum CommandCode {
     case load
     case trash
 }
+
+enum Mode {
+    case editing
+    case running
+    case stopped
+}
