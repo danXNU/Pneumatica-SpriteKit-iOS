@@ -83,17 +83,24 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
 
-        for valvola in valvole {
-            valvola.ios.forEach { $0.update() }
-            valvola.update()
+        switch mode {
+        case .editing:
+            break
+        case .running:
+            for valvola in valvole {
+                valvola.ios.forEach { $0.update() }
+                valvola.update()
+            }
+            
+            lines.forEach { $0.update() }
+            
+            if valvoleLayoutChanged {
+                lines.forEach { drawLine(line: $0) }
+                valvoleLayoutChanged = false
+            }
+        case .stopped: break
         }
-
-        lines.forEach { $0.update() }
         
-        if valvoleLayoutChanged {
-            lines.forEach { drawLine(line: $0) }
-            valvoleLayoutChanged = false
-        }
     }
     
     @objc func holdPoint(_ recognizer: UILongPressGestureRecognizer) {
@@ -201,8 +208,19 @@ class GameScene: SKScene {
         } else if let valvola = nodes.first as? ValvolaConformance {
             selectedValvola?.strokeColor = .white
             selectedValvola = valvola
-            selectedValvola?.strokeColor = .red
+            selectedValvola?.strokeColor = .blue
             
+            if mode != .running {
+                selectedValvola?.ios.forEach { $0.fillColor = .blue }
+                for line in self.lines {
+                    if selectedValvola?.ios.contains(line.fromInput) ?? false ||
+                        selectedValvola?.ios.contains(line.toOutput) ?? false {
+                        line.strokeColor = .blue
+                    } else {
+                        line.strokeColor = .red
+                    }
+                }
+            }
         } else {
             resetTouches()
             hideTableView()
@@ -240,11 +258,14 @@ class GameScene: SKScene {
         firstSelectedIO = nil
         secondSelectedIO = nil
         
-        for valvola in self.children where valvola is ValvolaConformance {
-            for input in valvola.children where input is InputOutput {
-                let obj = input as! InputOutput
-                obj.fillColor = obj.idleColor
+        for valvola in self.valvole {
+            for input in valvola.ios {
+                input.fillColor = input.idleColor
             }
+        }
+        
+        for line in self.lines {
+            line.strokeColor = .red
         }
     }
     
