@@ -99,7 +99,10 @@ class GameScene: SKScene {
 
         switch mode {
         case .editing:
-            break
+            if valvoleLayoutChanged {
+                lines.forEach { drawLine(line: $0) }
+                valvoleLayoutChanged = false
+            }
         case .running:
             for valvola in valvole {
                 valvola.ios.forEach { $0.update() }
