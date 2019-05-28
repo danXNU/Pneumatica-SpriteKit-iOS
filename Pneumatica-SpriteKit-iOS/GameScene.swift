@@ -73,6 +73,7 @@ class GameScene: SKScene {
                         }
                     }
                     self.makeExplosion(valvola)
+                    self.valvole.removeAll(where: { $0 == valvola })
                     self.selectedValvola = nil
                 }
                 
