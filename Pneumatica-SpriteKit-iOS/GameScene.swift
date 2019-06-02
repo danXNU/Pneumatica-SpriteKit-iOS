@@ -92,6 +92,19 @@ class GameScene: SKScene {
                 } catch {
                     UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
                 }
+            case .save3D:
+                guard let objectParent = self.selectedValvola else {
+                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "Non hai selezionato la valvola da cui ottenere le varie posizioni relative ad essa")
+                    return
+                }
+                let saver = Saver(circuitName: "Circuit2Dto3D", nodes: self.valvole,
+                                  scene: self.scene!, relativeObject: objectParent)
+                
+                do {
+                    try saver.save(to: "circuit2D-3D.json")
+                } catch {
+                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
+                }
             }
         }
     }

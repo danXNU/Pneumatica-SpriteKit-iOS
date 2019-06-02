@@ -13,6 +13,8 @@ import GameplayKit
 class GameViewController: UIViewController {
     @IBOutlet weak var modeSegment: UISegmentedControl!
     
+    var currentScene: SKScene!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,6 +23,8 @@ class GameViewController: UIViewController {
             if let scene = SKScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
+                
+                self.currentScene = scene
                 
                 // Present the scene
                 view.presentScene(scene)
@@ -64,6 +68,11 @@ class GameViewController: UIViewController {
         NotificationCenter.default.post(name: .commandSent, object: command)
     }
     
+    @IBAction func save3DTouched(_ sender: UIButton) {
+        let command = CommandCode.save3D
+        NotificationCenter.default.post(name: .commandSent, object: command)
+    }
+    
     @IBAction func caricaTouched(_ sender: UIButton) {
         let command = CommandCode.load
         NotificationCenter.default.post(name: .commandSent, object: command)
@@ -73,4 +82,11 @@ class GameViewController: UIViewController {
         let command = CommandCode.trash
         NotificationCenter.default.post(name: .commandSent, object: command)
     }
+    
+    
+    @IBAction func arButtonTapped(_ sender: UIButton) {
+        let arController = ARViewController(scene: self.currentScene)
+        self.present(arController, animated: true)
+    }
+    
 }

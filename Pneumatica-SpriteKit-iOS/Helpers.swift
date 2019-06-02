@@ -10,6 +10,7 @@ import Foundation
 
 enum CommandCode {
     case save
+    case save3D
     case load
     case trash
 }

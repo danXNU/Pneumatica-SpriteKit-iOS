@@ -17,6 +17,8 @@
 		DB97B3E3226A28CF00B1421E /* DiskObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB97B3E2226A28CF00B1421E /* DiskObjects.swift */; };
 		DB97B3E5226A2C6000B1421E /* Saver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB97B3E4226A2C6000B1421E /* Saver.swift */; };
 		DB97B3E7226A5DAB00B1421E /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB97B3E6226A5DAB00B1421E /* Loader.swift */; };
+		DB9A1C80229EE40F003D18B3 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9A1C7F229EE40F003D18B3 /* ARViewController.swift */; };
+		DB9A1C82229EE7CE003D18B3 /* emptyScene.scn in Resources */ = {isa = PBXBuildFile; fileRef = DB9A1C81229EE7CE003D18B3 /* emptyScene.scn */; };
 		DB9C8C332264CD7D0071C104 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C322264CD7D0071C104 /* Protocols.swift */; };
 		DB9C8C362264CE5D0071C104 /* OR.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C352264CE5D0071C104 /* OR.swift */; };
 		DB9C8C382264CE920071C104 /* GruppooFRL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C372264CE920071C104 /* GruppooFRL.swift */; };
@@ -55,6 +57,8 @@
 		DB97B3E2226A28CF00B1421E /* DiskObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskObjects.swift; sourceTree = "<group>"; };
 		DB97B3E4226A2C6000B1421E /* Saver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saver.swift; sourceTree = "<group>"; };
 		DB97B3E6226A5DAB00B1421E /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		DB9A1C7F229EE40F003D18B3 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
+		DB9A1C81229EE7CE003D18B3 /* emptyScene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = emptyScene.scn; sourceTree = "<group>"; };
 		DB9C8C322264CD7D0071C104 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		DB9C8C352264CE5D0071C104 /* OR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OR.swift; sourceTree = "<group>"; };
 		DB9C8C372264CE920071C104 /* GruppooFRL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GruppooFRL.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 				DBACB86B2258B793007B3E6C /* GameViewController.swift */,
 				DBCD4E1B2290029900E6BBA0 /* MovableEditMode.swift */,
 				DBCD4E1F22900CAD00E6BBA0 /* Helpers.swift */,
+				DB9A1C7F229EE40F003D18B3 /* ARViewController.swift */,
 			);
 			path = "Pneumatica-SpriteKit-iOS";
 			sourceTree = "<group>";
@@ -199,6 +204,7 @@
 				DBACB86D2258B793007B3E6C /* Main.storyboard */,
 				DBACB8752258B794007B3E6C /* Info.plist */,
 				DBCD4E1D2290048F00E6BBA0 /* Notifications.swift */,
+				DB9A1C81229EE7CE003D18B3 /* emptyScene.scn */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -304,6 +310,7 @@
 				DBACB86F2258B793007B3E6C /* Main.storyboard in Resources */,
 				DBACB8662258B793007B3E6C /* GameScene.sks in Resources */,
 				DBE603FB22687CDA00564E90 /* Explosion.sks in Resources */,
+				DB9A1C82229EE7CE003D18B3 /* emptyScene.scn in Resources */,
 				DBACB8712258B794007B3E6C /* Assets.xcassets in Resources */,
 				DBE603FC22687CDA00564E90 /* Assets.xcassets in Resources */,
 				DBACB8742258B794007B3E6C /* LaunchScreen.storyboard in Resources */,
@@ -346,6 +353,7 @@
 				DB97B3E3226A28CF00B1421E /* DiskObjects.swift in Sources */,
 				DB383E4A2268B1CC00267C92 /* BouncyView.swift in Sources */,
 				DB9C8C442264CF7A0071C104 /* Pulsante.swift in Sources */,
+				DB9A1C80229EE40F003D18B3 /* ARViewController.swift in Sources */,
 				DB97B3E5226A2C6000B1421E /* Saver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

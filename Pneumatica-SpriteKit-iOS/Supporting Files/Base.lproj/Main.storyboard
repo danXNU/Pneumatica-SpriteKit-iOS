@@ -33,17 +33,24 @@
                                 </connections>
                             </segmentedControl>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FRt-Sn-OE5">
-                                <rect key="frame" x="319" y="44" width="75" height="80"/>
+                                <rect key="frame" x="319" y="44" width="75" height="100"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aZ-2k-fzK">
-                                        <rect key="frame" x="0.0" y="0.0" width="75" height="36"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="75" height="28"/>
                                         <state key="normal" title="Salva"/>
                                         <connections>
                                             <action selector="saveTouched:" destination="BV1-FR-VrT" eventType="touchUpInside" id="tdr-ci-7fH"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2mK-dI-TaN">
+                                        <rect key="frame" x="0.0" y="36" width="75" height="28"/>
+                                        <state key="normal" title="Salva3D"/>
+                                        <connections>
+                                            <action selector="save3DTouched:" destination="BV1-FR-VrT" eventType="touchUpInside" id="7II-nY-Mdf"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vr2-Xb-k9Z">
-                                        <rect key="frame" x="0.0" y="44" width="75" height="36"/>
+                                        <rect key="frame" x="0.0" y="72" width="75" height="28"/>
                                         <state key="normal" title="Carica"/>
                                         <connections>
                                             <action selector="caricaTouched:" destination="BV1-FR-VrT" eventType="touchUpInside" id="pAc-dh-7GU"/>
@@ -52,7 +59,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="B4C-ee-IyB"/>
-                                    <constraint firstAttribute="height" constant="80" id="l7M-0I-VhK"/>
+                                    <constraint firstAttribute="height" constant="100" id="l7M-0I-VhK"/>
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v0O-8c-12r">
@@ -67,14 +74,27 @@
                                     <action selector="cestinoTouched:" destination="BV1-FR-VrT" eventType="touchUpInside" id="tL0-Ha-piY"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOW-PN-dai">
+                                <rect key="frame" x="19" y="98" width="70" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="KFV-Rv-IkM"/>
+                                    <constraint firstAttribute="height" constant="50" id="VQb-jf-VTf"/>
+                                </constraints>
+                                <state key="normal" title="ARKit"/>
+                                <connections>
+                                    <action selector="arButtonTapped:" destination="BV1-FR-VrT" eventType="touchUpInside" id="jE5-jj-jRs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="v0O-8c-12r" firstAttribute="leading" secondItem="4qk-I5-YsI" secondAttribute="leading" constant="20" id="6RO-zj-Hrf"/>
                             <constraint firstItem="jal-I8-pd2" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="CfD-GI-j8X"/>
+                            <constraint firstItem="YOW-PN-dai" firstAttribute="leading" secondItem="4qk-I5-YsI" secondAttribute="leading" constant="19" id="L5I-ck-G11"/>
                             <constraint firstItem="v0O-8c-12r" firstAttribute="top" secondItem="3se-qz-xqx" secondAttribute="top" constant="40" id="S8D-Hc-hUZ"/>
                             <constraint firstItem="FRt-Sn-OE5" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" id="Xls-ND-D9x"/>
                             <constraint firstItem="4qk-I5-YsI" firstAttribute="trailing" secondItem="FRt-Sn-OE5" secondAttribute="trailing" constant="20" id="dbx-Jy-TYN"/>
+                            <constraint firstItem="YOW-PN-dai" firstAttribute="top" secondItem="v0O-8c-12r" secondAttribute="bottom" constant="22" id="pb1-DU-VqU"/>
                             <constraint firstItem="jal-I8-pd2" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" id="zFq-G5-WXM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
@@ -85,6 +105,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="138.61607142857142"/>
         </scene>
     </scenes>
 </document>

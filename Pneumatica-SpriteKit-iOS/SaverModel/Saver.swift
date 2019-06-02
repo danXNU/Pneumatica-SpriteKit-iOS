@@ -15,12 +15,14 @@ class Saver {
     var links: [Link] = []
     
     var circuit: Circuit
+    var scene: SKScene
     
-    init(circuitName: String, nodes: [ValvolaConformance], scene: SKScene) {
+    init(circuitName: String, nodes: [ValvolaConformance], scene: SKScene, relativeObject: ValvolaConformance? = nil) {
         self.circuit = Circuit(name: circuitName)
         self.circuit.screenSize = scene.size
+        self.scene = scene
         self.nodes = nodes
-        calculate()
+        calculate(objectRelative: relativeObject)
     }
     
     public func save(to fileName: String) throws {
@@ -45,14 +47,20 @@ class Saver {
     }
     
     
-    private func calculate() {
+    private func calculate(objectRelative: ValvolaConformance? = nil) {
         for node in self.nodes {
             let name = node.name ?? ""
             guard let classType = ClassType.get(from: node) else { continue }
             
             var newObject = Object(name: name, classType: classType)
             newObject.id = node.id
-            newObject.position = node.position
+            if let objParent = objectRelative {
+                newObject.position = scene.convert(node.position, to: objParent)
+//                newObject.position = node.convert(node.position, to: objParent)
+            } else {
+                newObject.position = node.position
+            }
+            
             newObject.zPosition = node.zPosition
             newObject.size = node.frame.size
             
