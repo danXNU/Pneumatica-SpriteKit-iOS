@@ -11,4 +11,5 @@ import Foundation
 extension Notification.Name {
     static let sceneModeChanged = Notification.Name("sceneModeChanged")
     static let commandSent = Notification.Name("commandSent")
+    static let updateNeeded = Notification.Name("updateNeeded")
 }
