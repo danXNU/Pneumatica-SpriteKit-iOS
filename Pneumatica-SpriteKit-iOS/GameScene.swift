@@ -9,9 +9,18 @@
 import SpriteKit
 import GameplayKit
 import UIKit
+import AVFoundation
 
 class GameScene: SKScene {
-    var mode: Mode = .editing
+    var mode: Mode = .editing {
+        didSet {
+            if mode == Mode.running {
+                airSoundPlayer.play()
+            } else {
+                airSoundPlayer.pause()
+            }
+        }
+    }
     
     var defaultBackground: UIColor!
     
@@ -31,6 +40,12 @@ class GameScene: SKScene {
     
     let cameraNode = SKCameraNode()
     
+    lazy var airSoundPlayer: AVAudioPlayer = {
+        guard let url = Bundle.main.url(forResource: "air", withExtension: "m4a") else { fatalError() }
+        guard let player = try? AVAudioPlayer(contentsOf: url) else { fatalError() }
+        player.numberOfLoops = -1
+        return player
+    }()
     
     //MARK: - Lifecycle
     override func didMove(to view: SKView) {
@@ -54,6 +69,7 @@ class GameScene: SKScene {
         
         self.camera = cameraNode
         
+        airSoundPlayer.prepareToPlay()
         
         NotificationCenter.default.addObserver(forName: .sceneModeChanged, object: nil, queue: .main) { (notif) in
             guard let mode = notif.object as? Mode else { return }

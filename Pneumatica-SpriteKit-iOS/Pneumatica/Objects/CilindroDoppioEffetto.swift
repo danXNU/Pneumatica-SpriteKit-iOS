@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance, Movable {
     enum CyclinderState {
@@ -43,6 +44,20 @@ class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance, Movable {
     }
     var movingPath: MovingPath!
     
+    private lazy var exitSoundPlayer: AVAudioPlayer = {
+        guard let url = Bundle.main.url(forResource: "pistonOn", withExtension: "m4a") else { fatalError() }
+        guard let player = try? AVAudioPlayer(contentsOf: url) else { fatalError() }
+        player.prepareToPlay()
+        return player
+    }()
+    
+    private lazy var enterSoundPlayer: AVAudioPlayer = {
+        guard let url = Bundle.main.url(forResource: "pistonOff", withExtension: "m4a") else { fatalError() }
+        guard let player = try? AVAudioPlayer(contentsOf: url) else { fatalError() }
+        player.prepareToPlay()
+        return player
+    }()
+    
     required init(size: CGSize) {
         super.init()
         self.fillColor = .clear
@@ -64,11 +79,21 @@ class CilindroDoppioEffetto: SKShapeNode, ValvolaConformance, Movable {
             if inputLeft.ariaPressure > 0 && inputRight.ariaPressure <= 0 {
                 self.pistone.run(pistonAction)
                 self.state = .fuoriuscito
+                if self.enterSoundPlayer.isPlaying {
+                    self.enterSoundPlayer.pause()
+                    self.enterSoundPlayer.currentTime = 0.0
+                }
+                self.exitSoundPlayer.play()
             }
         case .fuoriuscito:
             if inputRight.ariaPressure > 0 && inputLeft.ariaPressure <= 0 {
                 self.pistone.run(pistonAction.reversed())
                 self.state = .interno
+                if self.exitSoundPlayer.isPlaying {
+                    self.exitSoundPlayer.pause()
+                    self.exitSoundPlayer.currentTime = 0.0
+                }
+                self.enterSoundPlayer.play()
             }
         case .animating: break // da fare in futuro se necessario
         }
