@@ -85,8 +85,6 @@ class GameViewController: UIViewController {
     
     
     @IBAction func arButtonTapped(_ sender: UIButton) {
-        let arController = ARViewController(scene: self.currentScene)
-        self.present(arController, animated: true)
     }
     
 }

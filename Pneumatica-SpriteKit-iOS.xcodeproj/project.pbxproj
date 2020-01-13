@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,7 +22,6 @@
 		DB97B3E3226A28CF00B1421E /* DiskObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB97B3E2226A28CF00B1421E /* DiskObjects.swift */; };
 		DB97B3E5226A2C6000B1421E /* Saver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB97B3E4226A2C6000B1421E /* Saver.swift */; };
 		DB97B3E7226A5DAB00B1421E /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB97B3E6226A5DAB00B1421E /* Loader.swift */; };
-		DB9A1C80229EE40F003D18B3 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9A1C7F229EE40F003D18B3 /* ARViewController.swift */; };
 		DB9A1C82229EE7CE003D18B3 /* emptyScene.scn in Resources */ = {isa = PBXBuildFile; fileRef = DB9A1C81229EE7CE003D18B3 /* emptyScene.scn */; };
 		DB9C8C332264CD7D0071C104 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C322264CD7D0071C104 /* Protocols.swift */; };
 		DB9C8C362264CE5D0071C104 /* OR.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C8C352264CE5D0071C104 /* OR.swift */; };
@@ -45,6 +44,7 @@
 		DBACB8742258B794007B3E6C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBACB8722258B794007B3E6C /* LaunchScreen.storyboard */; };
 		DBACB8802258B812007B3E6C /* AND.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB87D2258B812007B3E6C /* AND.swift */; };
 		DBACB8822258B812007B3E6C /* PressableInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBACB87F2258B812007B3E6C /* PressableInput.swift */; };
+		DBBA9E7E23CCD8D200E629FB /* DXPneumatic in Frameworks */ = {isa = PBXBuildFile; productRef = DBBA9E7D23CCD8D200E629FB /* DXPneumatic */; };
 		DBCD4E1C2290029900E6BBA0 /* MovableEditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD4E1B2290029900E6BBA0 /* MovableEditMode.swift */; };
 		DBCD4E1E2290048F00E6BBA0 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD4E1D2290048F00E6BBA0 /* Notifications.swift */; };
 		DBCD4E2022900CAD00E6BBA0 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD4E1F22900CAD00E6BBA0 /* Helpers.swift */; };
@@ -67,7 +67,6 @@
 		DB97B3E2226A28CF00B1421E /* DiskObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskObjects.swift; sourceTree = "<group>"; };
 		DB97B3E4226A2C6000B1421E /* Saver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saver.swift; sourceTree = "<group>"; };
 		DB97B3E6226A5DAB00B1421E /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
-		DB9A1C7F229EE40F003D18B3 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		DB9A1C81229EE7CE003D18B3 /* emptyScene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = emptyScene.scn; sourceTree = "<group>"; };
 		DB9C8C322264CD7D0071C104 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		DB9C8C352264CE5D0071C104 /* OR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OR.swift; sourceTree = "<group>"; };
@@ -92,6 +91,8 @@
 		DBACB8752258B794007B3E6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBACB87D2258B812007B3E6C /* AND.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AND.swift; sourceTree = "<group>"; };
 		DBACB87F2258B812007B3E6C /* PressableInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PressableInput.swift; sourceTree = "<group>"; };
+		DBBA9E7B23CCD8CD00E629FB /* DXPneumatic */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DXPneumatic; path = ../DXPneumatic; sourceTree = "<group>"; };
+		DBBA9E7F23CCD8FE00E629FB /* Pneumatica-SpriteKit-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pneumatica-SpriteKit-iOS.entitlements"; sourceTree = "<group>"; };
 		DBBC0E5F22687AED004BD2EA /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		DBCD4E1B2290029900E6BBA0 /* MovableEditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovableEditMode.swift; sourceTree = "<group>"; };
 		DBCD4E1D2290048F00E6BBA0 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
@@ -108,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBBA9E7E23CCD8D200E629FB /* DXPneumatic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,8 +173,10 @@
 		DBACB8572258B793007B3E6C = {
 			isa = PBXGroup;
 			children = (
+				DBBA9E7B23CCD8CD00E629FB /* DXPneumatic */,
 				DBACB8622258B793007B3E6C /* Pneumatica-SpriteKit-iOS */,
 				DBACB8612258B793007B3E6C /* Products */,
+				DBBA9E7C23CCD8D200E629FB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -187,6 +191,7 @@
 		DBACB8622258B793007B3E6C /* Pneumatica-SpriteKit-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				DBBA9E7F23CCD8FE00E629FB /* Pneumatica-SpriteKit-iOS.entitlements */,
 				DB97B3E1226A28BF00B1421E /* SaverModel */,
 				DB383E4B2268B21000267C92 /* Extensions.swift */,
 				DBE604032268B06C00564E90 /* Cells */,
@@ -199,7 +204,6 @@
 				DBACB86B2258B793007B3E6C /* GameViewController.swift */,
 				DBCD4E1B2290029900E6BBA0 /* MovableEditMode.swift */,
 				DBCD4E1F22900CAD00E6BBA0 /* Helpers.swift */,
-				DB9A1C7F229EE40F003D18B3 /* ARViewController.swift */,
 			);
 			path = "Pneumatica-SpriteKit-iOS";
 			sourceTree = "<group>";
@@ -233,6 +237,13 @@
 				DB9C8C322264CD7D0071C104 /* Protocols.swift */,
 			);
 			path = Pneumatica;
+			sourceTree = "<group>";
+		};
+		DBBA9E7C23CCD8D200E629FB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		DBBC0E5E22687AD5004BD2EA /* NOT_IN_USE */ = {
@@ -280,6 +291,9 @@
 			dependencies = (
 			);
 			name = "Pneumatica-SpriteKit-iOS";
+			packageProductDependencies = (
+				DBBA9E7D23CCD8D200E629FB /* DXPneumatic */,
+			);
 			productName = "Pneumatica-SpriteKit-iOS";
 			productReference = DBACB8602258B793007B3E6C /* Pneumatica-SpriteKit-iOS.app */;
 			productType = "com.apple.product-type.application";
@@ -373,7 +387,6 @@
 				DB97B3E3226A28CF00B1421E /* DiskObjects.swift in Sources */,
 				DB383E4A2268B1CC00267C92 /* BouncyView.swift in Sources */,
 				DB9C8C442264CF7A0071C104 /* Pulsante.swift in Sources */,
-				DB9A1C80229EE40F003D18B3 /* ARViewController.swift in Sources */,
 				DB97B3E5226A2C6000B1421E /* Saver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -520,7 +533,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Pneumatica-SpriteKit-iOS/Pneumatica-SpriteKit-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = R779A64KR9;
 				INFOPLIST_FILE = "$(SRCROOT)/Pneumatica-SpriteKit-iOS/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
@@ -530,6 +545,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.danitox.Pneumatica-SpriteKit-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -539,7 +555,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Pneumatica-SpriteKit-iOS/Pneumatica-SpriteKit-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = R779A64KR9;
 				INFOPLIST_FILE = "$(SRCROOT)/Pneumatica-SpriteKit-iOS/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
@@ -549,6 +567,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.danitox.Pneumatica-SpriteKit-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -576,6 +595,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DBBA9E7D23CCD8D200E629FB /* DXPneumatic */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DXPneumatic;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DBACB8582258B793007B3E6C /* Project object */;
 }

@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 import UIKit
 import AVFoundation
+import DXPneumatic
 
 class GameScene: SKScene {
     var mode: Mode = .editing {
@@ -37,6 +38,9 @@ class GameScene: SKScene {
     var valvole: [ValvolaConformance] = []
     var selectedValvola : ValvolaConformance?
     var valvoleLayoutChanged: Bool = false
+    
+    var newValvole: [BaseValvola] = []
+    var newValvoleNodes: [ValvolaStateReceiver] = []
     
     let cameraNode = SKCameraNode()
     
@@ -424,20 +428,20 @@ class GameScene: SKScene {
 extension GameScene : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         hideTableView()
-        if let dataSource = self.dataSource as? ObjectCreationDataSource {
-            let newNode = dataSource.createInstanceOf(index: indexPath.row)
-            newNode.fillColor = self.defaultBackground
-            
-//            let tempPoistion = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
-//            let newPosition = convertPoint(fromView: tempPoistion)
-//
-//            newNode.position = newPosition
-            
-//            self.addChild(newNode)
-            present(valvola: newNode)
-            newNode.zPosition = 1
-            valvole.append(newNode)
-        }
+        guard let dataSource = self.dataSource as? ObjectCreationDataSource else { return }
+        
+        let node = dataSource.createInstanceOf(type: ValvoleTypes.type(at: indexPath.row))
+        
+        self.newValvoleNodes.append(node)
+        self.newValvole.append(node.valvolaModel)
+        
+        let tempPoistion = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
+        let newPosition = convertPoint(fromView: tempPoistion)
+        node.position = newPosition
+        self.addChild(node)
+        
+        
+
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
