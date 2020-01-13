@@ -37,6 +37,8 @@ class GameScene: SKScene {
     let cameraNode = SKCameraNode()
     
     var newSelectedValvola: UIValvola?
+    var newFirstSelectedIO: GraphicalIO?
+    var newSecondSelectedIO: GraphicalIO?
     
     var isDragging: Bool = false
     
@@ -62,6 +64,7 @@ class GameScene: SKScene {
         
         self.camera = cameraNode
         
+        self.runtime.start()
         
         NotificationCenter.default.addObserver(forName: .sceneModeChanged, object: nil, queue: .main) { (notif) in
             guard let mode = notif.object as? Mode else { return }
@@ -227,6 +230,19 @@ class GameScene: SKScene {
         }
         
         isDragging = false
+        
+        guard let touch = touches.first else { return }
+        let touchPosition = touch.location(in: self)
+        let nodes = self.nodes(at: touchPosition)
+        guard let node = nodes.first else { return }
+        
+        if let objectIO = node as? GraphicalIO {
+            select(io: objectIO)
+            
+            if let firstIO = newFirstSelectedIO, let secondIO = newSecondSelectedIO {
+                self.runtime.connect(firstIO: firstIO.modelIO, with: secondIO.modelIO)
+            }
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -270,6 +286,18 @@ class GameScene: SKScene {
     }
     
     // MARK: - Generic Functions
+    
+    func select(io: GraphicalIO) {
+        if newFirstSelectedIO == nil {
+            newFirstSelectedIO = io
+        } else if newSecondSelectedIO == nil {
+            newSecondSelectedIO = io
+            return
+        } else {
+            newFirstSelectedIO = io
+            newSecondSelectedIO = nil
+        }
+    }
     
     fileprivate func makeExplosion(_ valvola: ValvolaConformance) {
         if let explosion = SKEmitterNode(fileNamed: "Explosion") {
@@ -440,6 +468,9 @@ extension GameScene : UITableViewDelegate {
         
         self.newValvoleNodes.append(node)
         self.runtime.addInCircuit(valvola: node.valvolaModel, hasToInitialize: false)
+        if let startingPoint = node as? DXPneumatic.GruppoFRL {
+            self.runtime.addStartingPoint(startingPoint.valvolaModel)
+        }
         
         present(valvola: node)
 

@@ -108,7 +108,7 @@ class ObjectCreationDataSource : NSObject, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BoldCell") as! BoldCell
-//        cell.mainLabel.text = types[indexPath.row].keyStringClass
+        cell.mainLabel.text = "\(ValvoleTypes.type(at: indexPath.row))"
         return cell
     }
     
