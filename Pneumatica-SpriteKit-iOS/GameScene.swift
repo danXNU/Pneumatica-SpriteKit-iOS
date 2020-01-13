@@ -13,15 +13,7 @@ import AVFoundation
 import DXPneumatic
 
 class GameScene: SKScene {
-    var mode: Mode = .editing {
-        didSet {
-            if mode == Mode.running {
-                airSoundPlayer.play()
-            } else {
-                airSoundPlayer.pause()
-            }
-        }
-    }
+    var mode: Mode = .editing
     
     var defaultBackground: UIColor!
     
@@ -39,17 +31,12 @@ class GameScene: SKScene {
     var selectedValvola : ValvolaConformance?
     var valvoleLayoutChanged: Bool = false
     
-    var newValvole: [BaseValvola] = []
+    var runtime: IPRuntime = IPRuntime(startingPoint: [])
     var newValvoleNodes: [ValvolaStateReceiver] = []
     
     let cameraNode = SKCameraNode()
     
-    lazy var airSoundPlayer: AVAudioPlayer = {
-        guard let url = Bundle.main.url(forResource: "air", withExtension: "m4a") else { fatalError() }
-        guard let player = try? AVAudioPlayer(contentsOf: url) else { fatalError() }
-        player.numberOfLoops = -1
-        return player
-    }()
+    var newSelectedValvola: UIValvola?
     
     //MARK: - Lifecycle
     override func didMove(to view: SKView) {
@@ -73,7 +60,6 @@ class GameScene: SKScene {
         
         self.camera = cameraNode
         
-        airSoundPlayer.prepareToPlay()
         
         NotificationCenter.default.addObserver(forName: .sceneModeChanged, object: nil, queue: .main) { (notif) in
             guard let mode = notif.object as? Mode else { return }
@@ -156,88 +142,101 @@ class GameScene: SKScene {
 
     // MARK: - Touches
     
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        let touchPoint = touches.first?.location(in: self)
+//
+//        let nodes = self.nodes(at: touchPoint!)
+//
+//        if editinMode.state == .active {
+//            if let movableObject = nodes.first as? Movable {
+//                editinMode.selectedInput = movableObject
+//            }
+//            if editinMode.selectedInput != nil && editinMode.selectedValvolaWithMovableInput != nil {
+//                editinMode.selectedValvolaWithMovableInput?.movableInput = editinMode.selectedInput
+//                editinMode.selectedValvolaWithMovableInput?.listenValue = editinMode.editView.sliderValue
+//                editinMode.reset()
+//                self.backgroundColor = self.defaultBackground
+//            }
+//            return
+//        }
+//
+//
+//        if let tappableIO = nodes.first as? Tappable {
+//            tappableIO.tapped()
+//        } else if let clickedIO = nodes.first as? InputOutput {
+//            if firstSelectedIO == nil { firstSelectedIO = clickedIO }
+//            else if secondSelectedIO == nil { secondSelectedIO = clickedIO }
+//
+//            if let firstValvola = firstSelectedIO?.parentValvola, let secondValvola = secondSelectedIO?.parentValvola {
+//                if firstValvola == secondValvola {
+//                    print("Non puoi collegare un filo alla stessa valvola")
+//                    resetTouches()
+//                    return
+//                }
+//            }
+//
+//
+//            if let firstIO = firstSelectedIO, let secondIO = secondSelectedIO {
+//                if firstIO.inputsConnected.contains(secondIO) && secondIO.inputsConnected.contains(firstIO) {
+//                    removeLine(from: firstIO, to: secondIO)
+//                } else {
+//                    createLine(from: firstIO, to: secondIO)
+//                }
+//                resetTouches()
+//            }
+//
+//
+//        } else if let valvola = nodes.first as? ValvolaConformance {
+//            selectedValvola?.strokeColor = .white
+//            selectedValvola = valvola
+//            selectedValvola?.strokeColor = .blue
+//
+//            if mode != .running {
+//                selectedValvola?.ios.forEach { $0.fillColor = .blue }
+//                for line in self.lines {
+//                    if selectedValvola?.ios.contains(line.firstIO) ?? false ||
+//                        selectedValvola?.ios.contains(line.secondIO) ?? false {
+//                        line.strokeColor = .blue
+//                    } else {
+//                        line.strokeColor = .red
+//                    }
+//                }
+//            }
+//        } else {
+//            resetTouches()
+//            hideTableView()
+//        }
+//    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let nodes = self.nodes(at: touch.location(in: self))
+        guard let node = nodes.first else { return }
+        guard let valvola = node as? UIValvola else { return }
+        print("Selected valvola")
+        
+        newSelectedValvola = valvola
+    }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touchPoint = touches.first?.location(in: self)
-        
-        let nodes = self.nodes(at: touchPoint!)
-        
-        if editinMode.state == .active {
-            if let movableObject = nodes.first as? Movable {
-                editinMode.selectedInput = movableObject
-            }
-            if editinMode.selectedInput != nil && editinMode.selectedValvolaWithMovableInput != nil {
-                editinMode.selectedValvolaWithMovableInput?.movableInput = editinMode.selectedInput
-                editinMode.selectedValvolaWithMovableInput?.listenValue = editinMode.editView.sliderValue
-                editinMode.reset()
-                self.backgroundColor = self.defaultBackground
-            }
-            return
-        }
-        
-        
-        if let tappableIO = nodes.first as? Tappable {
-            tappableIO.tapped()
-        } else if let clickedIO = nodes.first as? InputOutput {
-            if firstSelectedIO == nil { firstSelectedIO = clickedIO }
-            else if secondSelectedIO == nil { secondSelectedIO = clickedIO }
-        
-            if let firstValvola = firstSelectedIO?.parentValvola, let secondValvola = secondSelectedIO?.parentValvola {
-                if firstValvola == secondValvola {
-                    print("Non puoi collegare un filo alla stessa valvola")
-                    resetTouches()
-                    return
-                }
-            }
-            
-            
-            if let firstIO = firstSelectedIO, let secondIO = secondSelectedIO {
-                if firstIO.inputsConnected.contains(secondIO) && secondIO.inputsConnected.contains(firstIO) {
-                    removeLine(from: firstIO, to: secondIO)
-                } else {
-                    createLine(from: firstIO, to: secondIO)
-                }
-                resetTouches()
-            }
-            
-            
-        } else if let valvola = nodes.first as? ValvolaConformance {
-            selectedValvola?.strokeColor = .white
-            selectedValvola = valvola
-            selectedValvola?.strokeColor = .blue
-            
-            if mode != .running {
-                selectedValvola?.ios.forEach { $0.fillColor = .blue }
-                for line in self.lines {
-                    if selectedValvola?.ios.contains(line.firstIO) ?? false ||
-                        selectedValvola?.ios.contains(line.secondIO) ?? false {
-                        line.strokeColor = .blue
-                    } else {
-                        line.strokeColor = .red
-                    }
-                }
-            }
-        } else {
-            resetTouches()
-            hideTableView()
-        }
+        newSelectedValvola = nil
+        print("Deselcted valvola")
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if selectedValvola != nil {
+        if newSelectedValvola != nil {
             for touch in touches {
                 let touchPoint = touch.location(in: self)
-                selectedValvola?.position.x = touchPoint.x - 100
-                selectedValvola?.position.y = touchPoint.y - 50
+                newSelectedValvola!.position.x = touchPoint.x - 100
+                newSelectedValvola!.position.y = touchPoint.y - 50
             }
-            valvoleLayoutChanged = true
         } else {
-            guard let touch = touches.first else { return }
+             guard let touch = touches.first else { return }
             let location = touch.location(in: self)
             let previousLocation = touch.previousLocation(in: self)
             
             camera?.position.x -= location.x - previousLocation.x
             camera?.position.y -= location.y - previousLocation.y
-            
         }
     }
     
@@ -407,7 +406,7 @@ class GameScene: SKScene {
         line.run(compoundAction)
     }
     
-    func present(valvola: ValvolaConformance, position: CGPoint? = nil) {
+    func present(valvola: UIValvola, position: CGPoint? = nil) {
         if position == nil {
             let tempPoistion = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
             let newPosition = convertPoint(fromView: tempPoistion)
@@ -433,14 +432,9 @@ extension GameScene : UITableViewDelegate {
         let node = dataSource.createInstanceOf(type: ValvoleTypes.type(at: indexPath.row))
         
         self.newValvoleNodes.append(node)
-        self.newValvole.append(node.valvolaModel)
+        self.runtime.addInCircuit(valvola: node.valvolaModel, hasToInitialize: false)
         
-        let tempPoistion = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
-        let newPosition = convertPoint(fromView: tempPoistion)
-        node.position = newPosition
-        self.addChild(node)
-        
-        
+        present(valvola: node)
 
     }
     
