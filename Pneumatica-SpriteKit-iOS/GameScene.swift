@@ -38,6 +38,8 @@ class GameScene: SKScene {
     
     var newSelectedValvola: UIValvola?
     
+    var isDragging: Bool = false
+    
     //MARK: - Lifecycle
     override func didMove(to view: SKView) {
         self.size = view.bounds.size
@@ -219,12 +221,17 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        newSelectedValvola = nil
-        print("Deselcted valvola")
+        if isDragging {
+            newSelectedValvola = nil
+            print("Deselcted valvola after dragging")
+        }
+        
+        isDragging = false
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if newSelectedValvola != nil {
+            self.isDragging = true
             for touch in touches {
                 let touchPoint = touch.location(in: self)
                 newSelectedValvola!.position.x = touchPoint.x - 100
