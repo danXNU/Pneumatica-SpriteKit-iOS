@@ -240,7 +240,12 @@ class GameScene: SKScene {
             select(io: objectIO)
             
             if let firstIO = newFirstSelectedIO, let secondIO = newSecondSelectedIO {
-                self.runtime.connect(firstIO: firstIO.modelIO, with: secondIO.modelIO)
+                if firstIO.modelIO.isConnected(to: secondIO.modelIO) {
+                    self.runtime.disconnect(firstIO: firstIO.modelIO, from: secondIO.modelIO)
+                } else {
+                    self.runtime.connect(firstIO: firstIO.modelIO, with: secondIO.modelIO)
+                }
+                
             }
         }
     }
