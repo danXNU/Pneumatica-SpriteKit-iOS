@@ -420,8 +420,6 @@ class GameScene: SKScene {
         self.lines.append(line)
         addChild(line)
         
-        //firstIO.fillColor = .blue
-        //secondIO.fillColor = .blue
     }
     
     func removeLine(from firstIO: InputOutput, to secondIO: InputOutput) {
