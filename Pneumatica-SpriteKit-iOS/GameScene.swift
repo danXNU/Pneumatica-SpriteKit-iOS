@@ -135,11 +135,12 @@ class GameScene: SKScene {
 //                valvola.update()
 //            }
             
-            lines.forEach { $0.update() }
+            
             
 //            if valvoleLayoutChanged {
                 lines.forEach { drawLine(line: $0) }
                 valvoleLayoutChanged = false
+                lines.forEach { $0.update() }
 //            }
         case .stopped: break
         }
@@ -238,23 +239,7 @@ class GameScene: SKScene {
         guard let node = nodes.first else { return }
         
         if let objectIO = node as? GraphicalIO {
-            select(io: objectIO)
-            
-            if let firstIO = newFirstSelectedIO, let secondIO = newSecondSelectedIO {
-                if firstIO.modelIO.isConnected(to: secondIO.modelIO) {
-                    self.runtime.disconnect(firstIO: firstIO.modelIO, from: secondIO.modelIO)
-                    let line = self.lines.first {
-                        $0.firstIO == firstIO && $0.secondIO == secondIO || $0.firstIO == secondIO && $0.secondIO == firstIO
-                    }
-                    if let line = line {
-                        self.remove(line: line)
-                    }
-                } else {
-                    self.runtime.connect(firstIO: firstIO.modelIO, with: secondIO.modelIO)
-                    self.createLine(from: firstIO, to: secondIO)
-                }
-                
-            }
+            handleTouchedIO(objectIO)
         }
     }
     
@@ -299,6 +284,26 @@ class GameScene: SKScene {
     }
     
     // MARK: - Generic Functions
+    
+    func handleTouchedIO(_ io: GraphicalIO) {
+        select(io: io)
+        
+        if let firstIO = newFirstSelectedIO, let secondIO = newSecondSelectedIO {
+            if firstIO.modelIO.isConnected(to: secondIO.modelIO) {
+                self.runtime.disconnect(firstIO: firstIO.modelIO, from: secondIO.modelIO)
+                let line = self.lines.first {
+                    $0.firstIO == firstIO && $0.secondIO == secondIO || $0.firstIO == secondIO && $0.secondIO == firstIO
+                }
+                if let line = line {
+                    self.remove(line: line)
+                }
+            } else {
+                self.runtime.connect(firstIO: firstIO.modelIO, with: secondIO.modelIO)
+                self.createLine(from: firstIO, to: secondIO)
+            }
+            
+        }
+    }
     
     func select(io: GraphicalIO) {
         if newFirstSelectedIO == nil {
@@ -415,8 +420,8 @@ class GameScene: SKScene {
         self.lines.append(line)
         addChild(line)
         
-        firstIO.fillColor = .blue
-        secondIO.fillColor = .blue
+        //firstIO.fillColor = .blue
+        //secondIO.fillColor = .blue
     }
     
     func removeLine(from firstIO: InputOutput, to secondIO: InputOutput) {
