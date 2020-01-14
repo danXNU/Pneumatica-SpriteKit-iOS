@@ -7,13 +7,14 @@
 //
 
 import SpriteKit
+import DXPneumatic
 
 class Line: SKShapeNode {
-    var firstIO : InputOutput!
-    var secondIO: InputOutput!
+    var firstIO : GraphicalIO!
+    var secondIO: GraphicalIO!
     
     func update() {
-        if self.firstIO.ariaPressure > 0 && self.secondIO.ariaPressure > 0 {
+        if self.firstIO.modelIO.pressure > 0 && self.secondIO.modelIO.pressure > 0 {
             self.strokeColor = .green
         } else {
             self.strokeColor = .red

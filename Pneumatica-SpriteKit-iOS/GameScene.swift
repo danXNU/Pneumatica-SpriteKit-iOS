@@ -13,7 +13,7 @@ import AVFoundation
 import DXPneumatic
 
 class GameScene: SKScene {
-    var mode: Mode = .editing
+    var mode: Mode = .running
     
     var defaultBackground: UIColor!
     
@@ -39,6 +39,7 @@ class GameScene: SKScene {
     var newSelectedValvola: UIValvola?
     var newFirstSelectedIO: GraphicalIO?
     var newSecondSelectedIO: GraphicalIO?
+    
     
     var isDragging: Bool = false
     
@@ -72,52 +73,52 @@ class GameScene: SKScene {
             print("mode changed in: \(mode)")
         }
         
-        NotificationCenter.default.addObserver(forName: .commandSent, object: nil, queue: .main) { (notif) in
-            guard let command = notif.object as? CommandCode else { return }
-            switch command {
-            case .trash:
-                if let valvola = self.selectedValvola {
-                    for line in self.lines {
-                        if valvola.ios.contains(line.firstIO) ||
-                            valvola.ios.contains(line.secondIO) {
-                            self.remove(line: line)
-                        }
-                    }
-                    self.makeExplosion(valvola)
-                    self.valvole.removeAll(where: { $0 == valvola })
-                    self.selectedValvola = nil
-                }
-                
-            case .load:
-                do {
-                    let loader = try Loader(fileName: "circuit.json", scene: self.scene!)
-                    loader.load()
-                } catch {
-                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
-                }
-            case .save:
-                let valvole = self.valvole
-                let saver = Saver(circuitName: "TestCircuitName", nodes: valvole, scene: self.scene!)
-                do {
-                    try saver.save(to: "circuit.json")
-                } catch {
-                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
-                }
-            case .save3D:
-                guard let objectParent = self.selectedValvola else {
-                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "Non hai selezionato la valvola da cui ottenere le varie posizioni relative ad essa")
-                    return
-                }
-                let saver = Saver(circuitName: "Circuit2Dto3D", nodes: self.valvole,
-                                  scene: self.scene!, relativeObject: objectParent)
-                
-                do {
-                    try saver.save(to: "circuit2D-3D.json")
-                } catch {
-                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
-                }
-            }
-        }
+//        NotificationCenter.default.addObserver(forName: .commandSent, object: nil, queue: .main) { (notif) in
+//            guard let command = notif.object as? CommandCode else { return }
+//            switch command {
+//            case .trash:
+//                if let valvola = self.selectedValvola {
+//                    for line in self.lines {
+//                        if valvola.ios.contains(line.firstIO) ||
+//                            valvola.ios.contains(line.secondIO) {
+//                            self.remove(line: line)
+//                        }
+//                    }
+//                    self.makeExplosion(valvola)
+//                    self.valvole.removeAll(where: { $0 == valvola })
+//                    self.selectedValvola = nil
+//                }
+//
+//            case .load:
+//                do {
+//                    let loader = try Loader(fileName: "circuit.json", scene: self.scene!)
+//                    loader.load()
+//                } catch {
+//                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
+//                }
+//            case .save:
+//                let valvole = self.valvole
+//                let saver = Saver(circuitName: "TestCircuitName", nodes: valvole, scene: self.scene!)
+//                do {
+//                    try saver.save(to: "circuit.json")
+//                } catch {
+//                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
+//                }
+//            case .save3D:
+//                guard let objectParent = self.selectedValvola else {
+//                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "Non hai selezionato la valvola da cui ottenere le varie posizioni relative ad essa")
+//                    return
+//                }
+//                let saver = Saver(circuitName: "Circuit2Dto3D", nodes: self.valvole,
+//                                  scene: self.scene!, relativeObject: objectParent)
+//
+//                do {
+//                    try saver.save(to: "circuit2D-3D.json")
+//                } catch {
+//                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
+//                }
+//            }
+//        }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -129,17 +130,17 @@ class GameScene: SKScene {
                 valvoleLayoutChanged = false
             }
         case .running:
-            for valvola in valvole {
-                valvola.ios.forEach { $0.update() }
-                valvola.update()
-            }
+//            for valvola in valvole {
+//                valvola.ios.forEach { $0.update() }
+//                valvola.update()
+//            }
             
             lines.forEach { $0.update() }
             
-            if valvoleLayoutChanged {
+//            if valvoleLayoutChanged {
                 lines.forEach { drawLine(line: $0) }
                 valvoleLayoutChanged = false
-            }
+//            }
         case .stopped: break
         }
         
@@ -242,8 +243,15 @@ class GameScene: SKScene {
             if let firstIO = newFirstSelectedIO, let secondIO = newSecondSelectedIO {
                 if firstIO.modelIO.isConnected(to: secondIO.modelIO) {
                     self.runtime.disconnect(firstIO: firstIO.modelIO, from: secondIO.modelIO)
+                    let line = self.lines.first {
+                        $0.firstIO == firstIO && $0.secondIO == secondIO || $0.firstIO == secondIO && $0.secondIO == firstIO
+                    }
+                    if let line = line {
+                        self.remove(line: line)
+                    }
                 } else {
                     self.runtime.connect(firstIO: firstIO.modelIO, with: secondIO.modelIO)
+                    self.createLine(from: firstIO, to: secondIO)
                 }
                 
             }
@@ -371,8 +379,8 @@ class GameScene: SKScene {
         finishPoint.x += (line.secondIO.frame.width / 2)
         finishPoint.y += (line.secondIO.frame.height / 2)
         
-        let startPosition = convert(startPoint, from: line.firstIO!.parentValvola!)
-        let finishPosition = convert(finishPoint, from: line.secondIO!.parentValvola!)
+        let startPosition = convert(startPoint, from: line.firstIO!.parent!)
+        let finishPosition = convert(finishPoint, from: line.secondIO!.parent!)
         
         var keyPointes : [CGPoint] = []
         var startHolder = startPosition
@@ -398,7 +406,7 @@ class GameScene: SKScene {
         line.strokeColor = SKColor.red
     }
     
-    func createLine(from firstIO: InputOutput, to secondIO: InputOutput) {
+    func createLine(from firstIO: GraphicalIO, to secondIO: GraphicalIO) {
         let line = Line()
         line.firstIO = firstIO
         line.secondIO = secondIO
@@ -406,8 +414,6 @@ class GameScene: SKScene {
         drawLine(line: line)
         self.lines.append(line)
         addChild(line)
-        
-        firstIO.addWire(from: secondIO)
         
         firstIO.fillColor = .blue
         secondIO.fillColor = .blue
@@ -437,7 +443,6 @@ class GameScene: SKScene {
     
     func remove(line: Line) {
         self.lines.removeAll(where: { $0 == line })
-        line.firstIO.removeWire(line.secondIO)
         
         let fadeAction = SKAction.fadeOut(withDuration: 0.3)
         let removeAction = SKAction.removeFromParent()

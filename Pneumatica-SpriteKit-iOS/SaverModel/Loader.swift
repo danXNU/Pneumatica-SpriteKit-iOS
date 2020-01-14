@@ -62,7 +62,7 @@ class Loader {
                     line.firstIO == nodeIO && line.secondIO == newNodeIO ||
                     line.firstIO == newNodeIO && line.secondIO == nodeIO
                 }) {
-                    gameScene.createLine(from: nodeIO, to: newNodeIO)
+//                    gameScene.createLine(from: nodeIO, to: newNodeIO)
                 }
             }
         }
