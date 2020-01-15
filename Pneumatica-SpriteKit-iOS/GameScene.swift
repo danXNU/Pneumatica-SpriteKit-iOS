@@ -242,6 +242,8 @@ class GameScene: SKScene {
         
         if let objectIO = node as? GraphicalIO {
             handleTouchedIO(objectIO)
+        } else if let pressableIO = node as? GraphicalPressableIO {
+            pressableIO.modelIO.tap()
         }
     }
     

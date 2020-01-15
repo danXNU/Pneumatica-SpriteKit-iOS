@@ -8,11 +8,7 @@
 import SpriteKit
 import UIKit
 
-class PressableInput : SKShapeNode, Tappable {
-    static func == (lhs: PressableInput, rhs: PressableInput) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
+class PressableInput : SKShapeNode {
     var id : UUID = UUID()
     var parentValvola : ValvolaConformance?
     var idleColor: UIColor = .red
@@ -38,14 +34,6 @@ class PressableInput : SKShapeNode, Tappable {
         self.parentValvola = valvola
         self.name = "\(self.parentValvola!.labelText)"
         
-    }
-    
-    func tapped() {
-        if self.ariaPressure <= 0 {
-            self.ariaPressure = 2
-        } else {
-            self.ariaPressure = 0
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
