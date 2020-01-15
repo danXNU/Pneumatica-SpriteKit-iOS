@@ -141,6 +141,8 @@ class GameScene: SKScene {
                 lines.forEach { drawLine(line: $0) }
                 valvoleLayoutChanged = false
                 lines.forEach { $0.update() }
+            
+                self.runtime.observables.forEach { $0.updateAction() }
 //            }
         case .stopped: break
         }
@@ -483,6 +485,10 @@ extension GameScene : UITableViewDelegate {
         self.runtime.addInCircuit(valvola: node.valvolaModel, hasToInitialize: false)
         if let startingPoint = node as? DXPneumatic.GruppoFRL {
             self.runtime.addStartingPoint(startingPoint.valvolaModel)
+        }
+            
+        if let observable = node as? DXPneumatic.ChangeListener {
+            self.runtime.observables.append(observable)
         }
         
         present(valvola: node)
