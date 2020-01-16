@@ -130,20 +130,14 @@ class GameScene: SKScene {
                 valvoleLayoutChanged = false
             }
         case .running:
-//            for valvola in valvole {
-//                valvola.ios.forEach { $0.update() }
-//                valvola.update()
-//            }
+
+            lines.forEach { drawLine(line: $0) }
+            valvoleLayoutChanged = false
+            lines.forEach { $0.update() }
             
-            
-            
-//            if valvoleLayoutChanged {
-                lines.forEach { drawLine(line: $0) }
-                valvoleLayoutChanged = false
-                lines.forEach { $0.update() }
-            
-                self.runtime.observables.forEach { $0.updateAction() }
-//            }
+            let listeners = self.runtime.observables.filter { $0.isActive }
+            listeners.forEach { $0.object.updateAction() }
+
         case .stopped: break
         }
         
@@ -490,7 +484,8 @@ extension GameScene : UITableViewDelegate {
         }
             
         if let observable = node as? DXPneumatic.ChangeListener {
-            self.runtime.observables.append(observable)
+            let listener = Listener(uiObject: observable, model: node.valvolaModel)
+            self.runtime.observables.append(listener)
         }
         
         present(valvola: node)
