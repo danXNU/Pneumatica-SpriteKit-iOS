@@ -20,5 +20,53 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D0ED6D1B-333A-47B0-B3E8-AE0496D893ED"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../DXPneumatic/Sources/DXPneumatic/UI/ValvoleUI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
+            landmarkName = "updateAction()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D0ED6D1B-333A-47B0-B3E8-AE0496D893ED - eb9fd93d9dd402f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DXPneumatic.CilindroDoppioEffetto.updateAction() -&gt; ()"
+                  moduleName = "Pneumatica-SpriteKit-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danitox/Desktop/DXPneumatic/Sources/DXPneumatic/UI/ValvoleUI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "186"
+                  endingLineNumber = "186"
+                  offsetFromSymbolStart = "3198">
+               </Location>
+               <Location
+                  uuid = "D0ED6D1B-333A-47B0-B3E8-AE0496D893ED - eb9fd93d9dd402f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DXPneumatic.CilindroDoppioEffetto.updateAction() -&gt; ()"
+                  moduleName = "Pneumatica-SpriteKit-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danitox/Desktop/DXPneumatic/Sources/DXPneumatic/UI/ValvoleUI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "186"
+                  endingLineNumber = "186"
+                  offsetFromSymbolStart = "3350">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
