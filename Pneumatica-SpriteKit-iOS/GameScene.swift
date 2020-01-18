@@ -488,6 +488,13 @@ extension GameScene : UITableViewDelegate {
             self.runtime.observables.append(listener)
         }
         
+        if let finecorsa = node as? DXPneumatic.Finecorsa {
+            guard let object = self.runtime.valvole.first(where: { $0 is IPCilindroDE }) else { fatalError() }
+            guard let cilindro = object as? IPCilindroDE else { fatalError() }
+            guard let finecorsaModel = finecorsa.valvolaModel as? IPFinecorsa else { fatalError() }
+            runtime.observe(object: cilindro, observingObject: finecorsaModel)
+        }
+        
         present(valvola: node)
 
     }
