@@ -73,52 +73,6 @@ class GameScene: SKScene {
             print("mode changed in: \(mode)")
         }
         
-//        NotificationCenter.default.addObserver(forName: .commandSent, object: nil, queue: .main) { (notif) in
-//            guard let command = notif.object as? CommandCode else { return }
-//            switch command {
-//            case .trash:
-//                if let valvola = self.selectedValvola {
-//                    for line in self.lines {
-//                        if valvola.ios.contains(line.firstIO) ||
-//                            valvola.ios.contains(line.secondIO) {
-//                            self.remove(line: line)
-//                        }
-//                    }
-//                    self.makeExplosion(valvola)
-//                    self.valvole.removeAll(where: { $0 == valvola })
-//                    self.selectedValvola = nil
-//                }
-//
-//            case .load:
-//                do {
-//                    let loader = try Loader(fileName: "circuit.json", scene: self.scene!)
-//                    loader.load()
-//                } catch {
-//                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
-//                }
-//            case .save:
-//                let valvole = self.valvole
-//                let saver = Saver(circuitName: "TestCircuitName", nodes: valvole, scene: self.scene!)
-//                do {
-//                    try saver.save(to: "circuit.json")
-//                } catch {
-//                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
-//                }
-//            case .save3D:
-//                guard let objectParent = self.selectedValvola else {
-//                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "Non hai selezionato la valvola da cui ottenere le varie posizioni relative ad essa")
-//                    return
-//                }
-//                let saver = Saver(circuitName: "Circuit2Dto3D", nodes: self.valvole,
-//                                  scene: self.scene!, relativeObject: objectParent)
-//
-//                do {
-//                    try saver.save(to: "circuit2D-3D.json")
-//                } catch {
-//                    UIApplication.shared.keyWindow?.rootViewController?.showAlert(withTitle: "Errore", andMessage: "\(error)")
-//                }
-//            }
-//        }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -145,71 +99,6 @@ class GameScene: SKScene {
 
     // MARK: - Touches
     
-//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let touchPoint = touches.first?.location(in: self)
-//
-//        let nodes = self.nodes(at: touchPoint!)
-//
-//        if editinMode.state == .active {
-//            if let movableObject = nodes.first as? Movable {
-//                editinMode.selectedInput = movableObject
-//            }
-//            if editinMode.selectedInput != nil && editinMode.selectedValvolaWithMovableInput != nil {
-//                editinMode.selectedValvolaWithMovableInput?.movableInput = editinMode.selectedInput
-//                editinMode.selectedValvolaWithMovableInput?.listenValue = editinMode.editView.sliderValue
-//                editinMode.reset()
-//                self.backgroundColor = self.defaultBackground
-//            }
-//            return
-//        }
-//
-//
-//        if let tappableIO = nodes.first as? Tappable {
-//            tappableIO.tapped()
-//        } else if let clickedIO = nodes.first as? InputOutput {
-//            if firstSelectedIO == nil { firstSelectedIO = clickedIO }
-//            else if secondSelectedIO == nil { secondSelectedIO = clickedIO }
-//
-//            if let firstValvola = firstSelectedIO?.parentValvola, let secondValvola = secondSelectedIO?.parentValvola {
-//                if firstValvola == secondValvola {
-//                    print("Non puoi collegare un filo alla stessa valvola")
-//                    resetTouches()
-//                    return
-//                }
-//            }
-//
-//
-//            if let firstIO = firstSelectedIO, let secondIO = secondSelectedIO {
-//                if firstIO.inputsConnected.contains(secondIO) && secondIO.inputsConnected.contains(firstIO) {
-//                    removeLine(from: firstIO, to: secondIO)
-//                } else {
-//                    createLine(from: firstIO, to: secondIO)
-//                }
-//                resetTouches()
-//            }
-//
-//
-//        } else if let valvola = nodes.first as? ValvolaConformance {
-//            selectedValvola?.strokeColor = .white
-//            selectedValvola = valvola
-//            selectedValvola?.strokeColor = .blue
-//
-//            if mode != .running {
-//                selectedValvola?.ios.forEach { $0.fillColor = .blue }
-//                for line in self.lines {
-//                    if selectedValvola?.ios.contains(line.firstIO) ?? false ||
-//                        selectedValvola?.ios.contains(line.secondIO) ?? false {
-//                        line.strokeColor = .blue
-//                    } else {
-//                        line.strokeColor = .red
-//                    }
-//                }
-//            }
-//        } else {
-//            resetTouches()
-//            hideTableView()
-//        }
-//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
