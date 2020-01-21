@@ -21,6 +21,7 @@
 		DB47CE0C22664AC200EA2F6E /* CreationObjectDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB47CE0B22664AC200EA2F6E /* CreationObjectDataSource.swift */; };
 		DB5418EA23D3891C00B004A7 /* MainEditorContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5418E923D3891C00B004A7 /* MainEditorContainer.swift */; };
 		DB5418EC23D38BB700B004A7 /* SceneViewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5418EB23D38BB700B004A7 /* SceneViewUI.swift */; };
+		DB64C02323D726BF00F1BC04 /* GenericAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB64C02223D726BF00F1BC04 /* GenericAgent.swift */; };
 		DB97B3E3226A28CF00B1421E /* DiskObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB97B3E2226A28CF00B1421E /* DiskObjects.swift */; };
 		DB97B3E5226A2C6000B1421E /* Saver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB97B3E4226A2C6000B1421E /* Saver.swift */; };
 		DB97B3E7226A5DAB00B1421E /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB97B3E6226A5DAB00B1421E /* Loader.swift */; };
@@ -68,6 +69,7 @@
 		DB47CE0B22664AC200EA2F6E /* CreationObjectDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationObjectDataSource.swift; sourceTree = "<group>"; };
 		DB5418E923D3891C00B004A7 /* MainEditorContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEditorContainer.swift; sourceTree = "<group>"; };
 		DB5418EB23D38BB700B004A7 /* SceneViewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewUI.swift; sourceTree = "<group>"; };
+		DB64C02223D726BF00F1BC04 /* GenericAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericAgent.swift; sourceTree = "<group>"; };
 		DB97B3E2226A28CF00B1421E /* DiskObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskObjects.swift; sourceTree = "<group>"; };
 		DB97B3E4226A2C6000B1421E /* Saver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saver.swift; sourceTree = "<group>"; };
 		DB97B3E6226A5DAB00B1421E /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				DBACB86B2258B793007B3E6C /* GameViewController.swift */,
 				DBCD4E1B2290029900E6BBA0 /* MovableEditMode.swift */,
 				DBCD4E1F22900CAD00E6BBA0 /* Helpers.swift */,
+				DB64C02223D726BF00F1BC04 /* GenericAgent.swift */,
 			);
 			path = "Pneumatica-SpriteKit-iOS";
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				DBACB8802258B812007B3E6C /* AND.swift in Sources */,
 				DB9C8C462264CF990071C104 /* Finecorsa.swift in Sources */,
 				DB9C8C402264CF3E0071C104 /* Timer.swift in Sources */,
+				DB64C02323D726BF00F1BC04 /* GenericAgent.swift in Sources */,
 				DBACB8642258B793007B3E6C /* AppDelegate.swift in Sources */,
 				DB97B3E7226A5DAB00B1421E /* Loader.swift in Sources */,
 				DB383E51226916D500267C92 /* TreDueBistabile.swift in Sources */,

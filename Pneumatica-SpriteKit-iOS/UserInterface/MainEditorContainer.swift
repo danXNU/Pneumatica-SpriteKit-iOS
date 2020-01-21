@@ -9,11 +9,35 @@
 import SwiftUI
 
 struct MainEditorContainer: View {
+    
+    @ObservedObject var genericAgent: GenericAgent = GenericAgent()
+    
     var body: some View {
-//        NavigationView {
-            SceneViewUI()
-//        }
-//    .navigationViewStyle(StackNavigationViewStyle())
+        GeometryReader { geo in
+            HStack {
+                if self.genericAgent.isShowingValvoleList {
+                    Rectangle()
+                        .fill(Color.red)
+                        .frame(width: geo.size.width / 4)
+                }
+                
+                VStack {
+                    ZStack {
+                        Rectangle()
+                        .fill(Color(UIColor.systemBackground))
+                        .frame(height: geo.size.height * 0.075)
+                        .onTapGesture {
+                            self.genericAgent.isShowingValvoleList.toggle()
+                        }
+                        
+                        Text("Test")
+                    }
+                    
+                    SceneViewUI()
+                }
+            }
+
+        }
     }
 }
 

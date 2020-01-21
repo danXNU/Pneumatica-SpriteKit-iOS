@@ -10,9 +10,12 @@ import SwiftUI
 
 struct SceneViewUI: View, UIViewControllerRepresentable {
     
+    var genericAgent: GenericAgent
+    
     func makeUIViewController(context: UIViewControllerRepresentableContext<SceneViewUI>) -> GameViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(identifier: "gameVC") as? GameViewController else { fatalError() }
+        vc.genericAgent = genericAgent
         return vc
     }
     
@@ -23,6 +26,6 @@ struct SceneViewUI: View, UIViewControllerRepresentable {
 
 struct SceneViewUI_Previews: PreviewProvider {
     static var previews: some View {
-        SceneViewUI()
+        SceneViewUI(genericAgent: GenericAgent())
     }
 }

@@ -15,6 +15,8 @@ import DXPneumatic
 class GameScene: SKScene {
     var mode: Mode = .running
     
+    var genericAgent: GenericAgent?
+    
     var defaultBackground: UIColor!
     
     var firstSelectedIO: InputOutput?

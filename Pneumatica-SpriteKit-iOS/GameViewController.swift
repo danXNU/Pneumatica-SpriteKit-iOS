@@ -13,6 +13,8 @@ import GameplayKit
 class GameViewController: UIViewController {
     @IBOutlet weak var modeSegment: UISegmentedControl!
     
+    var genericAgent: GenericAgent?
+    
     var currentScene: SKScene!
     
     override func viewDidLoad() {
@@ -20,9 +22,10 @@ class GameViewController: UIViewController {
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
+            if let scene = SKScene(fileNamed: "GameScene") as? GameScene {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .resizeFill
+                scene.genericAgent = genericAgent
                 
                 self.currentScene = scene
                 
