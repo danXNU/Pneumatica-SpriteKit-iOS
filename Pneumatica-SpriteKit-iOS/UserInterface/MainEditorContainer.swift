@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import DXPneumatic
 
 struct MainEditorContainer: View {
     
@@ -58,10 +59,15 @@ struct MainEditorContainer: View {
                     
                     SceneViewUI(genericAgent: self.genericAgent)
                     
-                    if self.genericAgent.isShowingVariablesEditor {
-                        Rectangle()
-                            .fill(Color.red)
-                            .frame(width: geo.size.width / 4)
+                    if self.genericAgent.isShowingVariablesEditor && self.genericAgent.selectedValvola != nil {
+                        List(self.genericAgent.selectedValvola!.valvolaModel.editorItems, id: \.id) { item in
+                            VStack(spacing: 10) {
+                                Text("\(item.headerName)")
+                                
+                                Text("\(String(describing: (item[keyPath: item.path] as? Variable)?.untypedValue))")
+                            }
+                            
+                        }
                     }
                 }
                 
