@@ -15,7 +15,7 @@ import DXPneumatic
 class GameScene: SKScene {
     var mode: Mode = .running
     
-    var genericAgent: GenericAgent?
+    var genericAgent: GenericAgent!
     
     var defaultBackground: UIColor!
     
@@ -24,13 +24,9 @@ class GameScene: SKScene {
     var lines: [Line] = []
     
     var holdRecognizer: UILongPressGestureRecognizer!
-    var tableView : UITableView!
-    var dataSource : UITableViewDataSource!
     
     var editinMode : EditingMode!
     
-    var valvole: [ValvolaConformance] = []
-    var selectedValvola : ValvolaConformance?
     var valvoleLayoutChanged: Bool = false
     
     var runtime: IPRuntime = IPRuntime(startingPoint: [])
@@ -38,7 +34,7 @@ class GameScene: SKScene {
     
     let cameraNode = SKCameraNode()
     
-    var newSelectedValvola: UIValvola?
+//    var newSelectedValvola: UIValvola?
     var newFirstSelectedIO: GraphicalIO?
     var newSecondSelectedIO: GraphicalIO?
     
@@ -53,14 +49,7 @@ class GameScene: SKScene {
         self.defaultBackground = self.backgroundColor
         
         self.editinMode = EditingMode(sceneFrame: self.frame)
-        
-        self.tableView = UITableView()
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        self.tableView.register(BoldCell.self, forCellReuseIdentifier: "BoldCell")
-        self.tableView.backgroundColor = .clear
-        self.tableView.separatorStyle = .none
-        self.tableView.tableFooterView = UIView()
-        self.tableView.delegate = self
+
         
         self.holdRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(holdPoint(_:)))
         self.view?.addGestureRecognizer(self.holdRecognizer)
@@ -132,12 +121,12 @@ class GameScene: SKScene {
         guard let valvola = node as? UIValvola else { return }
         print("Selected valvola")
         
-        newSelectedValvola = valvola
+        self.genericAgent.selectedValvola = valvola
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isDragging {
-            newSelectedValvola = nil
+            self.genericAgent.selectedValvola = nil
             print("Deselcted valvola after dragging")
         }
         
@@ -156,12 +145,12 @@ class GameScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if newSelectedValvola != nil {
+        if self.genericAgent!.selectedValvola != nil {
             self.isDragging = true
             for touch in touches {
                 let touchPoint = touch.location(in: self)
-                newSelectedValvola!.position.x = touchPoint.x - 100
-                newSelectedValvola!.position.y = touchPoint.y - 50
+                self.genericAgent.selectedValvola!.position.x = touchPoint.x - 100
+                self.genericAgent.selectedValvola!.position.y = touchPoint.y - 50
             }
         } else {
              guard let touch = touches.first else { return }
@@ -249,34 +238,11 @@ class GameScene: SKScene {
         }
     }
     
-    func showTableView() {
-        let width = self.size.width / 2
-        let height = self.size.height
-        
-        let rect = CGRect(origin: .zero, size: .init(width: width, height: height))
-        self.tableView.frame = rect
-        self.view?.addSubview(self.tableView)
-        self.dataSource = ObjectCreationDataSource()
-        tableView.dataSource = self.dataSource
-        tableView.delegate = self
-        tableView.reloadData()
-    }
-    
-    func hideTableView() {
-        self.tableView.removeFromSuperview()
-    }
     
     func resetTouches() {
-        selectedValvola?.strokeColor = .white
-        selectedValvola = nil
+        self.genericAgent.selectedValvola = nil
         firstSelectedIO = nil
         secondSelectedIO = nil
-        
-        for valvola in self.valvole {
-            for input in valvola.ios {
-                input.fillColor = input.idleColor
-            }
-        }
         
         for line in self.lines {
             line.strokeColor = .red

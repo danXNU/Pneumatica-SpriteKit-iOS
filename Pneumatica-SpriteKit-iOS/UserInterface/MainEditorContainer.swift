@@ -14,34 +14,58 @@ struct MainEditorContainer: View {
     
     var body: some View {
         GeometryReader { geo in
-            HStack {
-                if self.genericAgent.isShowingValvoleList {
-                    List(ValvoleTypes.allCases, id: \.self) { type in
-                        Text(type.description)
-                            .onTapGesture {
-                                self.genericAgent.createInstanceOf(type: type)
-                            }
-                    }
-                    .frame(width: geo.size.width / 4)
-                    
-                }
-                
-                VStack {
-                    ZStack {
-                        Rectangle()
+            VStack {
+                ZStack {
+                    Rectangle()
                         .fill(Color(UIColor.systemBackground))
                         .frame(height: geo.size.height * 0.075)
-                        .onTapGesture {
-                            self.genericAgent.isShowingValvoleList.toggle()
+                    
+                    
+                    HStack {
+                        Image(systemName: self.genericAgent.isShowingValvoleList ? "chevron.left.square.fill" : "chevron.right.square.fill")
+                            .resizable()
+                            .aspectRatio(1.0, contentMode: .fit)
+                            .frame(height: 20)
+                            .offset(x: 15, y: 0)
+                            .onTapGesture {
+                                self.genericAgent.isShowingValvoleList.toggle()
                         }
-                        
+                        Spacer()
                         Text("Test")
+                        Spacer()
+                        Image(systemName: "slider.horizontal.3")
+                            .resizable()
+                            .aspectRatio(1.0, contentMode: .fit)
+                            .frame(height: 20)
+                            .onTapGesture {
+                                self.genericAgent.isShowingVariablesEditor.toggle()
+                        }
+                        .offset(x: -15, y: 0)
+                    }
+                    
+                }
+                HStack {
+                    if self.genericAgent.isShowingValvoleList {
+                        List(ValvoleTypes.allCases, id: \.self) { type in
+                            Text(type.description)
+                                .onTapGesture {
+                                    self.genericAgent.createInstanceOf(type: type)
+                            }
+                        }
+                        .frame(width: geo.size.width / 5)
+                        
                     }
                     
                     SceneViewUI(genericAgent: self.genericAgent)
+                    
+                    if self.genericAgent.isShowingVariablesEditor {
+                        Rectangle()
+                            .fill(Color.red)
+                            .frame(width: geo.size.width / 4)
+                    }
                 }
+                
             }
-
         }
     }
 }

@@ -11,6 +11,8 @@ import DXPneumatic
 
 class GenericAgent: ObservableObject {
     @Published var isShowingValvoleList: Bool = false
+    @Published var isShowingVariablesEditor: Bool = false
+    @Published var selectedValvola: UIValvola? = nil
     
     var valvolaCreationCompletion: ((UIValvola) -> Void)? = nil
     
