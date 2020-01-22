@@ -15,9 +15,9 @@ struct MainEditorContainer: View {
     var body: some View {
         GeometryReader { geo in
             HStack {
-                if self.genericAgent.isShowingValvoleList {                    
+                if self.genericAgent.isShowingValvoleList {
                     List(ValvoleTypes.allCases, id: \.self) { type in
-                        Text("\(String(describing: type))")
+                        Text(type.description)
                             .onTapGesture {
                                 self.genericAgent.createInstanceOf(type: type)
                             }

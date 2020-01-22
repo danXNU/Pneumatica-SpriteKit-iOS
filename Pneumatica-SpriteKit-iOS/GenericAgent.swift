@@ -87,7 +87,7 @@ class GenericAgent: ObservableObject {
     
 }
 
-enum ValvoleTypes: CaseIterable {
+enum ValvoleTypes: CaseIterable, CustomStringConvertible {
     case and
     case or
     case frl
@@ -102,5 +102,32 @@ enum ValvoleTypes: CaseIterable {
     
     static func type(at index: Int) -> ValvoleTypes {
         return ValvoleTypes.allCases[index]
+    }
+    
+    var description: String {
+        switch self {
+        case .and:
+            return "AND"
+        case .or:
+            return "OR"
+        case .frl:
+            return "FRL"
+        case .cde:
+            return "Cilindro DE"
+        case .treDueMS:
+            return "3/2 Monostabile"
+        case .treDueBS:
+            return "3/2 Bistabile"
+        case .timer:
+            return "Timer"
+        case .cinqueDueMS:
+            return "5/2 Monostabile"
+        case .cinqueDueBS:
+            return "5/2 Bistabile"
+        case .pulsante:
+            return "Pulsante"
+        case .finecorsa:
+            return "Finecorsa"
+        }
     }
 }
