@@ -15,10 +15,15 @@ struct MainEditorContainer: View {
     var body: some View {
         GeometryReader { geo in
             HStack {
-                if self.genericAgent.isShowingValvoleList {
-                    Rectangle()
-                        .fill(Color.red)
-                        .frame(width: geo.size.width / 4)
+                if self.genericAgent.isShowingValvoleList {                    
+                    List(ValvoleTypes.allCases, id: \.self) { type in
+                        Text("\(String(describing: type))")
+                            .onTapGesture {
+                                self.genericAgent.createInstanceOf(type: type)
+                            }
+                    }
+                    .frame(width: geo.size.width / 4)
+                    
                 }
                 
                 VStack {
@@ -33,7 +38,7 @@ struct MainEditorContainer: View {
                         Text("Test")
                     }
                     
-                    SceneViewUI()
+                    SceneViewUI(genericAgent: self.genericAgent)
                 }
             }
 
