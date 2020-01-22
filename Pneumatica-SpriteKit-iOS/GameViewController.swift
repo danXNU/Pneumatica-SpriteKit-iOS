@@ -10,9 +10,7 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController {
-    @IBOutlet weak var modeSegment: UISegmentedControl!
-    
+class GameViewController: UIViewController {    
     var genericAgent: GenericAgent?
     
     var currentScene: SKScene!
@@ -54,40 +52,6 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
-    }
-    
-    @IBAction func modeSegmentChanged(_ sender: UISegmentedControl) {
-        var mode: Mode = .editing
-        switch sender.selectedSegmentIndex {
-        case 0: mode = .editing
-        case 1: mode = .running
-        default: break
-        }
-        NotificationCenter.default.post(name: .sceneModeChanged, object: mode)
-    }
-    
-    @IBAction func saveTouched(_ sender: UIButton) {
-        let command = CommandCode.save
-        NotificationCenter.default.post(name: .commandSent, object: command)
-    }
-    
-    @IBAction func save3DTouched(_ sender: UIButton) {
-        let command = CommandCode.save3D
-        NotificationCenter.default.post(name: .commandSent, object: command)
-    }
-    
-    @IBAction func caricaTouched(_ sender: UIButton) {
-        let command = CommandCode.load
-        NotificationCenter.default.post(name: .commandSent, object: command)
-    }
-    
-    @IBAction func cestinoTouched(_ sender: UIButton) {
-        let command = CommandCode.trash
-        NotificationCenter.default.post(name: .commandSent, object: command)
-    }
-    
-    
-    @IBAction func arButtonTapped(_ sender: UIButton) {
     }
     
 }
