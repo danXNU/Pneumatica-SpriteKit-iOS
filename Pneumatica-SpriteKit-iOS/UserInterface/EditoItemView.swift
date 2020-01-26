@@ -20,13 +20,13 @@ struct EditoItemView: View {
                 TextField(itemManager.variableName.propertyName, text: $itemManager.stringValue)
             } else if itemManager.type == .int {
                 HStack {
-                    Text("\(itemManager.doubleValue)")
-                    Stepper(itemManager.variableName.propertyName, value: $itemManager.intValue)
+                    Stepper("\(itemManager.intValue)", value: $itemManager.intValue)
                 }
             } else if itemManager.type == .double {
                 HStack {
-                    Text("\(itemManager.doubleValue)")
-                    Stepper(itemManager.variableName.propertyName, onIncrement: { self.itemManager.doubleValue += 0.1 }, onDecrement: { self.itemManager.doubleValue -= 0.1 })
+                    Stepper(onIncrement: { self.itemManager.doubleValue += 0.1 }, onDecrement: { self.itemManager.doubleValue -= 0.1 }) {
+                        Text(String(format: "%.1f", Float(itemManager.doubleValue)))
+                    }
                 }
             }
         }

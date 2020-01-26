@@ -19,8 +19,8 @@ class GameScene: SKScene {
     
     var defaultBackground: UIColor!
     
-    var firstSelectedIO: InputOutput?
-    var secondSelectedIO: InputOutput?
+//    var firstSelectedIO: InputOutput?
+//    var secondSelectedIO: InputOutput?
     var lines: [Line] = []
     
     var holdRecognizer: UILongPressGestureRecognizer!
@@ -39,7 +39,7 @@ class GameScene: SKScene {
     var newSecondSelectedIO: GraphicalIO?
     
     
-    var isDragging: Bool = false
+//    var isDragging: Bool = false
     
     //MARK: - Lifecycle
     override func didMove(to view: SKView) {
@@ -79,6 +79,16 @@ class GameScene: SKScene {
             }
 
             self.present(valvola: node)
+        }
+        
+        self.genericAgent.valvolaSelectionChanged = { valvola, newState in
+            if newState == true {
+                guard let sprite = valvola as? SKShapeNode else { return }
+                sprite.strokeColor = .blue
+            } else {
+                guard let sprite = valvola as? SKShapeNode else { return }
+                sprite.strokeColor = .white
+            }
         }
         
         NotificationCenter.default.addObserver(forName: .sceneModeChanged, object: nil, queue: .main) { (notif) in
@@ -125,17 +135,17 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if isDragging {
+        if genericAgent.isDragging {
             self.genericAgent.selectedValvola = nil
             print("Deselcted valvola after dragging")
         }
         
-        isDragging = false
+        genericAgent.isDragging = false
         
         guard let touch = touches.first else { return }
         let touchPosition = touch.location(in: self)
         let nodes = self.nodes(at: touchPosition)
-        guard let node = nodes.first else { return }
+        guard let node = nodes.first else { resetTouches(); return }
         
         if let objectIO = node as? GraphicalIO {
             handleTouchedIO(objectIO)
@@ -146,7 +156,7 @@ class GameScene: SKScene {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if self.genericAgent!.selectedValvola != nil {
-            self.isDragging = true
+            self.genericAgent.isDragging = true
             for touch in touches {
                 let touchPoint = touch.location(in: self)
                 self.genericAgent.selectedValvola!.position.x = touchPoint.x - 100
@@ -241,8 +251,8 @@ class GameScene: SKScene {
     
     func resetTouches() {
         self.genericAgent.selectedValvola = nil
-        firstSelectedIO = nil
-        secondSelectedIO = nil
+        newFirstSelectedIO = nil
+        newSecondSelectedIO = nil
         
         for line in self.lines {
             line.strokeColor = .red

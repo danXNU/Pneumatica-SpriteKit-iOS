@@ -62,14 +62,7 @@ struct MainEditorContainer: View {
                     if self.genericAgent.isShowingVariablesEditor {
                         if self.genericAgent.selectedValvola != nil {
                             List(self.genericAgent.selectedValvola!.valvolaModel.variables, id: \.id) { item in
-//                                VStack(spacing: 10) {
-//                                    Text("\(item.headerName)")
-//
-//                                    Text("\(String(describing: self.genericAgent.selectedValvola!.valvolaModel[keyPath: item.path]))")
-//                                }
-
                                 EditoItemView(itemManager: .init(editorVariable: item, agent: self.genericAgent))
-
                             }
 //                            Text("Gang shiiit!")
                             .frame(width: geo.size.width / 5)

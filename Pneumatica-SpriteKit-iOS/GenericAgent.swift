@@ -10,11 +10,25 @@ import Foundation
 import DXPneumatic
 
 class GenericAgent: ObservableObject {
-    @Published var isShowingValvoleList: Bool = false
-    @Published var isShowingVariablesEditor: Bool = false
-    @Published var selectedValvola: UIValvola? = nil
+    @Published var isShowingValvoleList: Bool = true
+    @Published var isShowingVariablesEditor: Bool = true
+    @Published var selectedValvola: UIValvola? = nil {
+        willSet {
+            if let oldValvola = selectedValvola {
+                valvolaSelectionChanged?(oldValvola, false)
+            }
+        }
+        didSet {
+            if let valvolaJustSelected = selectedValvola {
+                valvolaSelectionChanged?(valvolaJustSelected, true)
+            }
+        }
+    }
+    
+    @Published var isDragging: Bool = false
     
     var valvolaCreationCompletion: ((UIValvola) -> Void)? = nil
+    var valvolaSelectionChanged: ((UIValvola, Bool) -> Void)? = nil
     
     public func createInstanceOf(type: ValvoleTypes) {
         switch type {
