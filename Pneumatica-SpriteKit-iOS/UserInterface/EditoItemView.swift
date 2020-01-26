@@ -14,19 +14,19 @@ struct EditoItemView: View {
     
     var body: some View {
         VStack {
-            Text("\(itemManager.variable.headerName)")
+            Text("\(itemManager.variableName.propertyName)")
             
             if itemManager.type == .string {
-                TextField(itemManager.variable.headerName, text: $itemManager.stringValue)
+                TextField(itemManager.variableName.propertyName, text: $itemManager.stringValue)
             } else if itemManager.type == .int {
                 HStack {
                     Text("\(itemManager.doubleValue)")
-                    Stepper(itemManager.variable.headerName, value: $itemManager.intValue)
+                    Stepper(itemManager.variableName.propertyName, value: $itemManager.intValue)
                 }
             } else if itemManager.type == .double {
                 HStack {
                     Text("\(itemManager.doubleValue)")
-                    Stepper(itemManager.variable.headerName, onIncrement: { self.itemManager.doubleValue += 0.1 }, onDecrement: { self.itemManager.doubleValue -= 0.1 })
+                    Stepper(itemManager.variableName.propertyName, onIncrement: { self.itemManager.doubleValue += 0.1 }, onDecrement: { self.itemManager.doubleValue -= 0.1 })
                 }
             }
         }
@@ -36,48 +36,43 @@ struct EditoItemView: View {
 
 class EditorItemManager: ObservableObject {
     var genericAgent: GenericAgent
-    var variable: EditorVariable<BaseValvola>
-    
-    @Published var value: GenericVariable {
-        didSet {
-            genericAgent.selectedValvola?.valvolaModel[keyPath: variable.path].value = value
-        }
-    }
-    
+    var variableName: VariablesKeys
+    var variable: Variable
+        
     @Published var stringValue: String = "" {
         didSet {
             if stringValue == "" { return }
-            genericAgent.selectedValvola?.valvolaModel[keyPath: variable.path].value = GenericVariable.string(stringValue)
+            genericAgent.selectedValvola?.valvolaModel.set(value: .string(stringValue), toKey: variableName)
         }
     }
     
     @Published var intValue: Int = -1 {
         didSet {
             if intValue <= -1 { return }
-            genericAgent.selectedValvola?.valvolaModel[keyPath: variable.path].value = GenericVariable.int(intValue)
+            genericAgent.selectedValvola?.valvolaModel.set(value: .int(intValue), toKey: variableName)
         }
     }
     
     @Published var doubleValue: Double = -1 {
         didSet {
             if doubleValue <= -1 { return }
-            genericAgent.selectedValvola?.valvolaModel[keyPath: variable.path].value = GenericVariable.double(doubleValue)
+            genericAgent.selectedValvola?.valvolaModel.set(value: .double(doubleValue), toKey: variableName)
         }
     }
     
     var type: Variable.HolderType {
-        return genericAgent.selectedValvola?.valvolaModel[keyPath: variable.path].valueType ?? .string
+        return genericAgent.selectedValvola!.valvolaModel.get(variable: variableName).valueType
     }
     
-    init(editorVariable: EditorVariable<BaseValvola>, agent: GenericAgent) {
-        self.variable = editorVariable
+    init(editorVariable: EditorVariable,  agent: GenericAgent) {
+        self.variable = editorVariable.propertyValue
         self.genericAgent = agent
-        self.value = agent.selectedValvola!.valvolaModel[keyPath: variable.path].value
+        self.variableName = editorVariable.propertyHeader
         
         switch type {
-        case .int: intValue = genericAgent.selectedValvola?.valvolaModel[keyPath: variable.path].getTypedValue(Int.self) ?? 0
-        case .string: stringValue = genericAgent.selectedValvola?.valvolaModel[keyPath: variable.path].getTypedValue(String.self) ?? ""
-        case .double: doubleValue = genericAgent.selectedValvola?.valvolaModel[keyPath: variable.path].getTypedValue(Double.self) ?? 0.0
+        case .int: intValue = variable.getTypedValue(Int.self) ?? 0
+        case .string: stringValue = variable.getTypedValue(String.self) ?? ""
+        case .double: doubleValue = variable.getTypedValue(Double.self) ?? 0.0
         default:
             print("Gang SHIIIT")
             fatalError()
