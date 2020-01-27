@@ -25,10 +25,38 @@ class GenericAgent: ObservableObject {
         }
     }
     
+    @Published var firstSelectedIO: GraphicalIO? = nil {
+        willSet {
+            if let oldIO = firstSelectedIO {
+                ioSelectionChanged?(oldIO, false)
+            }
+        }
+        didSet {
+            if let ioJustSelected = firstSelectedIO {
+                ioSelectionChanged?(ioJustSelected, true)
+            }
+        }
+    }
+    
+    @Published var secondSelectedIO: GraphicalIO? = nil {
+        willSet {
+            if let oldIO = secondSelectedIO {
+                ioSelectionChanged?(oldIO, false)
+            }
+        }
+        didSet {
+            if let ioJustSelected = secondSelectedIO {
+                ioSelectionChanged?(ioJustSelected, true)
+            }
+        }
+    }
+    
+    
     @Published var isDragging: Bool = false
     
     var valvolaCreationCompletion: ((UIValvola) -> Void)? = nil
     var valvolaSelectionChanged: ((UIValvola, Bool) -> Void)? = nil
+    var ioSelectionChanged: ((GraphicalIO, Bool) -> Void)? = nil
     
     public func createInstanceOf(type: ValvoleTypes) {
         switch type {

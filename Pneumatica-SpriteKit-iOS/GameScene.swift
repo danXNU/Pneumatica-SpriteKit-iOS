@@ -35,8 +35,8 @@ class GameScene: SKScene {
     let cameraNode = SKCameraNode()
     
 //    var newSelectedValvola: UIValvola?
-    var newFirstSelectedIO: GraphicalIO?
-    var newSecondSelectedIO: GraphicalIO?
+//    var newFirstSelectedIO: GraphicalIO?
+//    var newSecondSelectedIO: GraphicalIO?
     
     
 //    var isDragging: Bool = false
@@ -88,6 +88,16 @@ class GameScene: SKScene {
             } else {
                 guard let sprite = valvola as? SKShapeNode else { return }
                 sprite.strokeColor = .white
+            }
+        }
+        
+        self.genericAgent.ioSelectionChanged = { io, newState in
+            if newState == true {
+//                guard let sprite = io as? SKShapeNode else { return }
+                io.strokeColor = .blue
+            } else {
+//                guard let sprite = io as? SKShapeNode else { return }
+                io.strokeColor = .white
             }
         }
         
@@ -200,7 +210,7 @@ class GameScene: SKScene {
     func handleTouchedIO(_ io: GraphicalIO) {
         select(io: io)
         
-        if let firstIO = newFirstSelectedIO, let secondIO = newSecondSelectedIO {
+        if let firstIO = genericAgent.firstSelectedIO, let secondIO = genericAgent.secondSelectedIO {
             if firstIO.modelIO.isConnected(to: secondIO.modelIO) {
                 self.runtime.disconnect(firstIO: firstIO.modelIO, from: secondIO.modelIO)
                 let line = self.lines.first {
@@ -208,24 +218,26 @@ class GameScene: SKScene {
                 }
                 if let line = line {
                     self.remove(line: line)
+                    self.resetTouches()
                 }
             } else {
                 self.runtime.connect(firstIO: firstIO.modelIO, with: secondIO.modelIO)
                 self.createLine(from: firstIO, to: secondIO)
+                self.resetTouches()
             }
             
         }
     }
     
     func select(io: GraphicalIO) {
-        if newFirstSelectedIO == nil {
-            newFirstSelectedIO = io
-        } else if newSecondSelectedIO == nil {
-            newSecondSelectedIO = io
+        if genericAgent.firstSelectedIO == nil {
+            genericAgent.firstSelectedIO = io
+        } else if genericAgent.secondSelectedIO == nil {
+            genericAgent.secondSelectedIO = io
             return
         } else {
-            newFirstSelectedIO = io
-            newSecondSelectedIO = nil
+            genericAgent.firstSelectedIO = io
+            genericAgent.secondSelectedIO = nil
         }
     }
     
@@ -251,8 +263,8 @@ class GameScene: SKScene {
     
     func resetTouches() {
         self.genericAgent.selectedValvola = nil
-        newFirstSelectedIO = nil
-        newSecondSelectedIO = nil
+        genericAgent.firstSelectedIO = nil
+        genericAgent.secondSelectedIO = nil
         
         for line in self.lines {
             line.strokeColor = .red
