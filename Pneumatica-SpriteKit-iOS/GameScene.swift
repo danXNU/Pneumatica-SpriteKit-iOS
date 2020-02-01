@@ -19,8 +19,6 @@ class GameScene: SKScene {
     
     var defaultBackground: UIColor!
     
-//    var firstSelectedIO: InputOutput?
-//    var secondSelectedIO: InputOutput?
     var lines: [Line] = []
     
     var holdRecognizer: UILongPressGestureRecognizer!
@@ -33,13 +31,6 @@ class GameScene: SKScene {
     var newValvoleNodes: [ValvolaStateReceiver] = []
     
     let cameraNode = SKCameraNode()
-    
-//    var newSelectedValvola: UIValvola?
-//    var newFirstSelectedIO: GraphicalIO?
-//    var newSecondSelectedIO: GraphicalIO?
-    
-    
-//    var isDragging: Bool = false
     
     //MARK: - Lifecycle
     override func didMove(to view: SKView) {
@@ -371,38 +362,4 @@ class GameScene: SKScene {
         }
     }
     
-}
-
-extension GameScene : UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        hideTableView()
-//        guard let dataSource = self.dataSource as? ObjectCreationDataSource else { return }
-//
-//        let node = dataSource.createInstanceOf(type: ValvoleTypes.type(at: indexPath.row))
-//
-//        self.newValvoleNodes.append(node)
-//        self.runtime.addInCircuit(valvola: node.valvolaModel, hasToInitialize: false)
-//        if let startingPoint = node as? DXPneumatic.GruppoFRL {
-//            self.runtime.addStartingPoint(startingPoint.valvolaModel)
-//        }
-//
-//        if let observable = node as? DXPneumatic.ChangeListener {
-//            let listener = Listener(uiObject: observable, model: node.valvolaModel)
-//            self.runtime.observables.append(listener)
-//        }
-//
-//        if let finecorsa = node as? DXPneumatic.Finecorsa {
-//            guard let object = self.runtime.valvole.first(where: { $0 is IPCilindroDE }) else { fatalError() }
-//            guard let cilindro = object as? IPCilindroDE else { fatalError() }
-//            guard let finecorsaModel = finecorsa.valvolaModel as? IPFinecorsa else { fatalError() }
-//            runtime.observe(object: cilindro, observingObject: finecorsaModel)
-//        }
-//
-//        present(valvola: node)
-//
-//    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
-    }
 }
