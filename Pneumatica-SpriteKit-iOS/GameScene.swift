@@ -163,6 +163,8 @@ class GameScene: SKScene {
             self.runtime.observe(object: selectedMovableObject, observingObject: listener)
             
             listener.set(value: .movableObject(selectedMovableObject), toKey: VariablesKeys.movableObject)
+            
+            genericAgent.hasToSelectMovableObjects.toggle()
             return
         }
         
