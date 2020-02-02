@@ -62,12 +62,12 @@ class GameScene: SKScene {
                 self.runtime.observables.append(listener)
             }
 
-            if let finecorsa = node as? DXPneumatic.Finecorsa {
-                guard let object = self.runtime.valvole.first(where: { $0 is IPCilindroDE }) else { fatalError() }
-                guard let cilindro = object as? IPCilindroDE else { fatalError() }
-                guard let finecorsaModel = finecorsa.valvolaModel as? IPFinecorsa else { fatalError() }
-                self.runtime.observe(object: cilindro, observingObject: finecorsaModel)
-            }
+//            if let finecorsa = node as? DXPneumatic.Finecorsa {
+//                guard let object = self.runtime.valvole.first(where: { $0 is IPCilindroDE }) else { fatalError() }
+//                guard let cilindro = object as? IPCilindroDE else { fatalError() }
+//                guard let finecorsaModel = finecorsa.valvolaModel as? IPFinecorsa else { fatalError() }
+//                self.runtime.observe(object: cilindro, observingObject: finecorsaModel)
+//            }
 
             self.present(valvola: node)
         }
@@ -132,7 +132,10 @@ class GameScene: SKScene {
         guard let valvola = node as? UIValvola else { return }
         print("Selected valvola")
         
-        self.genericAgent.selectedValvola = valvola
+        if genericAgent.hasToSelectMovableObjects == false {
+            self.genericAgent.selectedValvola = valvola
+        }
+        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -147,6 +150,22 @@ class GameScene: SKScene {
         let touchPosition = touch.location(in: self)
         let nodes = self.nodes(at: touchPosition)
         guard let node = nodes.first else { resetTouches(); return }
+        
+        if genericAgent.hasToSelectMovableObjects {
+            guard let selectedValvola = node as? UIValvola else { return }
+            guard let selectedMovableObject = selectedValvola.valvolaModel as? MovableObject else { return }
+            
+            guard let listener = genericAgent.selectedListenerObject else { return }
+            if let movableObjectAttuale = listener.get(variable: .movableObject).getTypedValue(MovableObject.self) {
+                self.runtime.removeObserving(object: movableObjectAttuale, from: listener)
+            }
+
+            self.runtime.observe(object: selectedMovableObject, observingObject: listener)
+            
+            listener.set(value: .movableObject(selectedMovableObject), toKey: VariablesKeys.movableObject)
+            return
+        }
+        
         
         if let objectIO = node as? GraphicalIO {
             handleTouchedIO(objectIO)

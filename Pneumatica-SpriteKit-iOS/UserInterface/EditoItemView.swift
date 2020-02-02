@@ -28,6 +28,13 @@ struct EditoItemView: View {
                         Text(String(format: "%.1f", Float(itemManager.doubleValue)))
                     }
                 }
+            } else if itemManager.type == .movableObject {
+                VStack(spacing: 20) {
+                    Text(String(describing: itemManager.variable.getTypedValue(MovableObject.self)?.name))
+                    Button(action: { self.itemManager.genericAgent.hasToSelectMovableObjects.toggle() }, label: {
+                        Text(self.itemManager.genericAgent.hasToSelectMovableObjects ? "Annulla" : "Seleziona")
+                    })
+                }
             }
         }
     }
@@ -75,7 +82,7 @@ class EditorItemManager: ObservableObject {
         case .double: doubleValue = variable.getTypedValue(Double.self) ?? 0.0
         default:
             print("Gang SHIIIT")
-            fatalError()
+//            fatalError()
         }
     }
     

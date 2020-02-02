@@ -22,6 +22,11 @@ class GenericAgent: ObservableObject {
             if let valvolaJustSelected = selectedValvola {
                 valvolaSelectionChanged?(valvolaJustSelected, true)
             }
+            if let observingValvola = selectedValvola?.valvolaModel as? ObservingObject {
+                self.selectedListenerObject = observingValvola
+            } else {
+                self.selectedListenerObject = nil
+            }
         }
     }
     
@@ -53,6 +58,8 @@ class GenericAgent: ObservableObject {
     
     
     @Published var isDragging: Bool = false
+    @Published var hasToSelectMovableObjects: Bool = false
+    @Published var selectedListenerObject: ObservingObject? = nil
     
     var valvolaCreationCompletion: ((UIValvola) -> Void)? = nil
     var valvolaSelectionChanged: ((UIValvola, Bool) -> Void)? = nil
