@@ -29,12 +29,10 @@ struct EditoItemView: View {
                     }
                 }
             } else if itemManager.type == .movableObject {
-                VStack(spacing: 20) {
-                    Text(String(describing: itemManager.variable.getTypedValue(MovableObject.self)?.name))
-                    Button(action: { self.itemManager.genericAgent.hasToSelectMovableObjects.toggle() }, label: {
-                        Text(self.itemManager.genericAgent.hasToSelectMovableObjects ? "Annulla" : "Seleziona")
-                    })
-                }
+                Text(itemManager.variable.description)
+                Button(action: { self.itemManager.genericAgent.hasToSelectMovableObjects.toggle() }, label: {
+                    Text(self.itemManager.genericAgent.hasToSelectMovableObjects ? "Annulla" : "Seleziona")
+                })
             }
         }
     }
