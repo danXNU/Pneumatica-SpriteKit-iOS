@@ -28,7 +28,7 @@ class GameScene: SKScene {
     var valvoleLayoutChanged: Bool = false
     
     var runtime: IPRuntime = IPRuntime(startingPoint: [])
-    var newValvoleNodes: [ValvolaStateReceiver] = []
+    var newValvoleNodes: [UIValvola] = []
     
     let cameraNode = SKCameraNode()
     
@@ -62,14 +62,13 @@ class GameScene: SKScene {
                 self.runtime.observables.append(listener)
             }
 
-//            if let finecorsa = node as? DXPneumatic.Finecorsa {
-//                guard let object = self.runtime.valvole.first(where: { $0 is IPCilindroDE }) else { fatalError() }
-//                guard let cilindro = object as? IPCilindroDE else { fatalError() }
-//                guard let finecorsaModel = finecorsa.valvolaModel as? IPFinecorsa else { fatalError() }
-//                self.runtime.observe(object: cilindro, observingObject: finecorsaModel)
-//            }
-
             self.present(valvola: node)
+        }
+        
+        self.genericAgent.valvolaRemoveAction = { valvola in
+            self.newValvoleNodes.removeAll { valvola == $0 }
+//            self.removeFromParent()
+            valvola.removeFromParent()
         }
         
         self.genericAgent.valvolaSelectionChanged = { valvola, newState in

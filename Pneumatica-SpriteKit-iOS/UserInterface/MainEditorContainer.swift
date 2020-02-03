@@ -27,13 +27,23 @@ struct MainEditorContainer: View {
                             .resizable()
                             .aspectRatio(1.0, contentMode: .fit)
                             .frame(height: 20)
-                            .offset(x: 15, y: 0)
+//                            .offset(x: 15, y: 0)
                             .onTapGesture {
                                 self.genericAgent.isShowingValvoleList.toggle()
                         }
                         Spacer()
                         Text("Test")
                         Spacer()
+                        
+                        Image(systemName: "trash")
+                        .resizable()
+                        .aspectRatio(1.0, contentMode: .fit)
+                        .frame(height: 20)
+                            .onTapGesture {
+                                self.genericAgent.removeSelectedValvola()
+                            }
+//                            .offset(x: -20, y: 0)
+                        
                         Image(systemName: "slider.horizontal.3")
                             .resizable()
                             .aspectRatio(1.0, contentMode: .fit)
@@ -41,8 +51,9 @@ struct MainEditorContainer: View {
                             .onTapGesture {
                                 self.genericAgent.isShowingVariablesEditor.toggle()
                         }
-                        .offset(x: -15, y: 0)
+                        
                     }
+                    .padding(.horizontal, 10)
                     
                 }
                 HStack {
