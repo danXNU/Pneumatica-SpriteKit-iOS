@@ -10,34 +10,54 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController {    
+class GameViewController: UIViewController {
     var genericAgent: GenericAgent?
     
     var currentScene: SKScene!
     
+    var sceneView: SKView = {
+        let v = SKView(frame: .zero)
+        v.translatesAutoresizingMaskIntoConstraints = false
+        return v
+    }()
+    
+    let cameraNode = SKCameraNode()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") as? GameScene {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .resizeFill
-                scene.genericAgent = genericAgent
-                
-                self.currentScene = scene
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
+        self.view.addSubview(sceneView)
+        
+        // Load the SKScene from 'GameScene.sks'
+        if let scene = SKScene(fileNamed: "GameScene") as? GameScene {
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .resizeFill
+            scene.genericAgent = genericAgent
             
-            view.ignoresSiblingOrder = true
+            self.currentScene = scene
             
-            view.showsFPS = true
-            view.showsNodeCount = true
+            scene.addChild(cameraNode)
+            scene.camera = cameraNode
+            
+            // Present the scene
+            sceneView.presentScene(scene)
         }
+        
+        sceneView.ignoresSiblingOrder = true
+        
+        sceneView.showsFPS = true
+        sceneView.showsNodeCount = true
+        
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        sceneView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        sceneView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        sceneView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        sceneView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+    }
+    
     override var shouldAutorotate: Bool {
         return true
     }

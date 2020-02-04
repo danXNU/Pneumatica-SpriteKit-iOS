@@ -68,19 +68,7 @@ class GenericAgent: ObservableObject {
     
     public func removeSelectedValvola() {
         guard let valvola = self.selectedValvola else { return }
-        guard let runtime = valvola.valvolaModel.runtime else { return }
-        
-        let valvolaIOs = valvola.valvolaModel.ios
-        
-        let wires = runtime.wires.filter { valvolaIOs.contains($0.firstIO) || valvolaIOs.contains($0.secondIO) }
-        wires.forEach { wire in
-            runtime.disconnect(firstIO: wire.secondIO, from: wire.firstIO)
-        }
-        
-        runtime.removeFromCircuit(valvola: valvola.valvolaModel)
-        
         valvolaRemoveAction?(valvola)
-        
         self.selectedValvola = nil
     }
     

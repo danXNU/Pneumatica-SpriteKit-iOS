@@ -30,8 +30,6 @@ class GameScene: SKScene {
     var runtime: IPRuntime = IPRuntime(startingPoint: [])
     var newValvoleNodes: [UIValvola] = []
     
-    let cameraNode = SKCameraNode()
-    
     //MARK: - Lifecycle
     override func didMove(to view: SKView) {
         self.size = view.bounds.size
@@ -45,28 +43,38 @@ class GameScene: SKScene {
         self.holdRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(holdPoint(_:)))
         self.view?.addGestureRecognizer(self.holdRecognizer)
         
-        self.camera = cameraNode
         
         self.runtime.start()
         
-        self.genericAgent?.valvolaCreationCompletion = { valvola in
+        self.genericAgent?.valvolaCreationCompletion = { [weak self] valvola in
             let node = valvola
-            self.newValvoleNodes.append(node)
-            self.runtime.addInCircuit(valvola: node.valvolaModel, hasToInitialize: false)
+            self?.newValvoleNodes.append(node)
+            self?.runtime.addInCircuit(valvola: node.valvolaModel, hasToInitialize: false)
             if let startingPoint = node as? DXPneumatic.GruppoFRL {
-                self.runtime.addStartingPoint(startingPoint.valvolaModel)
+                self?.runtime.addStartingPoint(startingPoint.valvolaModel)
             }
 
             if let observable = node as? DXPneumatic.ChangeListener {
                 let listener = Listener(uiObject: observable, model: node.valvolaModel)
-                self.runtime.observables.append(listener)
+                self?.runtime.observables.append(listener)
             }
 
-            self.present(valvola: node)
+            self?.present(valvola: node)
         }
         
-        self.genericAgent.valvolaRemoveAction = { valvola in
-            self.newValvoleNodes.removeAll { valvola == $0 }
+        self.genericAgent.valvolaRemoveAction = { [weak self] valvola in
+            guard let runtime = valvola.valvolaModel.runtime else { return }
+            
+            let valvolaIOs = valvola.valvolaModel.ios
+            
+            let wires = runtime.wires.filter { valvolaIOs.contains($0.firstIO) || valvolaIOs.contains($0.secondIO) }
+            wires.forEach { wire in
+                runtime.disconnect(firstIO: wire.secondIO, from: wire.firstIO)
+            }
+            
+            runtime.removeFromCircuit(valvola: valvola.valvolaModel)
+            
+            self?.newValvoleNodes.removeAll { valvola == $0 }
 //            self.removeFromParent()
             valvola.removeFromParent()
         }
