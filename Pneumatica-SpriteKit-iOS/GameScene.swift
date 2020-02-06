@@ -28,7 +28,7 @@ class GameScene: SKScene {
     var valvoleLayoutChanged: Bool = false
     
     var runtime: IPRuntime = IPRuntime(startingPoint: [])
-    var newValvoleNodes: [UIValvola] = []
+    var newValvoleNodes: Array<UIValvola> = []
     
     //MARK: - Lifecycle
     override func didMove(to view: SKView) {
@@ -48,7 +48,7 @@ class GameScene: SKScene {
         
         self.genericAgent?.valvolaCreationCompletion = { [weak self] valvola in
             let node = valvola
-            self?.newValvoleNodes.append(node)
+//            self?.newValvoleNodes.append(node)
             self?.runtime.addInCircuit(valvola: node.valvolaModel, hasToInitialize: false)
             if let startingPoint = node as? DXPneumatic.GruppoFRL {
                 self?.runtime.addStartingPoint(startingPoint.valvolaModel)
@@ -63,20 +63,24 @@ class GameScene: SKScene {
         }
         
         self.genericAgent.valvolaRemoveAction = { [weak self] valvola in
-            guard let runtime = valvola.valvolaModel.runtime else { return }
-            
-            let valvolaIOs = valvola.valvolaModel.ios
-            
-            let wires = runtime.wires.filter { valvolaIOs.contains($0.firstIO) || valvolaIOs.contains($0.secondIO) }
-            wires.forEach { wire in
-                runtime.disconnect(firstIO: wire.secondIO, from: wire.firstIO)
+            DispatchQueue.main.async {
+                guard let runtime = valvola.valvolaModel.runtime else { return }
+                            
+                            let valvolaIOs = valvola.valvolaModel.ios
+                            
+                            let wires = runtime.wires.filter { valvolaIOs.contains($0.firstIO) || valvolaIOs.contains($0.secondIO) }
+                            wires.forEach { wire in
+                                runtime.disconnect(firstIO: wire.secondIO, from: wire.firstIO)
+                            }
+                            
+                            runtime.removeFromCircuit(valvola: valvola.valvolaModel)
+                            
+                //            self?.newValvoleNodes.removeAll { valvola == $0 }
+                //            self.removeFromParent()
+                            valvola.removeFromParent()
             }
             
-            runtime.removeFromCircuit(valvola: valvola.valvolaModel)
             
-            self?.newValvoleNodes.removeAll { valvola == $0 }
-//            self.removeFromParent()
-            valvola.removeFromParent()
         }
         
         self.genericAgent.valvolaSelectionChanged = { valvola, newState in
